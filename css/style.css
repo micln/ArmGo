@@ -1,0 +1,24 @@
+canvas{
+	border: 1px solid #000;
+	cursor:	hand;
+}
+
+.cope{
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	background: url("img/right.jpg");
+}
+
+#GoMission{
+	width: 200px;
+	height: 80px;
+	position: absolute;
+	cursor: hand;
+	//border: 1px solid #f00;
+}
+
+#toolslc{
+	position: absolute;
+	cursor: hand;
+}

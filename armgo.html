@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>ArmGo</title>
+	<meta charset='utf-8' >
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="js/maps.js"></script>
+	<script type="text/javascript" src="js/resource.js"></script>
+	<script type="text/javascript">
+    	// preload
+		for ( i=0; i<imgfile.length; i++){
+			var a = new Image();
+			a.src = "img/" + imgfile[i] ;
+		}
+    </script>
+</head> 
+<body>
+	<div style="display:none; position:absolute; left: 257px; top: 15px; width: 251px; height: 108px;">
+	  <input style="position:absolute; left: 13px; top: 52px; width: 71px; height: 38px;"type="button" value="DOWN" onClick="arm.down()">
+<input style="position:absolute; left: 85px; top: 15px; width: 60px; height: 76px;"type="button" value="->" onClick="arm.right()">
+<input style="position:absolute; left: 14px; top: 15px; width: 70px; height: 37px;" type="button" value="UP" onClick="arm.up()">
+	</div>
+    <span id="ns"></span>
+<br/>
+
+	<!--  main GAME  -->
+<div id="game">
+		<canvas id="canvas" width="900px" height="480px"></canvas>
+  <div id="cope1" class="cope"  ></div>
+  <input name="" type="button" style="position:absolute; left: 726px; top: 34px; width: 70px; height: 37px;" onClick="missionList.show();" value="Mission">
+  <input name="" type="button" style="position:absolute; left: 800px; top: 34px; width: 70px; height: 37px;" onClick="runs.run(0,0);" value="GO">
+  <div id="toolslc" ></div>
+</div>
+</body>
+	
+	<script type="text/javascript" src="js/mession.js"></script>
+	<script type="text/javascript" src="js/cope.js"></script>
+	<script type="text/javascript" src="js/arm.js"></script>
+	<script type="text/javascript" src="js/runs.js"></script>
+	<script type="text/javascript" src="js/toolbar.js"></script>
+	<script type="text/javascript" src="js/armgo.js"></script>
+
+
+</html>
