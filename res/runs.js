@@ -20,10 +20,10 @@ function RUNS(){
 	this.draw = function(){
 		for ( i=0; i<4; i++){
 			for ( j=1; j<9; j++){
-				drawCope(this.x+cope.width*j,this.y+cope.height*i*1.7,this.tasks[i][j-1],cope.width,cope.height);
+				(new COPE).draw(this.x+cope.width*j,this.y+cope.height*i*1.7,this.tasks[i][j-1],cope.width,cope.height);
 				if ( i==3 && j==5 ) break;
 			}
-			drawCope(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
+			(new COPE).draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
 		}
 		
 		// div : toolslc

@@ -1,5 +1,5 @@
 // Preferences
-var Fz = 20;
+var Fz = 25;
 
 // Const Variables
 var ms = {
@@ -9,13 +9,6 @@ var ms = {
 var CELL = {
 	x : 30,
 	y : 30
-}
-
-var BAG = {
-	x : 580,
-	y : 300,
-	r : 300,
-	c : 200
 }
 
 var GOALM = {
@@ -95,27 +88,13 @@ function initVal(v){
 function flashMap(x){
 	//cxt.clearRect(0,0,c.width,c.height);
 	drawState();
-	drawArm();
+	arm.draw();
 	toolbar.show();
 	if ( x == 1 ){
 		drawBg();
 		drawGoal();
 		runs.draw();
 	}
-}
-
-function drawHello(){
-	cxt.fillStyle = "#000";
-	cxt.fillRect(0,0,c.width,c.height);
-	var gradient=cxt.createLinearGradient(0,c.height/2-35,0,c.height/2+35);
-	gradient.addColorStop("0","#fff");
-	gradient.addColorStop("1.0","#777");
-	cxt.fillStyle = gradient;
-	cxt.font = "80px Arial Black";
-	cxt.fillText("ArmGo",c.width/2-150,c.height/2);
-	
-	cxt.font = "20px Arial Black";
-	cxt.fillText("click here",c.width/2-60,c.height/2+50);
 }
 
 function drawBg(){
@@ -182,33 +161,6 @@ function drawState(){
 	}
 }
 
-function drawArm(){
-	var x = arm.x;
-	var y = arm.y;
-	cxt.beginPath();
-	cxt.moveTo(x,y);
-	cxt.lineTo(x,y+30);
-	cxt.lineTo(x-2,y+30);
-	cxt.lineTo(x-6,y+15);
-	cxt.lineTo(x-2,y);
-	cxt.closePath();
-	cxt.fillStyle = arm.color;
-	cxt.fill();
-	cxt.fillRect(240,y+11,x-240,8);
-	cxt.fillRect(240,STATE.y-40,6,400);
-	//drawCope(x,y,2);
-	if ( arm.hand != 0 ) drawCell(arm.x,arm.y,arm.hand);
-}
-
-function drawCope(x,y,v,r,c){
-	var img = new Image();
-	img.src="img/"+imgfile[v];
-	if ( r == undefined ){
-		cxt.drawImage(img,x,y,cope.width,cope.height);
-	}else {
-		cxt.drawImage(img,x,y,r,c);
-	}
-}
 
 function drawCell(x,y,v){
 	cxt.fillStyle = color[v];
@@ -242,7 +194,7 @@ window.addEventListener('mousemove',Wmove,false);
 
 window.onload = function(){
 	//initVal(1);
-	drawHello();
+	(new HELLO).draw();
 	c.onclick = function(){
 		c.onclick = function(){};	
 		missionList.show();

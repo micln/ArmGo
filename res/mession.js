@@ -25,7 +25,7 @@ function MISSIONLIST(){
 		for ( i=1; i<=this.tot; i++){
 			var x = this.x + ((i-1)%5)*this.r*2;
 			var y = this.y + Math.floor((i-1)/5)*this.c*2;
-			drawCope(x,y,i+3,this.r,this.c);
+			(new COPE).draw(x,y,i+3,this.r,this.c);
 		}
 		c.onclick = function(e){
 			missionList.selectMission(e)

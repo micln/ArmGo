@@ -15,9 +15,8 @@ function TOOLBAR(){
 	this.s = 0;
 	this.draw = function(){
 		if ( this.s == 0 ) return ;
-		x = x - this.r - 20;
 		cxt.fillStyle = '#ff0000';
-		cxt.fillRect(x,y,this.r + 20,this.c+20);
+		cxt.fillRect(this.x,this.y,this.r + 20,this.c+20);
 	}
 	this.show = function(x,y){
 		this.x = x;

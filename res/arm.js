@@ -20,6 +20,22 @@ function ARM(){
 		this.hand = 0;
 	}
 	this.init();
+	this.draw = function(){
+		var x = arm.x;
+		var y = arm.y;
+		cxt.beginPath();
+		cxt.moveTo(x,y);
+		cxt.lineTo(x,y+30);
+		cxt.lineTo(x-2,y+30);
+		cxt.lineTo(x-6,y+15);
+		cxt.lineTo(x-2,y);
+		cxt.closePath();
+		cxt.fillStyle = arm.color;
+		cxt.fill();
+		cxt.fillRect(240,y+11,x-240,8);
+		cxt.fillRect(240,STATE.y-40,6,400);
+		if ( arm.hand != 0 ) drawCell(arm.x,arm.y,arm.hand);
+	}
 	this.done = function(v,i){
 		if ( v == undefined ) return ;
 		if ( runs.tasks[v][i+1] != 0 ) runs.run(v,i+1);
