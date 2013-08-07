@@ -7,4 +7,4 @@ programming the copes to leading the arm to move the cells, achieve the goal sta
 
 Contact us: pokerfacehlg@gmail.com
             
-            zhrlnt@gmail.com 
+        or: zhrlnt@gmail.com 
