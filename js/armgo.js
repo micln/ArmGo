@@ -37,15 +37,6 @@ var runs = new RUNS();
 var toolbar = new TOOLBAR();
 
 
-
-
-
-
-
-
-
-
-
 function getClickId(e,x,y,r,c,m){	// ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
 	var i = Math.floor(( e.clientX - eid("canvas").offsetLeft - x ) / r ) + 1;
 	var j = Math.floor(( e.clientY - eid("canvas").offsetTop - y ) / c )+ 1;
@@ -89,7 +80,6 @@ function flashMap(x){
 	//cxt.clearRect(0,0,c.width,c.height);
 	drawState();
 	arm.draw();
-	toolbar.show();
 	if ( x == 1 ){
 		drawBg();
 		drawGoal();
@@ -180,6 +170,7 @@ function Wmove(e){
 }
 
 function Wdown(e){
+
 }
 	
 function Wup(e){
@@ -191,6 +182,7 @@ function Cdown (e) {
 }
 
 window.addEventListener('mousemove',Wmove,false);
+window.addEventListener('mousedown',Wdown,false);
 
 window.onload = function(){
 	//initVal(1);

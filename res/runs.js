@@ -25,13 +25,13 @@ function RUNS(){
 			}
 			(new COPE).draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
 		}
-		
-		// div : toolslc
-		var cd = eid("toolslc");
-		cd.style.left = this.x + c.offsetLeft + cope.width;
-		cd.style.top =  this.y + c.offsetTop - cope.height * 0.7;
-		cd.style.width = this.r - cope.width;
-		cd.style.height = this.c;
+		c.onclick = function(e){
+			var x = e.clientX - c.offsetLeft;
+			var y = e.clientY - c.offsetTop;
+			if ( x>runs.x && x<runs.x+runs.r && y>runs.y && y<runs.y+runs.c){
+				toolbar.show(e.clientX+10,e.clientY+10);
+			}
+		}
 	}
 	this.run = function(v,i){
 		ns.innerHTML = v + ',' + i ;

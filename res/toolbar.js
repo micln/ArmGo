@@ -8,20 +8,23 @@
 */
 //
 function TOOLBAR(){
-	this.r = cope.width * 2;
-	this.c = 100;
-	this.x = this.r;
-	this.y = this.c;
-	this.s = 0;
-	this.draw = function(){
-		if ( this.s == 0 ) return ;
-		cxt.fillStyle = '#ff0000';
-		cxt.fillRect(this.x,this.y,this.r + 20,this.c+20);
+	this.obj = eid("toolslc");
+	this.init = function(p){
+		for ( i=0; i<8; i++){
+			var newson = document.createElement('div');
+			newson.className = "tool";
+			newson.style.background = "url('img/"+imgfile[i]+"')";
+			newson.style.backgroundSize = "35px 35px";
+			this.obj.appendChild(newson);
+		}
+	}
+	this.init();
+	this.hide = function(){
+		this.obj.style.zIndex = -1;
 	}
 	this.show = function(x,y){
-		this.x = x;
-		this.y = y;
-		this.s = 1;
-		this.draw();
+		this.obj.style.left = x;
+		this.obj.style.top = y;
+		this.obj.style.zIndex = 1;
 	}
 }

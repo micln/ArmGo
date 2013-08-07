@@ -20,5 +20,22 @@ canvas{
 
 #toolslc{
 	position: absolute;
+	border:	4px solid #1c44e1;
+	background-color: #fff;
+	width: 143px;
+	height: 143px;
+	padding-left: 8px;
+	padding-top: 8px;
+}
+
+.tool{
+	float: left;
+	width: 35px;
+	height: 35px;
+	margin: 5px;
 	cursor: hand;
+}
+
+.tool:hover{
+	outline: 4px solid #00C7FF;
 }
