@@ -39,8 +39,8 @@ function RUNS(){
 			this.obj.style.zIndex = -1;
 		}
 	}
-	this.x = STATE.x + CELL.x*8;
-	this.y = STATE.y - CELL.y + cope.height * 0.7;
+	this.x = state.x + CELL.x*8;
+	this.y = state.y - CELL.y + cope.height * 0.7;
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
 	this.stack = [];
@@ -63,6 +63,9 @@ function RUNS(){
 		this.obj.style.zIndex = -1;
 	}
 	this.run = function(v,i){
+		if (this.tasks[v][i] == 0 ){
+			runs.finish();
+		}
 		ns.innerHTML = v + ',' + i ;
 			switch( this.tasks[v][i] ){
 				case 1 :
@@ -91,5 +94,13 @@ function RUNS(){
 					this.run(3,0);
 					break;
 			}
+	}
+	this.readygo = function(){
+		eid("goit").disabled = true;
+		state.init(Mission);
+		this.run(0,0);
+	}
+	this.finish = function(){
+		eid("goit").disabled = false;
 	}
 }

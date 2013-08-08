@@ -16,20 +16,15 @@ var GOALM = {
 	y : 100
 }
 
-var STATE = {
-	x : GOALM.x + CELL.x * 8.5,
-	y : 100
-}
-
 // Global Variables
 var c = eid("canvas");
 var cxt = c.getContext("2d");
 var ctime;				// arm Go!
 var Mission;			// Mission Canvas Object
 var ns = eid("ns");		// debug message
-var state = [];			// the state of stage
 
 // object
+var state = new STATE();			// the state of stage
 var arm = new ARM();
 var cope = new COPE(1);
 var missionList = new MISSIONLIST();
@@ -60,12 +55,7 @@ function ename(x){
 
 function initVal(v){
 	Mission = v;
-	for ( i=0; i<6; i++){
-		state[i] = [];
-		for ( j=0; j<6; j++){
-			state[i][j] = startM[Mission][i][j];
-		}
-	}
+	state.init(v);
 	arm.init();
 	runs.init();
 	flashMap(1);
@@ -74,7 +64,7 @@ function initVal(v){
 
 function flashMap(x){
 	//cxt.clearRect(0,0,c.width,c.height);
-	drawState();
+	state.draw();
 	arm.draw();
 	if ( x == 1 ){
 		drawBg();
@@ -117,44 +107,13 @@ function drawGoal(){
 	}
 }
 
-function drawState(){
-	var x = STATE.x;
-	var y = STATE.y;
-	var g = state;
-	
-	// clear
-	cxt.fillStyle = color[3];
-	cxt.fillRect(arm.leftz-10,arm.topz,CELL.x*7+30,CELL.y*12);
-	
-	// holder
-	cxt.fillStyle = "#5E4925";
-	cxt.fillRect(STATE.x+CELL.x*6,STATE.y-35,15,500);
-	for ( i=1; i<7; i++){
-		cxt.fillRect(STATE.x,STATE.y+CELL.y*(i*2-1),CELL.x*6,15);
-	}
-	
-	// cell
-	for ( i=0; i<6; i++ ){
-		for ( j=0; j<6; j++){
-			cxt.fillStyle = color[g[i][j]];
-			cxt.strokeStyle = color[g[i][j]];
-			if ( g[i][j] != 0){
-				cxt.fillRect(j*CELL.x+x,i*CELL.y*2+y,CELL.x,CELL.y);
-			}else {
-				//cxt.strokeRect(j*CELL.x+x,i*CELL.y*2+y,CELL.x,CELL.y);
-			}
-		}
-	}
-}
-
-
 function drawCell(x,y,v){
 	cxt.fillStyle = color[v];
 	cxt.fillRect(x,y,CELL.x,CELL.y);
 }
 
 function checkAns(){
-	if ( state.toString() == Goal[Mission].toString()){
+	if ( state.box.toString() == Goal[Mission].toString()){
 		clearTimeout(ctime);
 		alert("WIN");
 		missionList.show();

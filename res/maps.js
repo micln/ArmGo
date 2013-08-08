@@ -1,4 +1,4 @@
-//the maps of the game
+//the data of ganme,maps
 //@randox
 //
 var color = ['#fff','#00D6FF','#FF5C00','#999966',];

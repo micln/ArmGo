@@ -8,9 +8,9 @@
 */
 //
 function ARM(){
-	this.leftz = STATE.x - CELL.x - 12;
-	this.topz = STATE.y;
-	this.bottonz = STATE.y + CELL.y * 12;
+	this.leftz = state.x - CELL.x - 12;
+	this.topz = state.y;
+	this.bottonz = state.y + CELL.y * 12;
 	this.speed = 6;
 	this.color = '#00ff00';
 	this.init = function(){
@@ -33,7 +33,7 @@ function ARM(){
 		cxt.fillStyle = arm.color;
 		cxt.fill();
 		cxt.fillRect(240,y+11,x-240,8);
-		cxt.fillRect(240,STATE.y-40,6,400);
+		cxt.fillRect(240,state.y-40,6,400);
 		if ( arm.hand != 0 ) drawCell(arm.x,arm.y,arm.hand);
 	}
 	this.done = function(v,i){
@@ -42,16 +42,21 @@ function ARM(){
 			runs.run(v,i+1);
 		}else{
 			var l = runs.stack.length-1;
-			var x = runs.stack[l][0];
-			var y = runs.stack[l][1];
-			runs.stack.length--;
-			runs.run(x,y+1);
+			if ( l >= 0 ){
+				var x = runs.stack[l][0];
+				var y = runs.stack[l][1];
+				runs.stack.length--;
+				runs.run(x,y+1);
+			}else{
+				// finish
+				runs.finish();
+			}
 		}
 	}
 	this.right = function(v,ii){
 		var i = 6;
-		while ( i>0 && state[this.r-1][i-1] != 0 ) i--;
-		this.goRight(STATE.x+CELL.x*i,v,ii);
+		while ( i>0 && state.box[this.r-1][i-1] != 0 ) i--;
+		this.goRight(state.x+CELL.x*i,v,ii);
 	}
 	this.left = function(v,i){
 		this.x -= this.speed ;
@@ -65,7 +70,7 @@ function ARM(){
 	this.up = function(v,i){
 		if ( this.r == 1 ) return ;
 		this.y -= this.speed ;
-		if (this.y > (STATE.y+CELL.y*(this.r-2)*2) ) {
+		if (this.y > (state.y+CELL.y*(this.r-2)*2) ) {
 			setTimeout('arm.up('+v+','+i+')',Fz);
 			//sleep(Fz);this.up();
 		}else {
@@ -76,7 +81,7 @@ function ARM(){
 	this.down = function(v,i){
 		if ( this.r == 6 ) return ;
 		this.y += this.speed ;
-		if ( this.y < ( STATE.y+CELL.y*(this.r*2))) {
+		if ( this.y < ( state.y+CELL.y*(this.r*2))) {
 			setTimeout('arm.down('+v+','+i+')',Fz);
 			//sleep(Fz);this.down();
 		}else {
@@ -92,18 +97,18 @@ function ARM(){
 		}if ( this.x + (this.hand > 0)*CELL.x  == x ){
 			
 			var i = 6;
-			while ( i>0 && state[this.r-1][i-1] != 0 ) i--;	// i <- first CELL	
+			while ( i>0 && state.box[this.r-1][i-1] != 0 ) i--;	// i <- first CELL	
 			
 			// fall
 			if (i>0 && this.hand>0 ){
-				state[this.r-1][i-1] = this.hand;
+				state.box[this.r-1][i-1] = this.hand;
 				this.hand = 0;
 			}
 			else 
 			// catch
-			if (i<6 && this.hand==0 && state[this.r-1][i] != 0){
-				this.hand = state[this.r-1][i];
-				state[this.r-1][i] = 0;
+			if (i<6 && this.hand==0 && state.box[this.r-1][i] != 0){
+				this.hand = state.box[this.r-1][i];
+				state.box[this.r-1][i] = 0;
 			}
 			
 			this.left(v,ii);

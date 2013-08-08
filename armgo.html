@@ -28,11 +28,12 @@
 <div id="game">
 	<canvas id="canvas" width="900px" height="480px"></canvas>
 	<input name="" type="button" style="position:absolute; left: 726px; top: 34px; width: 70px; height: 37px;" onClick="missionList.show();" value="Mission">
-	<input name="" type="button" style="position:absolute; left: 800px; top: 34px; width: 70px; height: 37px;" onClick="runs.run(0,0);" value="GO">
+	<input id="goit" name="" type="button" style="position:absolute; left: 800px; top: 34px; width: 70px; height: 137px;" onClick="runs.readygo();" value="GO">
 	
 	<div id="runs"></div>
 	<div id="toolslc" ></div>
 	
+	<script type="text/javascript" src="res/state.js"></script>
 	<script type="text/javascript" src="res/mission.js"></script>
 	<script type="text/javascript" src="res/cope.js"></script>
 	<script type="text/javascript" src="res/arm.js"></script>
