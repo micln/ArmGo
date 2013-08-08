@@ -16,11 +16,18 @@ function RUNS(){
 		if (xxx == 1 ){
 			for ( i=0; i<4; i++){
 				for ( j=1; j<9; j++){
+					// toolifs + tool
 					var newson = document.createElement('div');
 					newson.className = "toola";
+					// toolifs
 					var newson2 = document.createElement('div');
 					newson2.className = "toolifs";
+					newson2.setAttribute("copeid",i*8+j);
+					newson2.onclick = function(e){
+						runs.settoolifs(e,this.getAttribute("copeid"));
+					}
 					newson.appendChild(newson2);
+					// tool
 					newson2 = document.createElement('div');
 					newson2.className = 'tool';
 					newson2.setAttribute("copeid",i*8+j);
@@ -49,13 +56,22 @@ function RUNS(){
 		toolbar.show(e.clientX,e.clientY+10);
 		toolbar.settool(v);
 	}
+	this.settoolifs = function(e,v){
+		toolbar.show2(e.clientX,e.clientY+10);
+		toolbar.settool2(v);
+	}
 	this.draw = function(){
 		for ( i=0; i<4; i++){
 			for ( j=1; j<9; j++){
-				(new COPE).draw(this.x+cope.width*j,this.y+cope.height*i*1.7,this.tasks[i][j-1],cope.width,cope.height);
+				cope.draw(this.x+cope.width*j,this.y+cope.height*i*1.7,this.tasks[i][j-1],cope.width,cope.height);
+				if (this.ifs[i][j-1] != 0){
+					cope.drawifs(this.x+cope.width*j,this.y+cope.height*i*1.7,this.ifs[i][j-1]);
+				}else {
+					cope.drawifs(this.x+cope.width*j,this.y+cope.height*i*1.7,0);
+				}
 				if ( i==3 && j==5 ) break;
 			}
-			(new COPE).draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
+			cope.draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
 		}
 		this.obj.style.zIndex = 5;
 	}
@@ -67,6 +83,10 @@ function RUNS(){
 			runs.finish();
 		}
 		ns.innerHTML = v + ',' + i ;
+		if ( this.ifs[v][i] != 0 && this.ifs[v][i]!=arm.hand ){
+			arm.done(v,i);
+			return;
+		}
 			switch( this.tasks[v][i] ){
 				case 1 :
 					arm.right(v,i);
@@ -102,5 +122,6 @@ function RUNS(){
 	}
 	this.finish = function(){
 		eid("goit").disabled = false;
+		clearTimeout(ctime);
 	}
 }

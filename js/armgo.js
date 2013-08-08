@@ -114,7 +114,7 @@ function drawCell(x,y,v){
 
 function checkAns(){
 	if ( state.box.toString() == Goal[Mission].toString()){
-		clearTimeout(ctime);
+		runs.finish();
 		alert("WIN");
 		missionList.show();
 	}

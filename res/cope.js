@@ -22,4 +22,14 @@ function COPE(v){
 			cxt.drawImage(img,x,y,r,c);
 		}
 	}
+	this.drawifs = function(x,y,v){
+		cxt.fillStyle = color[v];
+		cxt.beginPath();
+		cxt.moveTo(x,y);
+		cxt.lineTo(x+5,y-20);
+		cxt.lineTo(x+30,y-20);
+		cxt.lineTo(x+35,y);
+		cxt.closePath();
+		cxt.fill();
+	}
 }
