@@ -38,7 +38,15 @@ function ARM(){
 	}
 	this.done = function(v,i){
 		if ( v == undefined ) return ;
-		if ( runs.tasks[v][i+1] != 0 ) runs.run(v,i+1);
+		if ( runs.tasks[v][i+1] != 0 ) {
+			runs.run(v,i+1);
+		}else{
+			var l = runs.stack.length-1;
+			var x = runs.stack[l][0];
+			var y = runs.stack[l][1];
+			runs.stack.length--;
+			runs.run(x,y+1);
+		}
 	}
 	this.right = function(v,ii){
 		var i = 6;

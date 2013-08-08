@@ -12,6 +12,7 @@ function RUNS(){
 	this.init = function(xxx){
 		this.tasks=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 		this.ifs=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+		this.stack = [];
 		if (xxx == 1 ){
 			for ( i=0; i<4; i++){
 				for ( j=1; j<9; j++){
@@ -42,6 +43,7 @@ function RUNS(){
 	this.y = STATE.y - CELL.y + cope.height * 0.7;
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
+	this.stack = [];
 	this.init(1);
 	this.settool = function(e,v){
 		toolbar.show(e.clientX,e.clientY+10);
@@ -73,15 +75,19 @@ function RUNS(){
 					arm.down(v,i);
 					break;
 				case 4 :
+					this.stack.push([v,i]);
 					this.run(0,0);
 					break;
 				case 5 :
+					this.stack.push([v,i]);
 					this.run(1,0);
 					break;
 				case 6 :
+					this.stack.push([v,i]);
 					this.run(2,0);
 					break;
 				case 7 :
+					this.stack.push([v,i]);
 					this.run(3,0);
 					break;
 			}
