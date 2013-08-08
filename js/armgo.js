@@ -67,13 +67,9 @@ function initVal(v){
 		}
 	}
 	arm.init();
+	runs.init();
 	flashMap(1);
 	ctime = setInterval('flashMap()',Fz);
-
-	var tlc = eid("toolslc");
-	tlc.style.zIndex = 1;
-	tlc.onclick = function (e){
-	}
 }
 
 function flashMap(x){

@@ -8,15 +8,45 @@
 */
 //
 function RUNS(){
-	this.init = function(){
-		this.tasks=[[1,5,1,0,0,0,0,0],[3,1,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+	this.obj = eid("runs");
+	this.init = function(xxx){
+		this.tasks=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 		this.ifs=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+		if (xxx == 1 ){
+			for ( i=0; i<4; i++){
+				for ( j=1; j<9; j++){
+					var newson = document.createElement('div');
+					newson.className = "toola";
+					var newson2 = document.createElement('div');
+					newson2.className = "toolifs";
+					newson.appendChild(newson2);
+					newson2 = document.createElement('div');
+					newson2.className = 'tool';
+					newson2.setAttribute("copeid",i*8+j);
+					newson2.setAttribute('id', 'cope'+(i*8+j));
+					newson2.onclick = function(e){
+						runs.settool(e,this.getAttribute('copeid'));
+					}
+					newson.appendChild(newson2);
+					this.obj.appendChild(newson);
+					if ( i==3 && j==5 ) break;
+				}
+			}
+			this.obj.style.left = this.x+cope.width + 8;
+			this.obj.style.top = this.y - 0.5;
+			this.obj.style.width = cope.width * 8;
+			this.obj.style.zIndex = -1;
+		}
 	}
-	this.init();
 	this.x = STATE.x + CELL.x*8;
 	this.y = STATE.y - CELL.y + cope.height * 0.7;
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
+	this.init(1);
+	this.settool = function(e,v){
+		toolbar.show(e.clientX,e.clientY+10);
+		toolbar.settool(v);
+	}
 	this.draw = function(){
 		for ( i=0; i<4; i++){
 			for ( j=1; j<9; j++){
@@ -25,13 +55,10 @@ function RUNS(){
 			}
 			(new COPE).draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
 		}
-		c.onclick = function(e){
-			var x = e.clientX - c.offsetLeft;
-			var y = e.clientY - c.offsetTop;
-			if ( x>runs.x && x<runs.x+runs.r && y>runs.y && y<runs.y+runs.c){
-				toolbar.show(e.clientX+10,e.clientY+10);
-			}
-		}
+		this.obj.style.zIndex = 5;
+	}
+	this.hide = function(){
+		this.obj.style.zIndex = -1;
 	}
 	this.run = function(v,i){
 		ns.innerHTML = v + ',' + i ;

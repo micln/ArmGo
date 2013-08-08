@@ -15,7 +15,8 @@ function MISSIONLIST(){
 	this.c = 80;
 	this.show = function(){
 		clearTimeout(ctime);
-		eid("toolslc").style.zIndex = -1;
+		toolbar.hide();
+		runs.hide();
 
 		cxt.fillStyle = '#000';
 		cxt.fillRect(0,0,c.width,c.height);
