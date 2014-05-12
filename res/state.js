@@ -21,6 +21,9 @@ function STATE(){
 		arm.init();
 		this.draw();
 	}
+	this.clear = function(){
+		
+	}
 	this.draw =function(){
 		var x = this.x;
 		var y = this.y;

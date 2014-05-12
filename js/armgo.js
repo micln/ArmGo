@@ -1,5 +1,6 @@
-// Preferences
-var Fz = 25;
+var conf = {
+	Fz: 25,
+};
 
 // Const Variables
 var ms = {
@@ -59,7 +60,7 @@ function initVal(v){
 	arm.init();
 	runs.init();
 	flashMap(1);
-	ctime = setInterval('flashMap()',Fz);
+	ctime = setInterval('flashMap()',conf.Fz);
 }
 
 function flashMap(x){
@@ -142,8 +143,7 @@ window.addEventListener('mousedown',Wdown,false);
 window.onload = function(){
 	//initVal(1);
 	(new HELLO).draw();
-	c.onclick = function(){
-		c.onclick = function(){};	
+	c.onclick = function(){	
 		missionList.show();
 	}
 }

@@ -43,7 +43,7 @@ function RUNS(){
 			this.obj.style.left = this.x+cope.width + 8;
 			this.obj.style.top = this.y - 0.5;
 			this.obj.style.width = cope.width * 8;
-			this.obj.style.zIndex = -1;
+			this.obj.style.display = 'none';
 		}
 	}
 	this.x = state.x + CELL.x*8;
@@ -73,10 +73,10 @@ function RUNS(){
 			}
 			cope.draw(this.x,this.y+cope.height*i*1.7,i+4,cope.width,cope.height);
 		}
-		this.obj.style.zIndex = 5;
+		this.obj.style.display = 'block';
 	}
 	this.hide = function(){
-		this.obj.style.zIndex = -1;
+		this.obj.style.display = 'none';
 	}
 	this.run = function(v,i){
 		if (this.tasks[v][i] == 0 ){

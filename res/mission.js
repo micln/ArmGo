@@ -17,7 +17,7 @@ function MISSIONLIST(){
 		clearTimeout(ctime);
 		toolbar.hide();
 		runs.hide();
-
+		runs.finish();
 		cxt.fillStyle = '#000';
 		cxt.fillRect(0,0,c.width,c.height);
 		cxt.fillStyle = '#fff';
@@ -28,6 +28,7 @@ function MISSIONLIST(){
 			var y = this.y + Math.floor((i-1)/5)*this.c*2;
 			cope.draw(x,y,i+3,this.r,this.c);
 		}
+		c.style.cursor= 'hand';
 		c.onclick = function(e){
 			missionList.selectMission(e)
 		}

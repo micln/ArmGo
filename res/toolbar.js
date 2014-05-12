@@ -28,27 +28,27 @@ function TOOLBAR(){
 			newson.setAttribute('toolid',i);
 			this.obj2.appendChild(newson);
 		}
+		this.obj.style.zIndex = 10;
+		this.obj2.style.zIndex = 10;
 	}
 	this.init();
 	this.hide = function(x){
-		this.obj.style.zIndex = -1;
-		this.obj.style.left = c.offsetLeft;
+		this.obj.style.display = 'none';
 	}
 	this.hide2 = function(){
-		this.obj2.style.zIndex = -1;
-		this.obj2.style.left = c.offsetLeft;
+		this.obj2.style.display = 'none';
 	}
 	this.show = function(x,y){
 		this.hide2();
 		this.obj.style.left = x;
 		this.obj.style.top = y;
-		this.obj.style.zIndex = 10;
+		this.obj.style.display = 'block';
 	}
 	this.show2 = function(x,y){
 		this.hide();
 		this.obj2.style.left = x;
 		this.obj2.style.top = y;
-		this.obj2.style.zIndex = 10;
+		this.obj2.style.display = 'block';
 	}
 	this.settool = function(v){
 		this.selrun = v;
