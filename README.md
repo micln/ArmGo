@@ -7,6 +7,7 @@ programming the copes to leading the arm to move the cells, achieve the goal sta
 
 testing page : http://armgoo.duapp.com ( Be true you are not in mac OS )
 
-Contact us: zhrlnt@gmail.com
+##Author
 
-or: pokerfacehlg@gmail.com 
+- [micln](https://github.com/micln) zhrlnt[X]gmail.com
+- [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
