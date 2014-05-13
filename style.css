@@ -1,6 +1,27 @@
 body{
 	text-align: center;
 }
+#msgbox{
+	position: absolute;
+	background: #E9E9E9;
+	border: 6px solid #B8B8B8;
+	border-radius: 3px;
+	left: 500;
+	top: 120px;
+	width: 366;
+	height: 240;
+	padding: 0px 10px;
+	display: none;
+}
+#msgbox>a{
+	position: relative;
+	top: 200;
+	border: 1px solid #000;
+	border-radius: 5px;
+	cursor: hand;
+	padding: 5px 20px;
+}
+
 canvas{
 	border: 1px solid #000;
 }

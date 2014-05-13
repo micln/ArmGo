@@ -152,6 +152,7 @@ function RUNS(){
 	this.store={
 		save:function(){
 			localStorage.setItem("armgo_runs_"+Mission,JSON.stringify(that.tasks));
+			localStorage.setItem("armgo_runs_ifs_"+Mission,JSON.stringify(that.ifs));
 			console.log(localStorage);
 		},
 		load:function(){
@@ -159,6 +160,11 @@ function RUNS(){
 			res = eval( "(" + localStorage.getItem(t) + ")" );
 			if ( res != null){
 				that.tasks = res;
+				t = "armgo_runs_ifs_"+Mission;
+				res = eval( "(" + localStorage.getItem(t) + ")" );
+				if ( res != null ){
+					that.ifs = res;
+				}
 			}
 		}
 	}

@@ -7,7 +7,9 @@ var runs = new RUNS();
 var toolbar = new TOOLBAR();
 
 window.onload = function(){
+
 	(new HELLO).draw();
+
 	c.onclick = function(){	
 		missionList.show();
 	}

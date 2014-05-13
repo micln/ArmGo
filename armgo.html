@@ -17,34 +17,40 @@
 
 
 <!--  main GAME  -->
-<div id="game">
-	<canvas id="canvas" width="900px" height="480px"></canvas>
-	<div id="runs"></div>
-	<div id="toolslc" ></div>
-	<div id="toolslcifs" ></div>
-	<div id="controlBar">
-		<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="Levels">
-		<input id="btn_Refresh" name="" type="button" onClick="runs.stop();initLevel(Mission);" value="Refresh">
-		<input id="btn_start" name="" type="button" onClick="runs.start();" value="Let's Go!">
+	<div id="game">
+		<div id="msgbox">
+			<a onclick="document.getElementById('msgbox').style.display = 'none'">OK</a>
+			<div></div>
+		</div>
+		<canvas id="canvas" width="900px" height="480px"></canvas>
+		<div id="runs"></div>
+		<div id="toolslc" ></div>
+		<div id="toolslcifs" ></div>
+		<div id="controlBar">
+			<input id="" name="" type="button" onClick="showhelp();" value="查看帮助 (Help)">
+			<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择 (Levels)">
+			<input id="btn_Refresh" name="" type="button" onClick="runs.stop();initLevel(Mission);" value="重新开始 (Refresh)">
+			<input id="btn_start" name="" type="button" onClick="runs.start();" value="启动程序 (Let's Go!)">
+		</div>
+		
+
+		<script type="text/javascript" src="modules/maps.js"></script>
+		<!-- 加载配置文件 -->
+		<script type="text/javascript" src="modules/json2.js"></script>
+		<script type="text/javascript" src="modules/common.js"></script>
+		<script type="text/javascript" src="conf.js"></script>
+		<!-- 加载游戏模块 -->
+		<script type="text/javascript" src="modules/state.js"></script>
+		<script type="text/javascript" src="modules/mission.js"></script>
+		<script type="text/javascript" src="modules/cope.js"></script>
+		<script type="text/javascript" src="modules/arm.js"></script>
+		<script type="text/javascript" src="modules/toolbar.js"></script>
+		<script type="text/javascript" src="modules/runs.js"></script>
+		<script type="text/javascript" src="modules/hello.js"></script>
+		<!-- 初始化游戏 -->
+		<script type="text/javascript" src="armgo.js"></script>
+
 	</div>
-	
-	<!-- 加载配置文件 -->
-	<script type="text/javascript" src="modules/json2.js"></script>
-	<script type="text/javascript" src="modules/common.js"></script>
-	<script type="text/javascript" src="conf.js"></script>
-	<!-- 加载游戏模块 -->
-	<script type="text/javascript" src="modules/state.js"></script>
-	<script type="text/javascript" src="modules/mission.js"></script>
-	<script type="text/javascript" src="modules/cope.js"></script>
-	<script type="text/javascript" src="modules/arm.js"></script>
-	<script type="text/javascript" src="modules/toolbar.js"></script>
-	<script type="text/javascript" src="modules/runs.js"></script>
-	<script type="text/javascript" src="modules/maps.js"></script>
-	<script type="text/javascript" src="modules/hello.js"></script>
-	<!-- 初始化游戏 -->
-	<script type="text/javascript" src="armgo.js"></script>
-	
-</div>
 
 </body>
 	

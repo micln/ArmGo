@@ -59,6 +59,9 @@ function ARM(){
 			}
 		}
 	}
+	this.died = function(){
+		alert("Destroyed!\n通过下方按钮“重新开始”")
+	}
 	this.right = function(v,ii){
 		var i = 6;
 		while ( i>0 && state.box[this.r-1][i-1] != 0 ) i--;
@@ -76,7 +79,10 @@ function ARM(){
 	}
 	this.up = function(v,i){
 		if (!this.running) return;
-		if ( this.r == 1 ) return ;
+		if ( this.r == 1 ) {
+			this.died();
+			return ;
+		}
 		this.y -= this.speed ;
 		if (this.y > (state.y+conf.cell.y*(this.r-2)*2) ) {
 			setTimeout('arm.up('+v+','+i+')',conf.Fz);
@@ -126,7 +132,6 @@ function ARM(){
 			setTimeout('checkAns()',200);
 		}
 	}
-
 
 	this.init();
 }

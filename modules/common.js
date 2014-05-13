@@ -5,12 +5,14 @@ var cxt = c.getContext("2d");
 var ctime;				// arm Go!
 var Mission;			// Mission Canvas Object
 var ns = eid("ns");		// debug message
+var costime;
 
 //	全局函数；公共组件
 
 function checkAns(){
 	if ( state.box.toString() == Goal[Mission].toString()){
-		alert("WIN");
+		//alert("WIN");
+		message("WIN<hr>"+costime*conf.Fz/1000+"s");
 		runs.finish();
 	//	missionList.show();
 	}
@@ -56,6 +58,8 @@ function drawGoal(){
 }
 
 function flashMap(x){
+	costime ++;
+	ns.innerHTML = "Time: " + Math.floor(costime * conf.Fz / 1000) + "s";
 //	console.log(Date());
 	state.draw();
 	if ( x == 1 ){		// 首次进入游戏，需要绘制静态背景
@@ -66,19 +70,29 @@ function flashMap(x){
 }
 
 function getClickId(e,x,y,r,c,m){	// ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
+	//alert(e.clientX+","+e.clientY);
 	var i = Math.floor(( e.clientX - eid("canvas").offsetLeft - x ) / r ) + 1;
 	var j = Math.floor(( e.clientY - eid("canvas").offsetTop - y ) / c )+ 1;
+	//alert(i+','+j);
 	eid("canvas").style.cursor = 'default';
 	var ttt = (j-1)*m+i ;
+	//alert(ttt);
 	if ( ttt > 0 && ttt <= missionList.tot ){
 		eid("canvas").onclick = function() { null; };
 		return ttt;
 	}else{
-		return getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.c*2,5);
+	//	return getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.c*2,5);
 	}
 }
 
+function message(t){
+	m = eid("msgbox");
+	m.getElementsByTagName("div")[0].innerHTML = t;
+	m.style.display = 'block';
+}
+
 function initLevel(v){
+	costime = 0;
 	Mission = v;
 	state.init(v);
 	arm.init();
@@ -86,6 +100,20 @@ function initLevel(v){
 	flashMap(1);
 	ctime = setInterval('flashMap()',conf.Fz);
 	eid("btn_start").disabled = false;
+}
+
+function preload(){
+	for ( i=0; i<imgfile.length; i++){
+		var a = new Image();
+		a.src = "img/" + imgfile[i] ;
+	}
+}
+preload();
+		
+function showhelp(){
+	txt = "请点击右侧方框选择指令块<br>点击下方“开始游戏”，机械手就可以根据你的指令启动<br><hr>你的目标是把箱子摆成左侧的图案<br>之后你就可以得到你的分数";
+	//alert(txt);
+	message(txt);
 }
 
 function eid(x){
