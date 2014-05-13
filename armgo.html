@@ -2,15 +2,7 @@
 <head>
 	<title>ArmGo</title>
 	<meta charset='utf-8' >
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script type="text/javascript" src="res/maps.js"></script>
-	<script type="text/javascript">
-    	// preload
-		for ( i=0; i<imgfile.length; i++){
-			var a = new Image();
-			a.src = "img/" + imgfile[i] ;
-		}
-    </script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
 </head> 
 <body>
 
@@ -31,18 +23,26 @@
 	<div id="toolslc" ></div>
 	<div id="toolslcifs" ></div>
 	<div id="controlBar">
-		<input id="goMission" name="" type="button" onClick="missionList.show();" value="Mission">
-		<input id="goit" name="" type="button" onClick="runs.readygo();" value="GO">
+		<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="Levels">
+		<input id="btn_Refresh" name="" type="button" onClick="runs.stop();initLevel(Mission);" value="Refresh">
+		<input id="btn_start" name="" type="button" onClick="runs.start();" value="Let's Go!">
 	</div>
 	
-	<script type="text/javascript" src="res/state.js"></script>
-	<script type="text/javascript" src="res/mission.js"></script>
-	<script type="text/javascript" src="res/cope.js"></script>
-	<script type="text/javascript" src="res/arm.js"></script>
-	<script type="text/javascript" src="res/toolbar.js"></script>
-	<script type="text/javascript" src="res/runs.js"></script>
-	<script type="text/javascript" src="res/hello.js"></script>
-	<script type="text/javascript" src="js/armgo.js"></script>
+	<!-- 加载配置文件 -->
+	<script type="text/javascript" src="modules/json2.js"></script>
+	<script type="text/javascript" src="modules/common.js"></script>
+	<script type="text/javascript" src="conf.js"></script>
+	<!-- 加载游戏模块 -->
+	<script type="text/javascript" src="modules/state.js"></script>
+	<script type="text/javascript" src="modules/mission.js"></script>
+	<script type="text/javascript" src="modules/cope.js"></script>
+	<script type="text/javascript" src="modules/arm.js"></script>
+	<script type="text/javascript" src="modules/toolbar.js"></script>
+	<script type="text/javascript" src="modules/runs.js"></script>
+	<script type="text/javascript" src="modules/maps.js"></script>
+	<script type="text/javascript" src="modules/hello.js"></script>
+	<!-- 初始化游戏 -->
+	<script type="text/javascript" src="armgo.js"></script>
 	
 </div>
 
