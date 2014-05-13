@@ -12,6 +12,7 @@ body{
 	height: 240;
 	padding: 0px 10px;
 	display: none;
+	z-index: 10;
 }
 #msgbox>a{
 	position: relative;

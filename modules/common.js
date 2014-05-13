@@ -21,6 +21,10 @@ function checkAns(){
 function drawcell(x,y,v){
 	cxt.fillStyle = color[v];
 	cxt.fillRect(x,y,conf.cell.x,conf.cell.y);
+	cxt.fillStyle = "#7E3902";
+	cxt.fillRect(x+conf.cell.x*0.2,y+conf.cell.y*0.2,conf.cell.x*0.6,conf.cell.y*0.6);
+	// cxt.strokeStyle = "#7E3902";
+	// cxt.strokeRect(x,y,conf.cell.x,conf.cell.y);
 }
 
 function drawBg(){
@@ -49,7 +53,8 @@ function drawGoal(){
 			cxt.fillStyle = color[g[i][j]];
 			cxt.strokeStyle = color[g[i][j]];
 			if ( g[i][j] != 0){
-				cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
+				//cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
+				drawcell(j*conf.cell.x+x,i*conf.cell.y*2+y,g[i][j]);
 			}else {
 				cxt.strokeRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
 			}
