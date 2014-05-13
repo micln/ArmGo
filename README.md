@@ -5,7 +5,7 @@ a game from iPad...
 
 programming the copes to leading the arm to move the cells, achieve the goal state and you can get your scores.
 
-testing page : http://z.cs203.net
+testing page : http://micln.github.io/armgo/
 
 ##Author
 
