@@ -1,6 +1,8 @@
 var conf = {
 	Fz: 25,
 
+	Debug: true,
+
 	cell : {
 		x : 30,
 		y : 30

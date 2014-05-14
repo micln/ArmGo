@@ -98,14 +98,12 @@ function RUNS(){
 		this.obj.style.display = 'none';
 	}
 	this.run = function(v,i){			//	运行(v,i)
-		log("[Try ] " + v + "," + i);
 		if ( !arm.running ) return;			
 		if (this.tasks[v][i] == 0 ){		// 没有要执行的指令
-		//	runs.finish();
-			return;
+			runs.finish();
 		}
 		ns.innerHTML = v + ',' + i ;
-		if ( this.ifs[v][i] != 0 && this.ifs[v][i]!=arm.hand ){	//	条件不满足时跳过这块
+		if ( this.ifs[v][i] != 0 && this.ifs[v][i]!=arm.hand ){	//	条件不满足
 			arm.done(v,i);
 			return;
 		}

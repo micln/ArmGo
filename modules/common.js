@@ -90,6 +90,10 @@ function getClickId(e,x,y,r,c,m){	// ID of (e.x,e.y) in Map: start(x,y),per(r,c)
 	}
 }
 
+function log(t){
+	if ( conf.Debug == true ) console.log(t);
+}
+
 function message(t){
 	m = eid("msgbox");
 	m.getElementsByTagName("div")[0].innerHTML = t;
