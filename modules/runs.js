@@ -101,14 +101,13 @@ function RUNS(){
 		log("[Try ] " + v + "," + i);
 		if ( !arm.running ) return;			
 		if (this.tasks[v][i] == 0 ){		// 没有要执行的指令
-		//	runs.finish();
 			return;
 		}
-		ns.innerHTML = v + ',' + i ;
 		if ( this.ifs[v][i] != 0 && this.ifs[v][i]!=arm.hand ){	//	条件不满足时跳过这块
 			arm.done(v,i);
 			return;
 		}
+		coststep ++;
 		switch( this.tasks[v][i] ){
 			case 1 :
 				arm.right(v,i);
@@ -142,6 +141,8 @@ function RUNS(){
 		eid("btn_start").disabled = true;
 		state.init(Mission);
 		arm.running = true;
+		costime = 0;
+		coststep = 0;
 		this.run(0,0);
 	}
 	this.finish = function(){

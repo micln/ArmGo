@@ -30,7 +30,7 @@ function STATE(){
 		var g = state.box;
 		
 		// clear
-		cxt.fillStyle = color[3];
+		cxt.fillStyle = color[0];
 		cxt.fillRect(arm.leftz-10,arm.topz,conf.cell.x*7+30,conf.cell.y*12);
 		
 		// holder

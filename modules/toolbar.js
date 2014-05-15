@@ -21,7 +21,7 @@ function TOOLBAR(){
 			newson.setAttribute('toolid',i);
 			this.obj.appendChild(newson);
 		}
-		for ( i=0; i<3; i++){
+		for ( i=0; i<color.length; i++){
 			var newson = document.createElement("div");
 			newson.className = "toolifs";
 			newson.style.backgroundColor = color[i];

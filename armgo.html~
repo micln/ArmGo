@@ -30,7 +30,7 @@
 		<canvas id="canvas" width="900px" height="480px"></canvas>
 		<div id="runs"></div>
 		<div id="toolslc">
-			选择指令<hr>
+			<span style='clear:both'>选择指令<span><hr>
 		</div>
 		<div id="toolslcifs" ></div>
 		<div id="controlBar">

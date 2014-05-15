@@ -4,6 +4,7 @@ var c = eid("canvas");
 var cxt = c.getContext("2d");
 var ctime;				// arm Go!
 var Mission;			// Mission Canvas Object
+var ns = eid("ns");		// debug message
 var costime;
 var coststep;
 
@@ -69,6 +70,7 @@ function drawGoal(){
 
 function flashMap(x){		//	渲染图像
 	costime ++;
+	ns.innerHTML = "Time: " + Math.floor(costime * conf.Fz / 1000) + "s";
 //	console.log(Date());
 	state.draw();
 	if ( x == 1 ){		// 首次进入游戏，需要绘制静态背景
@@ -124,7 +126,7 @@ function preload(){
 preload();
 		
 function showhelp(){
-	txt = "";
+	txt = "请点击右侧方框选择指令块<br>点击下方“开始游戏”，机械手就可以根据你的指令启动<br><hr>你的目标是把箱子摆成左侧的图案<br>之后你就可以得到你的分数";
 	//alert(txt);
 	message(txt);
 }
