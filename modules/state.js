@@ -11,11 +11,12 @@ function STATE(){
 	this.x = conf.goalm.x + conf.cell.x * 8.5;
 	this.y = 100;
 	this.box  = [];
+	for ( i=0; i<6; i++){ this.box[i] = [];	}
 	this.init = function(v){
 		for ( i=0; i<6; i++){
-			state.box[i] = [];
+			this.box[i] = [];
 			for ( j=0; j<6; j++){
-				state.box[i][j] = startM[Mission][i][j];
+				this.box[i][j] = startM[Mission][i][j];
 			}
 		}
 		arm.init();
@@ -24,6 +25,7 @@ function STATE(){
 	this.clear = function(){
 		
 	}
+
 	this.draw =function(){
 		var x = this.x;
 		var y = this.y;
@@ -58,6 +60,5 @@ function STATE(){
 
 		arm.draw();
 	}
-
 
 }

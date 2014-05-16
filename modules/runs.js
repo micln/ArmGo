@@ -33,11 +33,14 @@ function RUNS(){
 	this.y = state.y - conf.cell.y + cope.height * 0.7;
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
-	this.init = function(xxx){
+	this.clear = function(){
 		this.tasks=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 		this.ifs=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 		this.stack = [];
-		this.store.load();
+	}
+	this.clear();
+	this.init = function(xxx){
+		this.stop();
 		if (xxx == 1 ){
 			for ( i=0; i<4; i++){
 				for ( j=1; j<9; j++){
@@ -138,15 +141,15 @@ function RUNS(){
 	}
 	this.start = function(){
 		this.store.save();
-		eid("btn_start").disabled = true;
-		state.init(Mission);
+		initLevel(Mission);
+		this.store.load();
 		arm.running = true;
 		costime = 0;
 		coststep = 0;
 		this.run(0,0);
 	}
 	this.finish = function(){
-		clearTimeout(ctime);
+		clearFlash();
 		arm.halt();
 	}
 	this.stop = function(){
@@ -169,6 +172,7 @@ function RUNS(){
 					that.ifs = res;
 				}
 			}
+			runs.draw();
 		}
 	}
 

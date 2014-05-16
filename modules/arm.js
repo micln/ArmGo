@@ -113,11 +113,12 @@ function ARM(){
 		}
 	}
 	this.goRight = function(x,v,ii){
+		if (!this.running) return;
 		this.x 	+= this.speed ;
 		if ( this.x + (this.hand > 0)*conf.cell.x  < x ){
 			setTimeout('arm.goRight('+x+','+v+','+ii+')',conf.Fz);
 			//sleep(conf.Fz);this.goRight(x);
-		}if ( this.x + (this.hand > 0)*conf.cell.x  == x ){
+		}else if ( this.x + (this.hand > 0)*conf.cell.x  == x ){
 			
 			var i = 6;
 			while ( i>0 && state.box[this.r-1][i-1] != 0 ) i--;	// i <- first conf.cell	

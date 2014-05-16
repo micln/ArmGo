@@ -33,15 +33,13 @@
 			选择指令<hr>
 		</div>
 		<div id="toolslcifs" ></div>
-		<div id="controlBar">
-			<hr>
-			<input id="" style='display:initial' name="" type="button" onClick="showhelp();" value="查看帮助 (Help)">
-			<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择 (Levels)">
-			<hr>
-			<input id="btn_Refresh" name="" type="button" onClick="runs.stop();initLevel(Mission);" value="重新开始 (Refresh)">
-			<input id="btn_start" name="" type="button" onClick="runs.start();" value="ArmGo !">
-			<input id="btn_Clear" name="" type="button" onClick="runs.stop();initLevel(Mission);" value="清除已选 (Clear)">
-			<hr>
+		<div id="controlBar" >
+		<!--	<input id="" style='display:initial' name="" type="button" onClick="showhelp();" value="查看帮助 (Help)"> -->
+			<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择">
+			<input id="btn_Refresh" name="" type="button" onClick="initLevel(Mission);" value="重新开始">
+			<input id="btn_start" name="" type="button" onClick="runs.start();" value="Go!">
+			<input id="btn_save" name="" type="button" onClick="runs.store.save();" value="Save">
+			<input id="btn_load" name="" type="button" onClick="runs.store.load();" value="Load">
 		</div>
 		
 		

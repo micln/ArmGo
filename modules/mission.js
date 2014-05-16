@@ -13,10 +13,13 @@ function MISSIONLIST(){
 	this.y = 150;
 	this.r = 80;
 	this.c = 80;
+	this.has = true;
 	this.show = function(){
-		clearTimeout(ctime);
+		this.has = true;
+		for ( i=0;i<4;i++) btns[i].style.display='none';
 		toolbar.hide();
 		runs.hide();
+		runs.stop();
 		cxt.fillStyle = '#000';
 		cxt.fillRect(0,0,c.width,c.height);
 		cxt.fillStyle = '#fff';
@@ -32,8 +35,10 @@ function MISSIONLIST(){
 		}
 		c.style.cursor= 'hand';
 		c.onclick = function(e){
+			missionList.has = false;
 			missionList.selectMission(e)
 		}
+		//setTimeout('missionList.show()',conf.Fz/2);
 	}
 	this.selectMission = function(e){
 		initLevel(getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.c*2,5));

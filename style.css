@@ -26,8 +26,13 @@ body{
 	padding: 5px 20px;
 }
 
+#helptxt{
+	display: none;
+}
+
 canvas{
 	border: 1px solid #000;
+	margin-bottom: 200px;
 }
 
 #runs{
@@ -94,14 +99,26 @@ input[type='button']{
 	cursor: hand;
 	height: 35px;
 	text-align: center;
-	border: 1px solid;
-	background: #fff;
-	border-radius: 5px;
+	border: 1px solid #C7C7C7;
+	background: linear-gradient(to bottom,#FFFFFF 0,#B6B6B6 100%);
+	border-radius: 3px;
+	position: absolute;
 }
 
 input[type='button']:hover{
 	background: #bbb;
 }
+
 #btn_start{
-	
+	background: linear-gradient(to bottom,#42B600 0,#034700 100%);
+	width: 120px;
+	height: 80px;
+	color: #fff;
+	font-size: 40px;
+	border-radius: 15px;
+	border: 0px;
+}
+
+#btn_start:hover{
+	background: #034700;
 }

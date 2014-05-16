@@ -7,6 +7,13 @@ var Mission;			// Mission Canvas Object
 var costime;
 var coststep;
 
+var btn_start = eid("btn_start");
+var btn_Mission = eid("btn_goMission");
+var btn_Refresh = eid("btn_Refresh");
+var btn_save = eid("btn_save");
+var btn_load = eid("btn_load");
+var btns = [btn_start,btn_load,btn_save,btn_Refresh,btn_Refresh];
+
 //	全局函数；公共组件
 
 function checkAns(){
@@ -68,14 +75,19 @@ function drawGoal(){
 }
 
 function flashMap(x){		//	渲染图像
+	if ( missionList.has ) return;
 	costime ++;
-//	console.log(Date());
 	state.draw();
 	if ( x == 1 ){		// 首次进入游戏，需要绘制静态背景
 		drawBg();
 		drawGoal();
 		runs.draw();
 	}
+}
+
+function clearFlash(){
+//	log(ctime);
+	clearInterval(ctime);
 }
 
 function getClickId(e,x,y,r,c,m){	// ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
@@ -105,14 +117,29 @@ function message(t){
 }
 
 function initLevel(v){
+	for ( i=0;i<4;i++) btns[i].style.display='block';
 	Mission = v;
 	costime = 0;
 	state.init(v);
-	arm.init();
-	runs.init();
+	arm.halt();
+	runs.clear();
 	flashMap(1);
-	ctime = setInterval('flashMap()',conf.Fz);
-	eid("btn_start").disabled = false;
+	ctime = setInterval(flashMap,conf.Fz);
+
+	btn_start.style.top = c.offsetTop + c.offsetHeight - btn_start.offsetHeight - 10;
+	btn_start.style.left = c.offsetLeft + c.offsetWidth - btn_start.offsetWidth - 150;
+
+	btn_Mission.style.top = c.offsetTop + 10;
+	btn_Mission.style.left = c.offsetLeft + c.offsetWidth - btn_Mission.offsetWidth - 10;
+
+	btn_Refresh.style.top = c.offsetTop + c.offsetHeight - btn_Refresh.offsetHeight - 10;
+	btn_Refresh.style.left = c.offsetLeft + c.offsetWidth - btn_Refresh.offsetWidth - 300;
+
+	btn_save.style.top = btn_load.style.top =  btn_Refresh.offsetTop;
+	btn_save.style.left = btn_start.offsetLeft + btn_start.offsetWidth + 10;
+	btn_load.style.left = btn_save.offsetLeft + btn_save.offsetWidth + 10;
+
+//	eid("controlBar").style.display = 'initial';
 }
 
 function preload(){
