@@ -13,4 +13,6 @@ window.onload = function(){
 	c.onclick = function(){	
 		missionList.show();
 	}
+
+	//initLevel(1);
 }

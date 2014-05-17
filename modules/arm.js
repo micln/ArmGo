@@ -13,7 +13,6 @@ function ARM(){
 	this.bottonz = state.y + conf.cell.y * 12;
 	this.speed = 6;
 	this.running = false;
-	this.color = '#00ff00';
 	this.init = function(){
 		this.running = false;
 		this.x = this.leftz;
@@ -28,14 +27,39 @@ function ARM(){
 		cxt.beginPath();
 		cxt.moveTo(x,y);
 		cxt.lineTo(x,y+30);
-		cxt.lineTo(x-2,y+30);
+
+		cxt.lineTo(x+10,y+30);
+		cxt.lineTo(x+1,y+30+4);
+		cxt.lineTo(x-2,y+30+4);
+		cxt.lineTo(x-4,y+30);
+
+		cxt.lineTo(x-3,y+30);
 		cxt.lineTo(x-6,y+15);
-		cxt.lineTo(x-2,y);
+		cxt.lineTo(x-3,y);
+
+		cxt.lineTo(x-4,y);
+		cxt.lineTo(x-2,y-4);
+		cxt.lineTo(x+1,y-4);
+		cxt.lineTo(x+10,y);
+
 		cxt.closePath();
-		cxt.fillStyle = this.color;
+		cxt.fillStyle = '#00ff00';		// 连接杆
 		cxt.fill();
-		cxt.fillRect(240,y+11,x-240,8);
-		cxt.fillRect(240,state.y-40,6,400);
+		cxt.fillRect(240,y+12,x-240,6);
+
+		// 柱子
+		var gradient=cxt.createLinearGradient(240,0,246,0);
+		gradient.addColorStop("0","#ccc");
+		gradient.addColorStop("0.7","#555");
+		gradient.addColorStop("1.0","#999");
+		cxt.fillStyle = gradient;
+		cxt.fillRect(240,state.y-40,6,480);
+
+		// 连接点
+		cxt.fillStyle = '#00ff00';	// 连接点 + 爪子
+		cxt.arc(243,this.y+15,5,0,2*Math.PI);
+		cxt.fill();
+		
 		if ( this.hand != 0 ) drawcell(this.x,this.y,this.hand);
 	}
 	this.halt = function(){
@@ -137,7 +161,7 @@ function ARM(){
 			}
 			
 			this.left(v,ii);
-			setTimeout('checkAns()',200);
+			setTimeout(checkAns,200);
 		}
 	}
 

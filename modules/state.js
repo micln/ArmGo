@@ -33,7 +33,7 @@ function STATE(){
 		
 		// clear
 		cxt.fillStyle = color[0];
-		cxt.fillRect(arm.leftz-10,arm.topz,conf.cell.x*7+30,conf.cell.y*12);
+		cxt.fillRect(arm.leftz-15,arm.topz-10,conf.cell.x*7+30,conf.cell.y*12);
 		
 		// holder
 		cxt.fillStyle = "#5E4925";
