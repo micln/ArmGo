@@ -14,5 +14,4 @@ window.onload = function(){
 		missionList.show();
 	}
 
-	//initLevel(1);
 }
