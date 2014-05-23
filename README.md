@@ -7,10 +7,10 @@ Programming the copes to leading the arm to move the cells, achieve the goal sta
 
 Testing page : http://micln.github.io/armgo/
 
-##Author
+###Author
 
-- [micln](https://github.com/micln) zhrlnt[X]gmail.com
+[micln](https://github.com/micln) zhrlnt[X]gmail.com
 
-##Thanks My Friend
+####Thanks My Friend
 
-- [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
+[pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
