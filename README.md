@@ -11,7 +11,7 @@ Testing page : http://micln.github.io/armgo/
 
 [micln](https://github.com/micln) zhrlnt[X]gmail.com
 
-####Thanks My Friend
+####Thanks My Friends
 
 - [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
 - Guopenghua
