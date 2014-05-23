@@ -114,6 +114,7 @@ function message(t){
 	m = eid("msgbox");
 	m.getElementsByTagName("div")[0].innerHTML = t;
 	m.style.display = 'block';
+	m.style.left = ( document.body.clientWidth - m.offsetWidth ) / 2 ;
 }
 
 function initLevel(v){

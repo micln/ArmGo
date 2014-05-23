@@ -1,9 +1,12 @@
 body{
 	text-align: center;
+	overflow: hidden;
 }
+
 #game{
 
 }
+
 #msgbox{
 	position: absolute;
 	background: #E9E9E9;
@@ -17,6 +20,7 @@ body{
 	display: none;
 	z-index: 10;
 }
+
 #msgbox>a{
 	position: relative;
 	top: 200;

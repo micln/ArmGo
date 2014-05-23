@@ -1,10 +1,28 @@
 //
 // Class 机械臂
 //@Randox
-/*  attribute ：
+/*  attribute ：{
+		(leftz,topz)
+		speed
+		running
+
+	}
 		
 
-	method :
+	method : {
+		init()
+		draw()
+
+		up()
+		down()
+		left()
+		right()
+		GoRight()		// Catch()
+
+		Done()
+		Halt()
+		Died()
+	}
 */
 //
 function ARM(){
