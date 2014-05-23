@@ -1,7 +1,7 @@
 ArmGo
 =====
 
-a game from iPad...
+a game for programming learner
 
 programming the copes to leading the arm to move the cells, achieve the goal state and you can get your scores.
 
