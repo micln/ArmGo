@@ -13,4 +13,6 @@ Testing page : http://micln.github.io/armgo/
 
 ####Thanks My Friend
 
-[pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
+- [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
+- Guopenghua
+- Xuhuajie
