@@ -1,0 +1,128 @@
+body{
+	text-align: center;
+	overflow: hidden;
+}
+
+#game{
+
+}
+
+#msgbox{
+	position: absolute;
+	background: #E9E9E9;
+	border: 6px solid #B8B8B8;
+	border-radius: 3px;
+	left: 500;
+	top: 120px;
+	width: 366;
+	height: 240;
+	padding: 0px 10px;
+	display: none;
+	z-index: 10;
+}
+
+#msgbox>a{
+	position: relative;
+	top: 200;
+	border: 1px solid #000;
+	border-radius: 5px;
+	cursor: hand;
+	padding: 5px 20px;
+}
+
+#helptxt{
+	display: none;
+}
+
+canvas{
+	border: 1px solid #000;
+	margin-bottom: 200px;
+}
+
+#runs{
+	position: absolute;
+}
+
+.toola{
+	float: left;
+}
+
+#toolslc{
+	display: none;
+	position: absolute;
+	border:	4px solid #1b43e1;
+	background-color: #fff;
+	width: 143px;
+	padding-left: 8px;
+	padding-top: 8px;
+}
+
+#toolslcifs{
+	display: none;
+	position: absolute;
+	border:	4px solid #1b43e1;
+	background-color: #fff;
+	width: 150px;
+	height: 110px;
+	padding-left: 8px;
+	padding-top: 8px;
+}
+
+#toolslcifs .toolifs{
+	float: left;
+	border: 1px solid;
+	margin: 3px;
+}
+
+.toolifs{
+	width: 35px;
+	height: 24.5px;
+	cursor: hand;
+}
+
+.tool{
+	float: left;
+	width: 35px;
+	height: 35px;
+	cursor: hand;
+}
+
+#toolslc .tool{
+	margin: 5px;
+}
+
+.tool:hover{
+	outline: 4px solid #00C7FF;
+}
+
+.toolifs:hover{
+	outline: 4px solid #ff8100;
+}
+
+input[type='button']{
+	cursor: hand;
+	height: 35px;
+	text-align: center;
+	border: 1px solid #C7C7C7;
+	background: linear-gradient(to bottom,#FFFFFF 0,#B6B6B6 100%);
+	border-radius: 3px;
+	position: absolute;
+}
+
+input[type='button']:hover{
+	background: #bbb;
+}
+
+#btn_start{
+	background: linear-gradient(to bottom,#42B600 0,#034700 100%);
+	width: 120px;
+	height: 80px;
+	color: #fff;
+	font-size: 40px;
+	border-radius: 15px;
+	border: 0px;
+}
+
+#btn_start:hover{
+	background: #034700;
+}
