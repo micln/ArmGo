@@ -23,7 +23,7 @@ http://armgo.coding.io
 - Xuhuajie
 - Guopenghua
 
-### 其它说明
+### Others
 
 
 
