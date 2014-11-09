@@ -5,7 +5,9 @@ A game for program learner
 
 Programming the copes to leading the arm to move the cells, achieve the goal state and you can get your scores.
 
-Testing page : http://armgo.coding.io
+## Demo 
+
+http://armgo.coding.io
 
 ###Author
 
@@ -18,6 +20,13 @@ Testing page : http://armgo.coding.io
 ####Thanks My Friends
 
 - [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
-- Guopenghua
 - Xuhuajie
+- Guopenghua
+
+### 其它说明
+
+
+
+
+
 
