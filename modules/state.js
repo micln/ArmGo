@@ -1,5 +1,5 @@
 //
-// Class 游戏显示区域
+// Class 游戏中心，箱子显示区域
 //@Randox
 /*  attribute ：
 		
@@ -8,10 +8,15 @@
 */
 //
 function STATE(){
+	
 	this.x = conf.goalm.x + conf.cell.x * 8.5;
 	this.y = 100;
+	
+	//  .box    表示当前游戏中箱子的状态
 	this.box  = [];
 	for ( i=0; i<6; i++){ this.box[i] = [];	}
+	
+	//  初始化箱子显示区的状态
 	this.init = function(v){
 		for ( i=0; i<6; i++){
 			this.box[i] = [];
@@ -22,6 +27,7 @@ function STATE(){
 		arm.init();
 		this.draw();
 	}
+	
 	this.clear = function(){
 		
 	}
@@ -31,11 +37,11 @@ function STATE(){
 		var y = this.y;
 		var g = state.box;
 		
-		// clear
+		// clear    清空舞台
 		cxt.fillStyle = color[0];
 		cxt.fillRect(arm.leftz-15,arm.topz-10,conf.cell.x*7+30,conf.cell.y*12);
 		
-		// holder
+		// holder   支架
 		cxt.fillStyle = "#5E4925";
 		cxt.fillRect(this.x+conf.cell.x*6,this.y-35,15,500);
 		for ( i=1; i<7; i++){
@@ -45,8 +51,10 @@ function STATE(){
 		//	cell
 		for ( i=0; i<6; i++ ){
 			for ( j=0; j<6; j++){
+				
 				cxt.fillStyle = color[g[i][j]];
 				cxt.strokeStyle = color[g[i][j]];
+				
 				if ( g[i][j] != 0){
 					// cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
 					// cxt.fillStyle = "#7E3902";
@@ -57,7 +65,8 @@ function STATE(){
 				}
 			}
 		}
-
+		
+		//  绘制机械臂
 		arm.draw();
 	}
 

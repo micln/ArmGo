@@ -14,6 +14,7 @@ function MISSIONLIST() {
 	this.r = 80;
 	this.c = 80;
 	this.has = true;
+	
 	this.show = function() {
 		this.has = true;
 		for (i = 0; i < 4; i++) btns[i].style.display = 'none';
@@ -40,6 +41,7 @@ function MISSIONLIST() {
 		}
 		//setTimeout('missionList.show()',conf.Fz/2);
 	}
+	
 	this.selectMission = function(e) {
 		initLevel(getClickId(e, missionList.x, missionList.y, missionList.r * 2, missionList.c * 2, 5));
 	}
