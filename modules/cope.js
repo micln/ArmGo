@@ -13,6 +13,15 @@ function COPE(v){
 	this.width = 35;
 	this.height = this.width;
 	this.value = v;
+	
+	/**
+	 *  绘制指令块
+	 * 
+	 *  参数：
+	 *      - x,y   :   坐标，相对花布
+	 *      - v     :   指令信息
+	 *      - r,c   :   可选。指令块大小，默认为 this.width
+	 */
 	this.draw = function(x,y,v,r,c){
 		var img = new Image();
 		img.src="img/"+imgfile[v];
@@ -22,6 +31,13 @@ function COPE(v){
 			cxt.drawImage(img,x,y,r,c);
 		}
 	}
+	
+	/**
+	 *  绘制条件指令块
+	 *  
+	 *  参数：
+	 *      同上
+	 */
 	this.drawifs = function(x,y,v){
 		cxt.fillStyle = color[v];
 		cxt.beginPath();

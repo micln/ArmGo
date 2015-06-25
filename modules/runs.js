@@ -33,6 +33,7 @@ function RUNS() {
 	this.y = state.y - conf.cell.y + cope.height * 0.7;
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
+	
 	this.clear = function() {
 		this.tasks = [
 			[0, 0, 0, 0, 0, 0, 0, 0],
@@ -49,14 +50,27 @@ function RUNS() {
 		this.stack = [];
 	}
 	this.clear();
+   
+	/** 
+	 *      初始化指令区
+	 *      参数：
+	 *          - xxx   :   可选。为1时表示第一次初始化，需要绘制相关html元素（工具栏）
+	 * 
+	 */
 	this.init = function(xxx) {
+	    
+	    
 		this.stop();
+		
+		//  draw toolbar
 		if (xxx == 1) {
 			for (i = 0; i < 4; i++) {
 				for (j = 1; j < 9; j++) {
+				    
 					// toolifs + tool
 					var newson = document.createElement('div');
 					newson.className = "toola";
+					
 					// toolifs
 					var newson2 = document.createElement('div');
 					newson2.className = "toolifs";
@@ -65,6 +79,7 @@ function RUNS() {
 						runs.settoolifs(e, this.getAttribute("copeid"));
 					}
 					newson.appendChild(newson2);
+					
 					// tool
 					newson2 = document.createElement('div');
 					newson2.className = 'tool';
@@ -75,6 +90,8 @@ function RUNS() {
 					}
 					newson.appendChild(newson2);
 					this.obj.appendChild(newson);
+					
+					//  第4行只有5个指令
 					if (i == 3 && j == 5) break;
 				}
 			}
@@ -84,14 +101,17 @@ function RUNS() {
 			this.obj.style.display = 'none';
 		}
 	}
+	
 	this.settool = function(e, v) {
 		toolbar.show(e.clientX, e.clientY + 10);
 		toolbar.settool(v);
 	}
+	
 	this.settoolifs = function(e, v) {
 		toolbar.show2(e.clientX, e.clientY + 10);
 		toolbar.settool2(v);
 	}
+	
 	this.draw = function() {
 		for (i = 0; i < 4; i++) {
 			for (j = 1; j < 9; j++) {
@@ -110,45 +130,69 @@ function RUNS() {
 	this.hide = function() {
 		this.obj.style.display = 'none';
 	}
-	this.run = function(v, i) { //	运行(v,i)
+	
+	//	运行(v,i)
+	this.run = function(v, i) { 
+	    
 		log("[Try ] " + v + "," + i);
+		
 		if (!arm.running) return;
-		if (this.tasks[v][i] == 0) { // 没有要执行的指令
+		
+		// 此位置没有要执行的指令
+		if (this.tasks[v][i] == 0) { 
 			return;
 		}
-		if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) { //	条件不满足时跳过这块
+		
+		//  此位置有条件块但不满足条件
+		if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
 			arm.done(v, i);
 			return;
 		}
+		
+		//  执行此位置的代码
+		
 		coststep++;
+		
 		switch (this.tasks[v][i]) {
 			case 1:
 				arm.right(v, i);
 				break;
+				
 			case 2:
 				arm.up(v, i);
 				break;
+				
 			case 3:
 				arm.down(v, i);
 				break;
+				
+			//  Runer_1
 			case 4:
 				this.stack.push([v, i]);
 				this.run(0, 0);
 				break;
+			
+			//  Runer_2
 			case 5:
 				this.stack.push([v, i]);
 				this.run(1, 0);
 				break;
+				
+			//  Runer_3
 			case 6:
 				this.stack.push([v, i]);
 				this.run(2, 0);
 				break;
+				
+			//  Runer_4
 			case 7:
 				this.stack.push([v, i]);
 				this.run(3, 0);
 				break;
 		}
 	}
+	
+	//  启动机器
 	this.start = function() {
 		this.store.save();
 		initLevel(Mission);
@@ -158,30 +202,44 @@ function RUNS() {
 		coststep = 0;
 		this.run(0, 0);
 	}
+	
+	//  机器运行结束
 	this.finish = function() {
 		clearFlash();
 		arm.halt();
 	}
+	
+	//  机器终止运行
 	this.stop = function() {
 		this.finish();
 	}
+	
+	//  持久化组件
 	this.store = {
+	    
 		save: function() {
 			localStorage.setItem("armgo_runs_" + Mission, JSON.stringify(that.tasks));
 			localStorage.setItem("armgo_runs_ifs_" + Mission, JSON.stringify(that.ifs));
 			console.log(localStorage);
 		},
+		
 		load: function() {
+		    
+		    //  尝试获取指令
 			t = "armgo_runs_" + Mission;
 			res = eval("(" + localStorage.getItem(t) + ")");
 			if (res != null) {
 				that.tasks = res;
+				
+				//  尝试获取ifs指令
 				t = "armgo_runs_ifs_" + Mission;
 				res = eval("(" + localStorage.getItem(t) + ")");
 				if (res != null) {
 					that.ifs = res;
 				}
 			}
+		    
+		    //  绘制指令区
 			runs.draw();
 		}
 	}

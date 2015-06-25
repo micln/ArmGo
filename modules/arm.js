@@ -78,7 +78,9 @@ function ARM() {
 		cxt.arc(243, this.y + 15, 5, 0, 2 * Math.PI);
 		cxt.fill();
 
-		if (this.hand != 0) drawcell(this.x, this.y, this.hand);
+		if (this.hand != 0) {
+		    drawcell(this.x, this.y, this.hand);
+		}
 	}
 	this.halt = function() {
 		arm.init();

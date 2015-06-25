@@ -1,7 +1,7 @@
 var conf = {
 	Fz: 25,
 
-	Debug: false,
+	Debug: true,
 
 	cell: {
 		x: 30,
