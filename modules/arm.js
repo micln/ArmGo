@@ -107,6 +107,9 @@ function ARM() {
 		log("[Done] " + v + ',' + i);
 		
 		if (v == undefined) return;
+
+		//	此块有循环，继续执行
+		
 		
 		// 右块正常，执行(v,i+1)
 		if (runs.tasks[v][i + 1] != 0) {

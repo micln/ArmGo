@@ -48,4 +48,16 @@ function COPE(v){
 		cxt.closePath();
 		cxt.fill();
 	}
+
+	/**
+	 *  绘制循环的数字
+	 *  
+	 *  参数：
+	 *      同上
+	 */
+	this.drawLoopNum = function(x,y,v){
+		cxt.fillStyle = "#fff";
+		cxt.font = "18px 'monospace'";
+		cxt.fillText(v,x,y);
+	}
 }

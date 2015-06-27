@@ -47,6 +47,12 @@ function RUNS() {
 			[0, 0, 0, 0, 0, 0, 0, 0],
 			[0, 0, 0, 0, 0, 0, 0, 0]
 		];
+		this.loops = [
+			[1, 1, 1, 1, 1, 1, 1, 1],
+			[1, 1, 1, 1, 1, 1, 1, 1],
+			[1, 1, 1, 1, 1, 1, 1, 1],
+			[1, 1, 1, 1, 1, 1, 1, 1]
+		]
 		this.stack = [];
 	}
 	this.clear();
@@ -115,12 +121,22 @@ function RUNS() {
 	this.draw = function() {
 		for (i = 0; i < 4; i++) {
 			for (j = 1; j < 9; j++) {
-				cope.draw(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.tasks[i][j - 1], cope.width, cope.height);
+
+				//	绘制指令块
+				cope.draw(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.tasks[i][j - 1]);
+				
+				// 绘制条件指令块
 				if (this.ifs[i][j - 1] != 0) {
 					cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.ifs[i][j - 1]);
 				} else {
 					cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, 0);
 				}
+
+				// 绘制循环数字
+				if ( this.loops[i][j-1] != 1) {
+					cope.drawLoopNum(this.x + cope.width * (j+0.3), this.y + cope.height * i * 1.7,this.loops[i][j-1]);
+				}
+
 				if (i == 3 && j == 5) break;
 			}
 			cope.draw(this.x, this.y + cope.height * i * 1.7, i + 4, cope.width, cope.height);
@@ -220,6 +236,9 @@ function RUNS() {
 		save: function() {
 			localStorage.setItem("armgo_runs_" + Mission, JSON.stringify(that.tasks));
 			localStorage.setItem("armgo_runs_ifs_" + Mission, JSON.stringify(that.ifs));
+			localStorage.setItem("armgo_runs_loops_" + Mission, JSON.stringify(that.loops));
+			
+			console.log("Save:");
 			console.log(localStorage);
 		},
 		
@@ -236,6 +255,13 @@ function RUNS() {
 				res = eval("(" + localStorage.getItem(t) + ")");
 				if (res != null) {
 					that.ifs = res;
+				}
+
+				//	尝试获取loops指令
+				t = "armgo_runs_loops_" + Mission;
+				res = eval("(" + localStorage.getItem(t) + ")");
+				if (res != null) {
+					that.loops = res;
 				}
 			}
 		    
