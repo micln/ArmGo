@@ -225,10 +225,10 @@ function ARM() {
 			if (i > 0 && this.hand > 0) {
 				state.box[this.r - 1][i - 1] = this.hand;
 				this.hand = 0;
-			} else
+			}
 
 			// catch
-			if (i < 6 && this.hand == 0 && state.box[this.r - 1][i] != 0) {
+			else if (i < 6 && this.hand == 0 && state.box[this.r - 1][i] != 0) {
 				this.hand = state.box[this.r - 1][i];
 				state.box[this.r - 1][i] = 0;
 			}
@@ -237,7 +237,7 @@ function ARM() {
 		    //  此过程为异步操作，不影响下面的代码
 			this.left(v, ii);
 			
-			//  同时检查答案，延时200ms只是为了避免突兀
+			//  同时检查答案，延时200ms只是为了避免弹出框太突兀
 			setTimeout(checkAns, 200);
 		}
 	}

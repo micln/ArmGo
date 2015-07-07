@@ -23,8 +23,12 @@ function checkAns() {
 				costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0);
 			}
 		}
+		
 		score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
+		
 		message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>Score: " + score);
+		
+		//	通知游戏结束
 		runs.finish();
 	}
 }
@@ -89,18 +93,25 @@ function clearFlash() {
 	clearInterval(ctime);
 }
 
-function getClickId(e, x, y, r, c, m) { // ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
+// ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
+function getClickId(e, x, y, r, c, m) { 
+	
 	//alert(e.clientX+","+e.clientY);
 	var i = Math.floor((e.clientX - eid("canvas").offsetLeft - x) / r) + 1;
 	var j = Math.floor((e.clientY - eid("canvas").offsetTop - y) / c) + 1;
 	//alert(i+','+j);
+	
 	eid("canvas").style.cursor = 'default';
 	var ttt = (j - 1) * m + i;
 	//alert(ttt);
+	
 	if (ttt > 0 && ttt <= missionList.tot) {
+
+		//	清除因选关卡而设置的点击事件
 		eid("canvas").onclick = function() {
 			null;
 		};
+
 		return ttt;
 	} else {
 		//	return getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.c*2,5);
@@ -108,7 +119,8 @@ function getClickId(e, x, y, r, c, m) { // ID of (e.x,e.y) in Map: start(x,y),pe
 }
 
 function log(t) {
-	if (conf.Debug == true) console.log(t);
+	if (conf.Debug == true) 
+		console.log(t);
 }
 
 function message(t) {
@@ -117,6 +129,7 @@ function message(t) {
 	m.style.display = 'block';
 	m.style.left = (document.body.clientWidth - m.offsetWidth) / 2;
 }
+
 
 function initLevel(v) {
 	for (i = 0; i < 4; i++) btns[i].style.display = 'block';
@@ -150,7 +163,7 @@ function preload() {
 		a.src = "img/" + imgfile[i];
 	}
 }
-preload();
+setTimeout(preload,0);
 
 function showhelp() {
 	txt = "";

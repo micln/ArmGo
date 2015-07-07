@@ -52,7 +52,16 @@ function RUNS() {
 			[1, 1, 1, 1, 1, 1, 1, 1],
 			[1, 1, 1, 1, 1, 1, 1, 1],
 			[1, 1, 1, 1, 1, 1, 1, 1]
-		]
+		];
+
+		/** 
+		 *      Stack
+		 *      
+		 *          [[x,y,f],...]
+		 *				(x,y)	: 	Postion
+		 *				f 		: 	Loops
+		 * 
+		 */
 		this.stack = [];
 	}
 	this.clear();
@@ -184,25 +193,25 @@ function RUNS() {
 				
 			//  Runer_1
 			case 4:
-				this.stack.push([v, i]);
+				this.stack.push([v, i, this.loops[v][i]]);
 				this.run(0, 0);
 				break;
 			
 			//  Runer_2
 			case 5:
-				this.stack.push([v, i]);
+				this.stack.push([v, i, this.loops[v][i]]);
 				this.run(1, 0);
 				break;
 				
 			//  Runer_3
 			case 6:
-				this.stack.push([v, i]);
+				this.stack.push([v, i, this.loops[v][i]]);
 				this.run(2, 0);
 				break;
 				
 			//  Runer_4
 			case 7:
-				this.stack.push([v, i]);
+				this.stack.push([v, i, this.loops[v][i]]);
 				this.run(3, 0);
 				break;
 		}
