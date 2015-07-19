@@ -24,9 +24,12 @@ function checkAns() {
 			}
 		}
 		
-		score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
+		var score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
+		var scoretxt = '<span class="scorestar">★</span>'
+		if (score==2) scoretxt+=scoretxt;
+		if (score==3) scoretxt+=scoretxt+scoretxt;
 		
-		message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>Score: " + score);
+		message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>" + scoretxt);
 		
 		//	通知游戏结束
 		runs.finish();
@@ -62,7 +65,9 @@ function drawGoal() {
 	// conf.cell
 	cxt.fillStyle = '#000';
 	cxt.font = "30px 'Comic Sans MS'";
-	cxt.fillText("GOAL:", x, y - 20);
+	cxt.fillText("Goal:", x, y - 30);
+	cxt.fillText("Yours:", 300, y - 30);
+	cxt.fillText("Code:", 530, y - 30);
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 6; j++) {
 			cxt.fillStyle = color[g[i][j]];

@@ -41,8 +41,22 @@ function STATE(){
 		cxt.fillStyle = color[0];
 		cxt.fillRect(arm.leftz-15,arm.topz-10,conf.cell.x*7+30,conf.cell.y*12);
 		
+		// cxt.fillStyle = '#000';
+		// cxt.font = "normal normal 100 30px 'Comic Sans MS'";
+		// cxt.fillText("Yours:", this.x, this.y - 20);
+
 		// holder   支架
-		cxt.fillStyle = "#5E4925";
+		// var gradient = cxt.createLinearGradient(this.x, this.y-35, this.x+conf.cell.x*6+15, this.y+500);
+		var gradient = cxt.createLinearGradient(300, 50,  330 ,500);
+		// gradient.addColorStop(0, "#fff");
+		// gradient.addColorStop(0.5, "#000");
+		// gradient.addColorStop(1.0, "#fff");
+		for (var i=0; i<0.9; i+=0.05){
+			gradient.addColorStop(i, "#987335");
+			gradient.addColorStop(i+0.025, "#5E4925");
+		}
+		cxt.fillStyle = gradient;
+		// cxt.fillStyle = "#5E4925";
 		cxt.fillRect(this.x+conf.cell.x*6,this.y-35,15,500);
 		for ( i=1; i<7; i++){
 			cxt.fillRect(this.x,this.y+conf.cell.y*(i*2-1),conf.cell.x*6,15);

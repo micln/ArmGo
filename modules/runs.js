@@ -229,14 +229,15 @@ function RUNS() {
 	}
 	
 	//  机器运行结束
-	this.finish = function() {
+	this.finish = function(x) {
 		clearFlash();
-		arm.halt();
+		if (x!=1)
+			arm.halt();
 	}
 	
 	//  机器终止运行
 	this.stop = function() {
-		this.finish();
+		this.finish(1);
 	}
 	
 	//  持久化组件

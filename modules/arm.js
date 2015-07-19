@@ -48,7 +48,7 @@ function ARM() {
 		this.y = this.topz;
 		this.r = 1;
 		this.hand = 0;
-		this.draw();
+		// this.draw();
 	}
 	
 	this.draw = function() {
