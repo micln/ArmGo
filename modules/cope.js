@@ -18,7 +18,7 @@ function COPE(v){
 	 *  绘制指令块
 	 * 
 	 *  参数：
-	 *      - x,y   :   坐标，相对花布
+	 *      - x,y   :   坐标，相对画布
 	 *      - v     :   指令信息
 	 *      - r,c   :   可选。指令块大小，默认为 this.width
 	 */
@@ -26,7 +26,8 @@ function COPE(v){
 		var img = new Image();
 		img.src="img/"+imgfile[v];
 		if ( r == undefined ){
-			cxt.drawImage(img,x,y,cope.width,cope.height);
+			// cxt.drawImage(img,x,y,cope.width,cope.height);
+			cxt.drawImage(img,x+cope.width*0.02,y+cope.height*0.02,cope.width*0.96,cope.height*0.96);
 		}else {
 			cxt.drawImage(img,x,y,r,c);
 		}

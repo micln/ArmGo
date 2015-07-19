@@ -73,11 +73,11 @@ function ARM() {
 		cxt.lineTo(x + 10, y);
 
 		cxt.closePath();
-		cxt.fillStyle = '#00ff00'; // 连接杆
+		cxt.fillStyle = '#00ff00'; // 连接横杆
 		cxt.fill();
 		cxt.fillRect(240, y + 12, x - 240, 6);
 
-		// 柱子
+		// 支撑立柱
 		var gradient = cxt.createLinearGradient(240, 0, 246, 0);
 		gradient.addColorStop("0", "#ccc");
 		gradient.addColorStop("0.7", "#555");

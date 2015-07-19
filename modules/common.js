@@ -13,6 +13,8 @@ var btn_save = eid("btn_save");
 var btn_load = eid("btn_load");
 var btns = [btn_start, btn_load, btn_save, btn_Refresh, btn_Refresh];
 
+var g_img = {}
+
 //	全局函数；公共组件
 
 function checkAns() {
@@ -45,9 +47,20 @@ function drawcell(x, y, v) {
 	// cxt.strokeRect(x,y,conf.cell.x,conf.cell.y);
 }
 
-function drawBg() {
-	cxt.fillStyle = color[0];
-	cxt.fillRect(0, 0, c.width, c.height);
+function drawBg(x,y,w,h) {
+	// cxt.fillStyle = color[0];
+	// cxt.fillRect(0, 0, c.width, c.height);
+	
+	//	draw all
+	var img = new Image()
+	img.src=g_img['bg'].src;
+	if ( x== undefined) {
+		cxt.drawImage(img,0,0)
+	}else{
+		//	draw(x,y,w,h)
+		cxt.drawImage(img,x,y,w,h,x,y,w,h)
+	}
+	
 }
 
 function drawGoal() {
@@ -56,7 +69,13 @@ function drawGoal() {
 	var g = Goal[Mission];
 
 	// holder
-	cxt.fillStyle = "#5E4925";
+	var gradient = cxt.createLinearGradient(50, 50,  330 ,500);
+	for (var i=0; i<0.9; i+=0.05){
+		gradient.addColorStop(i, "#987335");
+		gradient.addColorStop(i+0.025, "#5E4925");
+	}
+	// cxt.fillStyle = "#5E4925";
+	cxt.fillStyle = gradient;
 	cxt.fillRect(conf.goalm.x + conf.cell.x * 6, conf.goalm.y - 35, 15, 500);
 	for (i = 1; i < 7; i++) {
 		cxt.fillRect(conf.goalm.x, conf.goalm.y + conf.cell.y * (i * 2 - 1), conf.cell.x * 6, 15);
@@ -76,7 +95,7 @@ function drawGoal() {
 				//cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
 				drawcell(j * conf.cell.x + x, i * conf.cell.y * 2 + y, g[i][j]);
 			} else {
-				cxt.strokeRect(j * conf.cell.x + x, i * conf.cell.y * 2 + y, conf.cell.x, conf.cell.y);
+				// cxt.strokeRect(j * conf.cell.x + x, i * conf.cell.y * 2 + y, conf.cell.x, conf.cell.y);
 			}
 		}
 	}
@@ -167,6 +186,11 @@ function preload() {
 		var a = new Image();
 		a.src = "img/" + imgfile[i];
 	}
+	g_img['hello'] = new Image()
+	g_img['hello'].src ='img/hello.jpg'
+
+	g_img['bg'] = new Image()
+	g_img['bg'].src ='img/bg.jpg'
 }
 setTimeout(preload,0);
 

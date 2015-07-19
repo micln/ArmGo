@@ -138,7 +138,8 @@ function RUNS() {
 				if (this.ifs[i][j - 1] != 0) {
 					cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.ifs[i][j - 1]);
 				} else {
-					cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, 0);
+					// cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, 0);
+					drawBg(this.x + cope.width * j, this.y + cope.height * i*1.7 - cope.height*0.7, cope.width, cope.height*0.7)
 				}
 
 				// 绘制循环数字

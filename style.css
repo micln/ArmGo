@@ -43,6 +43,7 @@ canvas{
 	border: 1px solid #919191;
 	box-shadow: 0px 0px 5px 1px #030303;
 	margin-bottom: 800px;
+	background-image: url('img/hello.jpg');
 }
 
 #runs{

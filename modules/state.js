@@ -38,8 +38,11 @@ function STATE(){
 		var g = state.box;
 		
 		// clear    清空舞台
-		cxt.fillStyle = color[0];
-		cxt.fillRect(arm.leftz-15,arm.topz-10,conf.cell.x*7+30,conf.cell.y*12);
+		// cxt.fillStyle = color[0];
+		// cxt.fillRect(arm.leftz-15,arm.topz-10,conf.cell.x*7+30,conf.cell.y*12);
+		// drawBg(arm.leftz,arm.topz,conf.cell.x*7+30,conf.cell.y*12)
+		// drawBg(state.x,state.y,conf.cell.x*7+30,conf.cell.y*12)
+		drawBg(235,90,240,400)
 		
 		// cxt.fillStyle = '#000';
 		// cxt.font = "normal normal 100 30px 'Comic Sans MS'";
@@ -47,7 +50,7 @@ function STATE(){
 
 		// holder   支架
 		// var gradient = cxt.createLinearGradient(this.x, this.y-35, this.x+conf.cell.x*6+15, this.y+500);
-		var gradient = cxt.createLinearGradient(300, 50,  330 ,500);
+		var gradient = cxt.createLinearGradient(300, 50,  580 ,500);
 		// gradient.addColorStop(0, "#fff");
 		// gradient.addColorStop(0.5, "#000");
 		// gradient.addColorStop(1.0, "#fff");
