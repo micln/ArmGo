@@ -230,6 +230,7 @@ function RUNS() {
 	}
 	
 	//  机器运行结束
+	//	x 表示由halt得来，为空则表示程序正常结束
 	this.finish = function(x) {
 		clearFlash();
 		if (x!=1)

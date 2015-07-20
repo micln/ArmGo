@@ -23,15 +23,18 @@ function MISSIONLIST() {
 		runs.stop();
 		cxt.fillStyle = '#000';
 		cxt.fillRect(0, 0, c.width, c.height);
+		var img = new Image();
+		img.src='img/bg.jpg'
+		cxt.drawImage(img,0,0)
 		cxt.fillStyle = '#fff';
-		cxt.font = "40px Arial";
+		cxt.font = "40px 'Comic Sans MS'"
 		cxt.fillText("Level :", this.x, this.y - 50);
+
+		cxt.strokeStyle = '#fff';
 		for (i = 1; i <= this.tot; i++) {
 			var x = this.x + ((i - 1) % 5) * this.r * 2;
 			var y = this.y + Math.floor((i - 1) / 5) * this.c * 2;
-			//	cope.draw(x,y,i+3,this.r,this.c);
-			cxt.strokeStyle = '#ffffff';
-			cxt.strokeRect(x, y, this.r, this.c);
+			cxt.strokeRect(x, y, this.r, this.c);	
 			cxt.fillText(i, x + this.r * 1 / 3, y + this.c * 2 / 3);
 		}
 		c.style.cursor = 'hand';
