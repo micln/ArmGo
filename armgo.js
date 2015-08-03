@@ -7,10 +7,11 @@ var missionList = new MISSIONLIST();
 var runs = new RUNS();
 var toolbar = new TOOLBAR();
 
-window.onload = function() {
-	
-	c.onclick = function() {
+window.addEventListener('load', function(){
+    
+    actor.start()
+    
+    c.onclick = function() {
 		missionList.show();
 	}
-
-}
+})

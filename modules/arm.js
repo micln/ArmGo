@@ -26,6 +26,8 @@
 */
 //
 function ARM() {
+    
+    var that = this;
 	
 	//  边界
 	this.leftz = state.x - conf.cell.x - 12;
@@ -46,7 +48,7 @@ function ARM() {
 		this.running = false;
 		this.x = this.leftz;
 		this.y = this.topz;
-		this.r = 1;
+		this.r = 1;             //  行号
 		this.hand = 0;
 		// this.draw();
 	}
@@ -139,6 +141,7 @@ function ARM() {
 		message("Destroyed!<hr>通过下方按钮“重新开始”")
 	}
 	
+	//  向右运动，返回
 	this.right = function(v, ii) {
 	    
 		if (!this.running) return;
@@ -153,20 +156,40 @@ function ARM() {
 			return;
 		}
 		
-		//  送到
-		this.goRight(state.x + conf.cell.x * i, v, ii);
+		//  走到最右边
+		var num = ( state.x + conf.cell.x * i - (this.leftz + (this.hand>0) * conf.cell.x) ) / this.speed;
+		actor.add("arm.doRight()", num)
+
+        //  到右边之后执行抓取、放置		
+		actor.add(function(){
+		    
+		    // 放下箱子
+    		if (i > 0 && that.hand > 0) {
+    			state.box[that.r - 1][i - 1] = arm.hand;
+    			that.hand = 0;
+    		}
+    		// 抓取箱子
+    		else if (i < 6 && that.hand == 0 && state.box[that.r - 1][i] != 0) {
+    			that.hand = state.box[that.r - 1][i];
+    			state.box[that.r - 1][i] = 0;
+    		}
+		})
+		
+		//  检查答案
+		actor.add("checkAns()")
+		
+		//  打道回府
+		actor.add("arm.left()")
+		
 	}
 	
+	//  向左运动
 	this.left = function(v, i) { // 带入参数表示正在执行第(v,i)块指令
 	
 		if (!this.running) return;
 		
-		this.x -= this.speed;
-		if (this.x > this.leftz) {
-			setTimeout('arm.left(' + v + ',' + i + ')', conf.Fz);
-		} else {
-			this.done(v, i);
-		}
+		var num = ( this.x - this.leftz ) / this.speed;
+		actor.add("arm.doLeft()", num)
 	}
 	
 	this.up = function(v, i) {
@@ -177,69 +200,38 @@ function ARM() {
 			this.died();
 			return;
 		}
-		this.y -= this.speed;
-		if (this.y > (state.y + conf.cell.y * (this.r - 2) * 2)) {
-			setTimeout('arm.up(' + v + ',' + i + ')', conf.Fz);
-			//sleep(conf.Fz);this.up();
-		} else {
-			this.r--;
-			this.done(v, i);
-		}
+		//  计算需要下移的次数
+		var num  =  conf.cell.y*2  / this.speed;
+		actor.add("arm.doUp()", num)
+		actor.add("arm.r--")
 	}
 	
 	this.down = function(v, i) {
 		if (!this.running) return;
-		if (this.r == 6) {
+		if (this.r >= 6) {
 			this.died();
 			return;
 		}
-		this.y += this.speed;
-		if (this.y < (state.y + conf.cell.y * (this.r * 2))) {
-			setTimeout('arm.down(' + v + ',' + i + ')', conf.Fz);
-			//sleep(conf.Fz);this.down();
-		} else {
-			this.r++;
-			this.done(v, i);
-		}
+		
+		//  计算需要下移的次数
+		var num  =  conf.cell.y*2  / this.speed;
+		actor.add("arm.doDown()", num)
+		actor.add("arm.r++")
+
 	}
 	
-	this.goRight = function(x, v, ii) {
-	    
-		if (!this.running) return;
-		
-		this.x += this.speed;
-		
-		//  还没走到就继续走
-		if (this.x + (this.hand > 0) * conf.cell.x < x) {
-			setTimeout('arm.goRight(' + x + ',' + v + ',' + ii + ')', conf.Fz);
-			
-			
-		//  走到最右边了
-		} else if (this.x + (this.hand > 0) * conf.cell.x == x) {       
-
-            // i <- first conf.cell	
-			var i = 6;
-			while (i > 0 && state.box[this.r - 1][i - 1] != 0) i--; 
-
-			// fall
-			if (i > 0 && this.hand > 0) {
-				state.box[this.r - 1][i - 1] = this.hand;
-				this.hand = 0;
-			}
-
-			// catch
-			else if (i < 6 && this.hand == 0 && state.box[this.r - 1][i] != 0) {
-				this.hand = state.box[this.r - 1][i];
-				state.box[this.r - 1][i] = 0;
-			}
-			
-		    //  打道回府
-		    //  此过程为异步操作，不影响下面的代码
-			this.left(v, ii);
-			
-			//  同时检查答案，延时200ms只是为了避免弹出框太突兀
-			setTimeout(checkAns, 200);
-		}
+	
+	this.doUp = function(){
+	    this.y -= this.speed;
+	}
+	this.doDown = function(){
+	    this.y += this.speed;
+	}
+	this.doRight = function(){
+	    this.x += this.speed;
+	}
+	this.doLeft = function(){
+	    this.x -= this.speed;
 	}
 
     //  建立对象之后随即初始化

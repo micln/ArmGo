@@ -18,6 +18,9 @@ var g_img = {}
 //	全局函数；公共组件
 
 function checkAns() {
+    console.log('正在尝试检查答案...')
+	console.log(state.box.toString())
+	console.log(Goal[Mission].toString())
 	if (state.box.toString() == Goal[Mission].toString()) {
 		var costcope = 0;
 		for (i = 0; i < 4; i++) {
