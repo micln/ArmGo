@@ -24,9 +24,11 @@ function checkAns() {
 	if (state.box.toString() == Goal[Mission].toString()) {
 		var costcope = 0;
 		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 8; j++) {
-				costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0);
-			}
+			for (j = 0; j < 8; j++) 
+			    //  不统计跳转指令
+			    if ( runs.tasks[i][j]<=3 ) {
+				    costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0) ;
+			    }
 		}
 		
 		var score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
