@@ -109,6 +109,7 @@ function flashMap(x) { //	渲染图像
 	costime++;
 	state.draw();
 	if (x == 1) { // 首次进入游戏，需要绘制静态背景
+	    actor.start()
 		drawBg();
 		drawGoal();
 		runs.draw();
@@ -118,6 +119,9 @@ function flashMap(x) { //	渲染图像
 function clearFlash() {
 	//	log(ctime);
 	clearInterval(ctime);
+	log('clearFlash.')
+	actor.stop()
+	log('actor.stop.')
 }
 
 // ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 

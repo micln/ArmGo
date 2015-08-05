@@ -34,6 +34,9 @@ function RUNS() {
 	this.r = cope.width * 9;
 	this.c = cope.height * 6.8;
 	
+	//  当递归深度超过这个值时，认为是无限递归，直接退出
+	this.stackLim = 50;
+	
 	this.clear = function() {
 		this.tasks = [
 			[0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,6 +66,7 @@ function RUNS() {
 		 * 
 		 */
 		this.stack = [];
+		this.stackLen = 0;
 	}
 	this.clear();
    
@@ -160,62 +164,82 @@ function RUNS() {
 	//	运行(v,i)
 	this.run = function(v, i) { 
 	    
-		log("[Try ] " + v + "," + i);
+	    log("[Try ] " + v + "," + i);
+	    
+	    //  得到此位置的循环数
+		var lpn = this.loops[v][i];
 		
-		if (!arm.running) return;
+		while (lpn--){
+		    
+		    if (!arm.running) return;
 		
-		// 此位置没有要执行的指令
-		if (this.tasks[v][i] == 0) { 
-			return;
+    		//  如果递归超过this.stackLim次，认为是死循环
+    		if ( i==0 && ++this.stackLen > this.stackLim ) return;
+    		
+    		// 此位置没有要执行的指令
+    		if (this.tasks[v][i] == 0) { 
+    			return;
+    		}
+    		
+    		//  此位置有条件块但不满足条件
+    		if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
+    			arm.done(v, i);
+    			return;
+    		}
+    		
+    		//  执行此位置的代码
+    		
+    		coststep++;
+    		
+    		switch (this.tasks[v][i]) {
+    			case 1:
+    				arm.right();
+    				break;
+    				
+    			case 2:
+    				arm.up();
+    				break;
+    				
+    			case 3:
+    				arm.down();
+    				break;
+    				
+    			//  Runer_1
+    			case 4:
+    				// this.stack.push([v, i, this.loops[v][i]]);
+    				this.run(0, 0);
+    				break;
+    			
+    			//  Runer_2
+    			case 5:
+    				// this.stack.push([v, i, this.loops[v][i]]);
+    				this.run(1, 0);
+    				break;
+    				
+    			//  Runer_3
+    			case 6:
+    				// this.stack.push([v, i, this.loops[v][i]]);
+    				this.run(2, 0);
+    				break;
+    				
+    			//  Runer_4
+    			case 7:
+    				// this.stack.push([v, i, this.loops[v][i]]);
+    				this.run(3, 0);
+    				break;
+    		}
+    		
+    		
+    		if ( i==0 ) this.stackLen--;
+		    
 		}
 		
-		//  此位置有条件块但不满足条件
-		if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
-			arm.done(v, i);
-			return;
+		//  该指令执行完毕
+		// 右块正常，执行(v,i+1)
+		if (this.tasks[v][i + 1] != 0) {
+			this.run(v, i + 1); 
 		}
 		
-		//  执行此位置的代码
-		
-		coststep++;
-		
-		switch (this.tasks[v][i]) {
-			case 1:
-				arm.right(v, i);
-				break;
-				
-			case 2:
-				arm.up(v, i);
-				break;
-				
-			case 3:
-				arm.down(v, i);
-				break;
-				
-			//  Runer_1
-			case 4:
-				this.stack.push([v, i, this.loops[v][i]]);
-				this.run(0, 0);
-				break;
-			
-			//  Runer_2
-			case 5:
-				this.stack.push([v, i, this.loops[v][i]]);
-				this.run(1, 0);
-				break;
-				
-			//  Runer_3
-			case 6:
-				this.stack.push([v, i, this.loops[v][i]]);
-				this.run(2, 0);
-				break;
-				
-			//  Runer_4
-			case 7:
-				this.stack.push([v, i, this.loops[v][i]]);
-				this.run(3, 0);
-				break;
-		}
 	}
 	
 	//  启动机器

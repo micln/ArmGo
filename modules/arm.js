@@ -110,7 +110,7 @@ function ARM() {
 		
 		if (v == undefined) return;
 
-		//	此块有循环，继续执行
+		
 		
 		
 		// 右块正常，执行(v,i+1)
@@ -142,14 +142,14 @@ function ARM() {
 	}
 	
 	//  向右运动，返回
-	this.right = function(v, ii) {
+	this.right = function() {
 	    
 		if (!this.running) return;
 		
-		//  计算右侧能走到的位置
-		var i = 6;
+		//  计算右侧能走到的位置，假定能走到第5格（从0开始计数）
+		var i = 5;
 		while (i > 0 && state.box[this.r - 1][i - 1] != 0) i--;
-		
+		console.log('i='+i)
 		//  如果右侧满且手里有东西，会撞毁
 		if (i == 0 && this.hand != 0) {
 			this.died();
@@ -165,7 +165,7 @@ function ARM() {
 		    
 		    // 放下箱子
     		if (i > 0 && that.hand > 0) {
-    			state.box[that.r - 1][i - 1] = arm.hand;
+    			state.box[that.r - 1][i] = arm.hand;
     			that.hand = 0;
     		}
     		// 抓取箱子
@@ -179,12 +179,12 @@ function ARM() {
 		actor.add("checkAns()")
 		
 		//  打道回府
-		actor.add("arm.left()")
+		actor.add("arm.doLeft()", num)
 		
 	}
 	
 	//  向左运动
-	this.left = function(v, i) { // 带入参数表示正在执行第(v,i)块指令
+	this.left = function() { // 带入参数表示正在执行第(v,i)块指令
 	
 		if (!this.running) return;
 		
@@ -192,31 +192,35 @@ function ARM() {
 		actor.add("arm.doLeft()", num)
 	}
 	
-	this.up = function(v, i) {
+	this.up = function() {
 	    
 		if (!this.running) return;
 		
-		if (this.r == 1) {
-			this.died();
-			return;
-		}
+		actor.add(function(){
+    		if (that.r == 1) {
+    			that.died();
+    		}
+		})
+		
 		//  计算需要下移的次数
 		var num  =  conf.cell.y*2  / this.speed;
 		actor.add("arm.doUp()", num)
-		actor.add("arm.r--")
+		actor.add("arm.Rup()")
 	}
 	
-	this.down = function(v, i) {
+	this.down = function() {
 		if (!this.running) return;
-		if (this.r >= 6) {
-			this.died();
-			return;
-		}
+		
+		actor.add(function(){
+		    if ( that.r >= 6 ) {
+		        that.died()
+		    } 
+		})
 		
 		//  计算需要下移的次数
 		var num  =  conf.cell.y*2  / this.speed;
 		actor.add("arm.doDown()", num)
-		actor.add("arm.r++")
+		actor.add("arm.Rdown()")
 
 	}
 	
@@ -233,6 +237,16 @@ function ARM() {
 	this.doLeft = function(){
 	    this.x -= this.speed;
 	}
+	
+	this.Rup = function(){
+	    this.r--;
+	    log('arm is in row['+this.r+']')
+	}
+	this.Rdown = function(){
+	    this.r++;
+	    log('arm is in row['+this.r+']')
+	}
+	
 
     //  建立对象之后随即初始化
 	this.init();
