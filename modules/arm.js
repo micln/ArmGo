@@ -145,21 +145,43 @@ function ARM() {
 	this.right = function() {
 	    
 		if (!this.running) return;
-		
-		//  计算右侧能走到的位置，假定能走到第5格（从0开始计数）
-		var i = 5;
-		while (i > 0 && state.box[this.r - 1][i - 1] != 0) i--;
-		console.log('i='+i)
-		//  如果右侧满且手里有东西，会撞毁
-		if (i == 0 && this.hand != 0) {
-			this.died();
-			return;
-		}
-		
-		//  走到最右边
-		var num = ( state.x + conf.cell.x * i - (this.leftz + (this.hand>0) * conf.cell.x) ) / this.speed;
-		actor.add("arm.doRight()", num)
 
+		var num = 0;
+		var i;
+
+		actor.add(function(){
+			console.log("running right.")
+			//  计算右侧能走到的位置，假定能走到第5格（从0开始计数）
+			i = 5;
+			//	如果前面那格有东西，就往前
+			while (i > 0 && state.box[that.r - 1][i-1] != 0) i--;
+			console.log('rightest pos: (%d,%d)',that.r,i)
+			//  如果右侧满且手里有东西，会撞毁
+			if (i == 0 && that.hand != 0) {
+				that.died();
+				return;
+			}
+
+			//	如果手里有东西&要走的那个地方也有东西，再往前一格
+			//	因为我不知道能走到i是因为能抓还是能放
+			if ( that.hand>0 && state.box[that.r-1][i]!=0 ) i--;
+
+			//  走到最右边
+			// var dis = ( state.x + conf.cell.x * i - (that.leftz + (that.hand>0) * conf.cell.x) )
+			var dis =  state.x + conf.cell.x * i - that.leftz
+			num =  dis / that.speed;
+		})
+
+		actor.add(function(){
+			
+			if ( actor.anilist[0].count == -10){
+				actor.anilist[0].count = num-1
+			}
+
+			arm.doRight()
+
+		},-10)
+			
         //  到右边之后执行抓取、放置		
 		actor.add(function(){
 		    
@@ -179,7 +201,15 @@ function ARM() {
 		actor.add("checkAns()")
 		
 		//  打道回府
-		actor.add("arm.doLeft()", num)
+		actor.add(function(){
+
+			if ( actor.anilist[0].count == -10){
+				actor.anilist[0].count = num-1
+			}
+
+			arm.doLeft()
+		}, -10)
+		
 		
 	}
 	
@@ -187,9 +217,13 @@ function ARM() {
 	this.left = function() { // 带入参数表示正在执行第(v,i)块指令
 	
 		if (!this.running) return;
+
+		actor.add(function(){
+			var num = ( that.x - that.leftz ) / that.speed;
+			actor.add("arm.doLeft()", num)
+		})
 		
-		var num = ( this.x - this.leftz ) / this.speed;
-		actor.add("arm.doLeft()", num)
+		
 	}
 	
 	this.up = function() {
@@ -200,28 +234,31 @@ function ARM() {
     		if (that.r == 1) {
     			that.died();
     		}
+
+    		
 		})
-		
 		//  计算需要下移的次数
-		var num  =  conf.cell.y*2  / this.speed;
+		var num  =  conf.cell.y*2  / that.speed;
 		actor.add("arm.doUp()", num)
 		actor.add("arm.Rup()")
+		
+		
 	}
 	
 	this.down = function() {
 		if (!this.running) return;
 		
 		actor.add(function(){
+			console.log("running down.")
 		    if ( that.r >= 6 ) {
 		        that.died()
 		    } 
 		})
-		
+
 		//  计算需要下移的次数
-		var num  =  conf.cell.y*2  / this.speed;
+		var num  =  conf.cell.y*2  / that.speed;
 		actor.add("arm.doDown()", num)
 		actor.add("arm.Rdown()")
-
 	}
 	
 	

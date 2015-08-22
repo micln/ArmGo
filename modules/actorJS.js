@@ -84,7 +84,12 @@ function ActorClass() {
     var started = 0;
     this.start = function(){
         
-        if ( started ) return;
+        if ( started ) {
+            alert("Actor Error: start in started.")
+            this.stop()
+        };
+
+        console.log("Actor Starting...")
         started = 1;
         
         //	默认以正常速率启动
@@ -100,6 +105,7 @@ function ActorClass() {
         running = 0;
         started = 0;
         this.anilist = [];
+        console.log("Actor Stoped.")
     }
     
     /*
@@ -129,7 +135,8 @@ function ActorClass() {
      */
     function go(){
         //	被暂停 或 停机
-        if ( running <= 0 ) {console.log('stop'+1)
+        if ( running <= 0 ) {
+            //console.log('stop'+1)
             return
         }
         nowfz = (Fz/running) || Fz;
@@ -152,12 +159,13 @@ function ActorClass() {
         var fn = that.anilist[0].fn;
         setTimeout(function(){
             doit(fn)
+
+            //  次数够了，删除此函数
+            if ( --that.anilist[0].count <= 0  ){
+                that.anilist.shift()
+            }
+
         },0)
-        
-        //	次数够了，删除此函数
-        if ( --that.anilist[0].count <= 0  ){
-            that.anilist.shift()
-        }
         
         //	正常执行下一次
         setTimeout(function(){go()}, nowfz)

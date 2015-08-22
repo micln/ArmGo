@@ -1,7 +1,7 @@
 // Global Variables
 var c = eid("canvas");
 var cxt = c.getContext("2d");
-var ctime; // arm Go!
+var g_ctime; // arm Go!
 var Mission; // Mission Canvas Object
 var costime;
 var coststep;
@@ -106,12 +106,14 @@ function drawGoal() {
 	}
 }
 
-function flashMap(x) { //	渲染图像
+//	刷新图像
+function flashMap(x) { 
 	if (missionList.has) return;
 	costime++;
 	state.draw();
-	if (x == 1) { // 首次进入游戏，需要绘制静态背景
-	    actor.start()
+
+	// 首次进入从关卡进入游戏主界面，需要刷新非舞台区
+	if (x == 1) { 
 		drawBg();
 		drawGoal();
 		runs.draw();
@@ -119,11 +121,8 @@ function flashMap(x) { //	渲染图像
 }
 
 function clearFlash() {
-	//	log(ctime);
-	clearInterval(ctime);
+	clearInterval(g_ctime);
 	log('clearFlash.')
-	actor.stop()
-	log('actor.stop.')
 }
 
 // ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
@@ -161,33 +160,6 @@ function message(t) {
 	m.getElementsByTagName("div")[0].innerHTML = t;
 	m.style.display = 'block';
 	m.style.left = (document.body.clientWidth - m.offsetWidth) / 2;
-}
-
-
-function initLevel(v) {
-	for (i = 0; i < 4; i++) btns[i].style.display = 'block';
-	Mission = v;
-	costime = 0;
-	state.init(v);
-	arm.halt();
-	runs.clear();
-	flashMap(1);
-	ctime = setInterval(flashMap, conf.Fz);
-
-	btn_start.style.top = c.offsetTop + c.offsetHeight - btn_start.offsetHeight - 10;
-	btn_start.style.left = c.offsetLeft + c.offsetWidth - btn_start.offsetWidth - 150;
-
-	btn_Mission.style.top = c.offsetTop + 10;
-	btn_Mission.style.left = c.offsetLeft + c.offsetWidth - btn_Mission.offsetWidth - 10;
-
-	btn_Refresh.style.top = c.offsetTop + c.offsetHeight - btn_Refresh.offsetHeight - 10;
-	btn_Refresh.style.left = c.offsetLeft + c.offsetWidth - btn_Refresh.offsetWidth - 300;
-
-	btn_save.style.top = btn_load.style.top = btn_Refresh.offsetTop;
-	btn_save.style.left = btn_start.offsetLeft + btn_start.offsetWidth + 10;
-	btn_load.style.left = btn_save.offsetLeft + btn_save.offsetWidth + 10;
-
-	//	eid("controlBar").style.display = 'initial';
 }
 
 function preload() {

@@ -6,11 +6,7 @@ var cope = new COPE(1);
 var missionList = new MISSIONLIST();
 var runs = new RUNS();
 var toolbar = new TOOLBAR();
-
 window.addEventListener('load', function(){
-    
-    actor.start()
-    
     c.onclick = function() {
 		missionList.show();
 	}

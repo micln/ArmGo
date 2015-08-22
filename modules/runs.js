@@ -73,52 +73,57 @@ function RUNS() {
 	/** 
 	 *      初始化指令区
 	 *      参数：
-	 *          - xxx   :   可选。为1时表示第一次初始化，需要绘制相关html元素（工具栏）
+	 *          - xxx   :   可选。为1时表示第一次初始化，需要绘制相关html元素（输入位置的选择框）
 	 * 
 	 */
 	this.init = function(xxx) {
 	    
 	    
-		this.stop();
+		if ( arm.running ) this.stop();
 		
 		//  draw toolbar
 		if (xxx == 1) {
-			for (i = 0; i < 4; i++) {
-				for (j = 1; j < 9; j++) {
-				    
-					// toolifs + tool
-					var newson = document.createElement('div');
-					newson.className = "toola";
-					
-					// toolifs
-					var newson2 = document.createElement('div');
-					newson2.className = "toolifs";
-					newson2.setAttribute("copeid", i * 8 + j);
-					newson2.onclick = function(e) {
-						runs.settoolifs(e, this.getAttribute("copeid"));
-					}
-					newson.appendChild(newson2);
-					
-					// tool
-					newson2 = document.createElement('div');
-					newson2.className = 'tool';
-					newson2.setAttribute("copeid", i * 8 + j);
-					newson2.setAttribute('id', 'cope' + (i * 8 + j));
-					newson2.onclick = function(e) {
-						runs.settool(e, this.getAttribute('copeid'));
-					}
-					newson.appendChild(newson2);
-					this.obj.appendChild(newson);
-					
-					//  第4行只有5个指令
-					if (i == 3 && j == 5) break;
-				}
-			}
-			this.obj.style.left = this.x + cope.width + c.offsetLeft + 1;
-			this.obj.style.top = this.y + c.offsetTop - cope.height * 0.7;
-			this.obj.style.width = cope.width * 8;
-			this.obj.style.display = 'none';
+			this.genHTMLToolbar()
 		}
+	}
+
+	//	第一次启动游戏时，生成输入位置的选择框。只应该调用一次
+	this.genHTMLToolbar = function(){
+		for (i = 0; i < 4; i++) {
+			for (j = 1; j < 9; j++) {
+			    
+				// toolifs + tool
+				var newson = document.createElement('div');
+				newson.className = "toola";
+				
+				// toolifs
+				var newson2 = document.createElement('div');
+				newson2.className = "toolifs";
+				newson2.setAttribute("copeid", i * 8 + j);
+				newson2.onclick = function(e) {
+					runs.settoolifs(e, this.getAttribute("copeid"));
+				}
+				newson.appendChild(newson2);
+				
+				// tool
+				newson2 = document.createElement('div');
+				newson2.className = 'tool';
+				newson2.setAttribute("copeid", i * 8 + j);
+				newson2.setAttribute('id', 'cope' + (i * 8 + j));
+				newson2.onclick = function(e) {
+					runs.settool(e, this.getAttribute('copeid'));
+				}
+				newson.appendChild(newson2);
+				this.obj.appendChild(newson);
+				
+				//  第4行只有5个指令
+				if (i == 3 && j == 5) break;
+			}
+		}
+		this.obj.style.left = this.x + cope.width + c.offsetLeft + 1;
+		this.obj.style.top = this.y + c.offsetTop - cope.height * 0.7;
+		this.obj.style.width = cope.width * 8;
+		this.obj.style.display = 'none';
 	}
 	
 	this.settool = function(e, v) {
@@ -164,14 +169,16 @@ function RUNS() {
 	//	运行(v,i)
 	this.run = function(v, i) { 
 	    
-	    log("[Try ] " + v + "," + i);
-	    
 	    //  得到此位置的循环数
 		var lpn = this.loops[v][i];
+
+		console.log('[Try ] %d,%d Loop(%d)',v,i,lpn)
 		
 		while (lpn--){
 		    
 		    if (!arm.running) return;
+
+		    console.log('[Do  ] %d,%d',v,i)
 		
     		//  如果递归超过this.stackLim次，认为是死循环
     		if ( i==0 && ++this.stackLen > this.stackLim ) return;
@@ -190,7 +197,7 @@ function RUNS() {
     		//  执行此位置的代码
     		
     		coststep++;
-    		
+    		console.log('task=%d',this.tasks[v][i])
     		switch (this.tasks[v][i]) {
     			case 1:
     				arm.right();
@@ -239,6 +246,11 @@ function RUNS() {
 		if (this.tasks[v][i + 1] != 0) {
 			this.run(v, i + 1); 
 		}
+
+		// actor.add(function(){
+		// 	console.log("%d,%d done.",v,i)
+		// })
+
 		
 	}
 	
@@ -247,15 +259,21 @@ function RUNS() {
 		this.store.save();
 		initLevel(Mission);
 		this.store.load();
+
 		arm.running = true;
+
 		costime = 0;
 		coststep = 0;
+
+		actor.stop();
+		actor.start();
 		this.run(0, 0);
 	}
 	
 	//  机器运行结束
 	//	x 表示由halt得来，为空则表示程序正常结束
 	this.finish = function(x) {
+		actor.stop();
 		clearFlash();
 		if (x!=1)
 			arm.halt();
