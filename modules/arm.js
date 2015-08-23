@@ -49,6 +49,9 @@ function ARM() {
 		this.x = this.leftz;
 		this.y = this.topz;
 		this.r = 1;             //  行号
+
+		//	hand用来告诉动画引擎要不要渲染，bhand只用来告诉runs条件是否满足，因此非异步
+		this.bhand = 0;
 		this.hand = 0;
 		// this.draw();
 	}
@@ -142,7 +145,11 @@ function ARM() {
 	}
 	
 	//  向右运动，返回
-	this.right = function() {
+	//  @ 	a.x, a.y 
+	//  		表示从 runs.task[a.x][a.y] 过来的，用于判断ifs是否满足条件
+	//  	a.c 
+	//  		调用该函数时的条件指令块，不满足时直接return
+	this.right = function(a) {
 	    
 		if (!this.running) return;
 
@@ -150,6 +157,16 @@ function ARM() {
 		var i;
 
 		actor.add(function(){
+
+			if (a.c!=0 && a.c!=arm.hand) {
+
+				//	告诉下一个actor不要执行了
+				//	本次活动取消
+				num = -402;
+
+				return;
+			}
+
 			console.log("running right.")
 			//  计算右侧能走到的位置，假定能走到第5格（从0开始计数）
 			i = 5;
@@ -173,17 +190,24 @@ function ARM() {
 		})
 
 		actor.add(function(){
+
+			//	本次活动取消
+			if ( num == -402) return;
 			
-			if ( actor.anilist[0].count == -10){
+			//	根据上一次actor得到num值
+			if ( actor.anilist[0].count == -401){
 				actor.anilist[0].count = num-1
 			}
 
 			arm.doRight()
 
-		},-10)
+		},-401)
 			
         //  到右边之后执行抓取、放置		
 		actor.add(function(){
+
+			//	本次活动取消
+			if ( num == -402) return;
 		    
 		    // 放下箱子
     		if (i > 0 && that.hand > 0) {
@@ -198,17 +222,26 @@ function ARM() {
 		})
 		
 		//  检查答案
-		actor.add("checkAns()")
+		actor.add(function(){
+
+			//	本次活动取消
+			if ( num == -402) return;
+			checkAns()
+		})
 		
 		//  打道回府
 		actor.add(function(){
 
-			if ( actor.anilist[0].count == -10){
+			//	本次活动取消
+			if ( num == -402) return;
+
+			//	根据上一次actor得到num值
+			if ( actor.anilist[0].count == -401){
 				actor.anilist[0].count = num-1
 			}
 
 			arm.doLeft()
-		}, -10)
+		}, -401)
 		
 		
 	}
@@ -219,6 +252,9 @@ function ARM() {
 		if (!this.running) return;
 
 		actor.add(function(){
+
+			
+
 			var num = ( that.x - that.leftz ) / that.speed;
 			actor.add("arm.doLeft()", num)
 		})
@@ -226,30 +262,69 @@ function ARM() {
 		
 	}
 	
-	this.up = function() {
+	this.up = function(a) {
 	    
 		if (!this.running) return;
+
+		var cancel = 0;
 		
 		actor.add(function(){
+
+			if (a.c!=0 && a.c!=arm.hand) {
+
+				//	本次活动取消
+				cancel = 1;
+				return;
+			}
+
     		if (that.r == 1) {
     			that.died();
     		}
 
     		
 		})
+
 		//  计算需要下移的次数
 		var num  =  conf.cell.y*2  / that.speed;
-		actor.add("arm.doUp()", num)
-		actor.add("arm.Rup()")
+		actor.add(function(){
+
+			//	本次活动取消
+			if (cancel == 1) 
+				return;
+
+			arm.doUp()
+
+		}, num)
+
+		actor.add(function(){
+
+			//	本次活动取消
+			if (cancel == 1) 
+				return;
+
+			//	修改that.r
+			arm.Rup()
+		})
 		
 		
 	}
 	
-	this.down = function() {
+	this.down = function(a) {
 		if (!this.running) return;
+
+		var cancel = 0;
 		
 		actor.add(function(){
+
+			if (a.c!=0 && a.c!=arm.hand) {
+
+				//	本次活动取消
+				cancel = 1;
+				return;
+			}
+
 			console.log("running down.")
+
 		    if ( that.r >= 6 ) {
 		        that.died()
 		    } 
@@ -257,8 +332,26 @@ function ARM() {
 
 		//  计算需要下移的次数
 		var num  =  conf.cell.y*2  / that.speed;
-		actor.add("arm.doDown()", num)
-		actor.add("arm.Rdown()")
+
+		actor.add(function(){
+
+			//	本次活动取消
+			if (cancel == 1) 
+				return;
+
+			arm.doDown()
+
+		}, num)
+
+		actor.add(function(){
+
+			//	本次活动取消
+			if (cancel == 1) 
+				return;
+
+			arm.Rdown()
+
+		})
 	}
 	
 	

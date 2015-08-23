@@ -137,6 +137,7 @@ function RUNS() {
 	}
 	
 	this.draw = function() {
+		console.log('runs.draw')
 		for (i = 0; i < 4; i++) {
 			for (j = 1; j < 9; j++) {
 
@@ -160,6 +161,8 @@ function RUNS() {
 			}
 			cope.draw(this.x, this.y + cope.height * i * 1.7, i + 4, cope.width, cope.height);
 		}
+
+		//	用来选中的格子
 		this.obj.style.display = 'block';
 	}
 	this.hide = function() {
@@ -167,84 +170,86 @@ function RUNS() {
 	}
 	
 	//	运行(v,i)
-	this.run = function(v, i) { 
+	this.run = function(pos, condition) { 
 	    
 	    //  得到此位置的循环数
-		var lpn = this.loops[v][i];
+		var lpn = this.loops[pos.v][pos.i];
 
-		console.log('[Try ] %d,%d Loop(%d)',v,i,lpn)
+		console.log('[Try ] %d,%d Loop(%d)',pos.v,pos.i,lpn)
 		
 		while (lpn--){
 		    
 		    if (!arm.running) return;
 
-		    console.log('[Do  ] %d,%d',v,i)
+		    console.log('[Do  ] %d,%d',pos.v,pos.i)
 		
     		//  如果递归超过this.stackLim次，认为是死循环
-    		if ( i==0 && ++this.stackLen > this.stackLim ) return;
+    		if ( pos.i==0 && ++this.stackLen > this.stackLim ) return;
     		
     		// 此位置没有要执行的指令
-    		if (this.tasks[v][i] == 0) { 
+    		if (this.tasks[pos.v][pos.i] == 0) { 
     			return;
     		}
     		
-    		//  此位置有条件块但不满足条件
-    		if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
-    			arm.done(v, i);
-    			return;
-    		}
+    		//	@ 不再runs中判断条件块，而在arm中去判断，如果不满足，则return当前函数
+    		//	
+    		// //  此位置有条件块但不满足条件
+    		// if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
+    		// 	arm.done(v, i);
+    		// 	return;
+    		// }
     		
     		//  执行此位置的代码
     		
     		coststep++;
-    		console.log('task=%d',this.tasks[v][i])
-    		switch (this.tasks[v][i]) {
+    		console.log('task=%d',this.tasks[pos.v][pos.i])
+    		switch (this.tasks[pos.v][pos.i]) {
     			case 1:
-    				arm.right();
+    				arm.right({'c':this.ifs[pos.v][pos.i]});
     				break;
     				
     			case 2:
-    				arm.up();
+    				arm.up({'c':this.ifs[pos.v][pos.i]});
     				break;
     				
     			case 3:
-    				arm.down();
+    				arm.down({'c':this.ifs[pos.v][pos.i]});
     				break;
     				
     			//  Runer_1
     			case 4:
     				// this.stack.push([v, i, this.loops[v][i]]);
-    				this.run(0, 0);
+    				this.run( {'v':0, 'i':0} );
     				break;
     			
     			//  Runer_2
     			case 5:
     				// this.stack.push([v, i, this.loops[v][i]]);
-    				this.run(1, 0);
+    				this.run( {'v':1, 'i':0} );
     				break;
     				
     			//  Runer_3
     			case 6:
     				// this.stack.push([v, i, this.loops[v][i]]);
-    				this.run(2, 0);
+    				this.run( {'v':2, 'i':0} );
     				break;
     				
     			//  Runer_4
     			case 7:
     				// this.stack.push([v, i, this.loops[v][i]]);
-    				this.run(3, 0);
+    				this.run( {'v':3, 'i':0} );
     				break;
     		}
     		
     		
-    		if ( i==0 ) this.stackLen--;
+    		if ( pos.i==0 ) this.stackLen--;
 		    
 		}
 		
 		//  该指令执行完毕
 		// 右块正常，执行(v,i+1)
-		if (this.tasks[v][i + 1] != 0) {
-			this.run(v, i + 1); 
+		if (this.tasks[pos.v][pos.i + 1] != 0) {
+			this.run( {'v':pos.v, 'i':pos.i + 1} ); 
 		}
 
 		// actor.add(function(){
@@ -266,8 +271,12 @@ function RUNS() {
 		coststep = 0;
 
 		actor.stop();
-		actor.start();
-		this.run(0, 0);
+
+		setTimeout(function(){
+			actor.start();
+			that.run({'v':0,'i':0});
+		}, 50)
+		
 	}
 	
 	//  机器运行结束

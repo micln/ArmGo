@@ -21,11 +21,11 @@ function MISSIONLIST() {
 		for (i = 0; i < 4; i++) 
 			btns[i].style.display = 'none';
 
-		if ( arm.running ) {
+		// if ( arm.running ) {
 			toolbar.hide();
 			runs.hide();
 			runs.stop();
-		}
+		// }
 		
 		cxt.fillStyle = '#000';
 		cxt.fillRect(0, 0, c.width, c.height);
