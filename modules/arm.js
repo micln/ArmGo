@@ -158,7 +158,7 @@ function ARM() {
 
 		actor.add(function(){
 
-			if (a.c!=0 && a.c!=arm.hand) {
+			if (a && a.c!=0 && a.c!=arm.hand) {
 
 				//	告诉下一个actor不要执行了
 				//	本次活动取消
@@ -270,7 +270,7 @@ function ARM() {
 		
 		actor.add(function(){
 
-			if (a.c!=0 && a.c!=arm.hand) {
+			if (a && a.c!=0 && a.c!=arm.hand) {
 
 				//	本次活动取消
 				cancel = 1;
@@ -316,7 +316,7 @@ function ARM() {
 		
 		actor.add(function(){
 
-			if (a.c!=0 && a.c!=arm.hand) {
+			if (a && a.c!=0 && a.c!=arm.hand) {
 
 				//	本次活动取消
 				cancel = 1;

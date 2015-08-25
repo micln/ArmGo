@@ -171,6 +171,9 @@ function RUNS() {
 	
 	//	运行(v,i)
 	this.run = function(pos, condition) { 
+
+		this.run2()
+		return
 	    
 	    //  得到此位置的循环数
 		var lpn = this.loops[pos.v][pos.i];
@@ -258,6 +261,106 @@ function RUNS() {
 
 		
 	}
+
+	//	@ 采用递归的方式模拟完整运行一次
+	//	
+	//	记录一组虚拟的state.box和arm
+	//	，独立于界面的记录
+	//	
+	this.run2  = function(){
+
+		var sg = [ [],[],[],[],[],[] ];
+		for (var i=0;i<6;i++){
+			for (var j=5;j>=0;j--){
+				if (state.box[i][j]==0) break;
+				sg[i].push(state.box[i][j])
+			}
+		}
+
+		var myarm = {
+			row : 0,
+			hand: 0
+		}
+
+		function gohand(){
+			if (myarm.hand==0){
+				if (sg[myarm.row].length>0){
+					myarm.hand = sg[myarm.row].pop();
+				}
+			}else{
+				if (sg[myarm.row].length<6){
+					sg[myarm.row].push(myarm.hand)
+					myarm.hand=0
+				}
+			}
+		}
+
+		function go(pos){
+			var lpn = that.loops[pos.x][pos.y];
+			console.log('go %d,%d L(%d)',pos.x,pos.y,lpn)
+			while (lpn--){
+				if (!arm.running) return;
+				console.log('do %d,%d L(%d)',pos.x,pos.y,lpn)
+
+				if (pos.y==0 && ++that.stackLen > that.stackLim) {
+					console.log('[Halt] Deap Loops.')
+					return 
+				};
+
+				if (that.tasks[pos.x][pos.y]==0) {
+					console.log('[Halt] No code.')
+					return 
+				}
+
+				if ( that.ifs[pos.x][pos.y]!=0 && that.ifs[pos.x][pos.y]!=myarm.hand){
+					console.log('[Cotn] Bad Condition.' )
+					if (that.tasks[pos.x][pos.y+1]){
+						go({x:pos.x,y:pos.y+1})
+					}
+					return
+				}
+
+				coststep++;
+
+				switch ( that.tasks[pos.x][pos.y]){
+					case 1:
+						gohand();
+						arm.right();
+						break;
+					case 2:
+						if (myarm.row>0) myarm.row--;
+						arm.up();
+						break;
+					case 3:
+						if (myarm.row<4) myarm.row++;
+						arm.down();
+						break;
+					case 4:
+						go({x:0,y:0})
+						break;
+					case 5:
+						go({x:1,y:0})
+						break;
+					case 6:
+						go({x:2,y:0})
+						break;
+					case 7:
+						go({x:3,y:0})
+						break;
+				}
+
+				if (pos.x==0) this.stackLen--;
+			}
+
+			if (that.tasks[pos.x][pos.y+1]){
+				go({x:pos.x,y:pos.y+1})
+			}
+		}
+
+		go({x:0,y:0})
+		console.log('[Done] go(0,0)')
+
+	}
 	
 	//  启动机器
 	this.start = function() {
@@ -277,6 +380,11 @@ function RUNS() {
 			that.run({'v':0,'i':0});
 		}, 50)
 		
+	}
+
+	this.restart = function(){
+		this.finish();
+		initLevel(Mission);
 	}
 	
 	//  机器运行结束
