@@ -9,9 +9,9 @@ body{
 
 #msgbox{
 	position: absolute;
-	background: #E9E9E9;
-	border: 6px solid #B8B8B8;
-	border-radius: 3px;
+	background: #4EC5E8;
+	border: 10px solid #008BFF;
+	border-radius: 20px;
 	left: 500;
 	top: 120px;
 	width: 366;
@@ -24,10 +24,15 @@ body{
 #msgbox>a{
 	position: relative;
 	top: 200;
-	border: 1px solid #000;
+	border: 1px solid rgba(0, 110, 255, 0.44);
 	border-radius: 5px;
 	cursor: hand;
 	padding: 5px 20px;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+a#msgok:hover{
+	background-color: rgba(255, 255, 255, 0.6);
 }
 
 #helptxt{
@@ -35,8 +40,10 @@ body{
 }
 
 canvas{
-	border: 1px solid #000;
+	border: 1px solid #919191;
+	box-shadow: 0px 0px 5px 1px #030303;
 	margin-bottom: 800px;
+	background-image: url('img/hello.jpg');
 }
 
 #runs{
@@ -125,4 +132,16 @@ input[type='button']:hover{
 
 #btn_start:hover{
 	background: #034700;
+}
+
+span.scorestar{
+	font-size: 60px;
+	  color: #FF0;
+	  text-shadow: 0px 8px 10px #F7C810;
+	-webkit-animation:bianxiao 800ms;
+
+}
+@keyframes bianxiao{
+	from{font-size: 500px}
+	to{font-size: 60px}
 }

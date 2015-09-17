@@ -11,22 +11,12 @@ http://armgo.coding.io
 
 ###Author
 
+ZJL@USC
+
 [kzzhr](http://dashayu.tk/) zhrlnt[X]gmail.com
 
 - [coding.net](https://coding.net/u/kzzhr)
 
-- [github](https://github.com/micln) 
+Jiang Si
 
-####Thanks My Friends
-
-- [pokerG](https://github.com/pokerG) pokerfacehlg[X]gmail.com
-- Xuhuajie
-- Guopenghua
-
-### Others
-
-
-
-
-
-
+Liang Jinfeng
