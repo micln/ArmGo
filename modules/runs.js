@@ -120,11 +120,19 @@ function RUNS() {
 				if (i == 3 && j == 5) break;
 			}
 		}
-		this.obj.style.left = this.x + cope.width + c.offsetLeft + 1;
-		this.obj.style.top = this.y + c.offsetTop - cope.height * 0.7;
-		this.obj.style.width = cope.width * 8;
-		this.obj.style.display = 'none';
+		
+	    placegrids();
+	    
+		that.obj.style.display = 'none'; 
+		that.obj.style.width = cope.width * 8;
 	}
+	function placegrids(){
+	   	that.obj.style.left = that.x + cope.width + c.offsetLeft + 1;
+		that.obj.style.top = that.y + c.offsetTop - cope.height * 0.7;
+	}
+	window.addEventListener('resize', function(){
+	    placegrids(); 
+	});
 	
 	this.settool = function(e, v) {
 		toolbar.show(e.clientX, e.clientY + 10);

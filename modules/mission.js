@@ -67,6 +67,13 @@ function initLevel(v) {
 	flashMap(1);
 	g_ctime = setInterval(flashMap, conf.Fz);
 
+    placebtns();
+
+	//	eid("controlBar").style.display = 'initial';
+}
+
+function placebtns(){
+
 	btn_start.style.top = c.offsetTop + c.offsetHeight - btn_start.offsetHeight - 10;
 	btn_start.style.left = c.offsetLeft + c.offsetWidth - btn_start.offsetWidth - 150;
 
@@ -79,6 +86,9 @@ function initLevel(v) {
 	btn_save.style.top = btn_load.style.top = btn_Refresh.offsetTop;
 	btn_save.style.left = btn_start.offsetLeft + btn_start.offsetWidth + 10;
 	btn_load.style.left = btn_save.offsetLeft + btn_save.offsetWidth + 10;
-
-	//	eid("controlBar").style.display = 'initial';
+	
 }
+
+window.addEventListener('resize', function(){
+    placebtns();
+});
