@@ -18,7 +18,7 @@
 <!--  main GAME  -->
 	<div id="game">
 		<h2>ArmGo - 编程菜鸟进阶</h2>
-		 <p><a target='_blank' href="https://www.zybuluo.com/kzzhr/note/144269">帮助手册</a></p> 
+		 <!-- <p><a target='_blank' href="https://www.zybuluo.com/kzzhr/note/144269">帮助手册</a></p>  -->
 		<div id="msgbox">
 			<a id="msgok" onclick="document.getElementById('msgbox').style.display = 'none'">OK</a>
 			<div></div>
@@ -36,13 +36,17 @@
 		<div id="toolslcifs" >条件指令<hr></div>
 		<div id="controlBar" >
 		<!--	<input id="" style='display:initial' name="" type="button" onClick="showhelp();" value="查看帮助 (Help)"> -->
-			<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择">
-			<input id="btn_Refresh" name="" type="button" onClick="runs.restart()" value="重新开始">
-			<input id="btn_start" name="" type="button" onClick="runs.start();" value="Go!">
-			<input id="btn_save" name="" type="button" onClick="runs.store.save();" value="Save">
-			<input id="btn_load" name="" type="button" onClick="runs.store.load();" value="Load">
+			<input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择" class='zhide'>
+			<input id="btn_Refresh" name="" type="button" onClick="runs.restart()" value="重新开始" class='zhide'>
+			<input id="btn_start" name="" type="button" onClick="runs.start();" value="Go!" class='zhide'>
+			<input id="btn_save" name="" type="button" onClick="runs.store.save();" value="Save" class='zhide'>
+			<input id="btn_load" name="" type="button" onClick="runs.store.load();" value="Load" class='zhide'>
 		</div>
-		
+
+		<div style="position: fixed; right:0px; top: 0px; bottom: 0px;" class='zhide'>
+			<span onclick='this.parentNode.classList.add("zhide")' style="float: right;width: 20px;height: 20px;text-align: center;background-color: #F00;color: #fff;cursor: pointer;">X</span>
+			<pre id='codepad' style="max-height: 90%;overflow-y: auto;outline: 1px solid #ccc;padding: 10px;background: #eee;"></pre>
+		</div>
 		
         <!-- 加载地图资源 -->
 		<script type="text/javascript" src="modules/maps.js"></script>

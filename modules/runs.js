@@ -383,6 +383,8 @@ function RUNS() {
 
 		actor.stop();
 
+		this.showCode();
+
 		setTimeout(function(){
 			actor.start();
 			that.run({'v':0,'i':0});
@@ -447,6 +449,84 @@ function RUNS() {
 		    //  绘制指令区
 			runs.draw();
 		}
+	}
+
+	this.genCodeOne = function(arg){
+		var code = {
+			x: arg.x,
+			y: arg.y
+		}
+
+		var x = arg.x;
+		var y = arg.y;
+		var indent = arg.indent;
+
+		var ret = [];
+		var defer = [];
+
+		if ( this.loops[x][y]>1 ) {
+			// var idx = sprintf('i%d%d', x,y);
+			var idx = 'i';
+			ret.push(sprintf('for (int %s=1; %s<=%d; %s++) {', idx, idx, this.loops[x][y], idx));
+			defer.push('}');
+		}
+
+		if ( that.ifs[x][y] >0 ) {
+			ret.push( sprintf('if (condition[%d][%d] == hand ) {', x, y) );
+			defer.pish('}');
+		}
+
+		var tmp = '';
+		var hash = {
+			1: 'moveRight();',
+			2: 'moveUp();',
+			3: 'moveDown();',
+			4: 'func1();',
+			5: 'func2();',
+			6: 'func3();',
+			7: 'func4();'
+		}
+
+		ret.push( hash[that.tasks[x][y]] );
+
+		var rets = '';
+
+		for ( var i=0; i<ret.length; i++) {
+			rets += '\t'.repeat(i+indent) + ret[i] + '\n';
+		}
+		for ( var i=defer.length-1;i>=0;i--){
+			rets += '\t'.repeat(i+indent) + defer[i] + '\n';
+		}
+		return rets;
+
+	}
+	this.genCodePROG = function(idx){
+
+		var rets = sprintf('void func%d() {\n', idx+1);
+		for (var i=0; i<that.tasks[idx].length && that.tasks[idx][i]>0; i++){
+			rets += that.genCodeOne({x:idx, y:i, indent:1});
+		}
+		return rets + '}\n\n';
+	}
+
+	this.genCode =function(){
+
+		var rets = '';
+
+		for ( var i=0;i<4;i++) {
+			rets += that.genCodePROG(i);
+		}
+
+		rets += sprintf('int main(){\n\tfunc1();\n\treturn 0;\n}\n');
+		return rets;
+	}
+
+	this.showCode = function(){
+
+		var cpad = eid('codepad');
+		cpad.innerHTML = that.genCode();
+
+		cpad.parentNode.classList.remove('zhide');
 	}
 
 	this.init(1);

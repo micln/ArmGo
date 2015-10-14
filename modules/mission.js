@@ -19,7 +19,7 @@ function MISSIONLIST() {
 		this.has = true;
 		
 		for (i = 0; i < 4; i++) 
-			btns[i].style.display = 'none';
+			btns[i].classList.add('zhide');
 
 		// if ( arm.running ) {
 			toolbar.hide();
@@ -58,14 +58,12 @@ function MISSIONLIST() {
 
 //	载入关卡
 function initLevel(v) {
-	for (i = 0; i < 4; i++) 
-		btns[i].style.display = 'block';
 	Mission = v;
 	
 	state.init(v);
 	runs.clear();
-	flashMap(1);
-	g_ctime = setInterval(flashMap, conf.Fz);
+	freshMap(1);
+	g_ctime = setInterval(freshMap, conf.Fz);
 
     placebtns();
 
@@ -73,6 +71,12 @@ function initLevel(v) {
 }
 
 function placebtns(){
+
+	btn_Mission.classList.remove('zhide');
+	btn_start.classList.remove('zhide');
+	btn_Refresh.classList.remove('zhide');
+	btn_save.classList.remove('zhide');
+	btn_load.classList.remove('zhide');
 
 	btn_start.style.top = c.offsetTop + c.offsetHeight - btn_start.offsetHeight - 10;
 	btn_start.style.left = c.offsetLeft + c.offsetWidth - btn_start.offsetWidth - 150;
@@ -86,6 +90,7 @@ function placebtns(){
 	btn_save.style.top = btn_load.style.top = btn_Refresh.offsetTop;
 	btn_save.style.left = btn_start.offsetLeft + btn_start.offsetWidth + 10;
 	btn_load.style.left = btn_save.offsetLeft + btn_save.offsetWidth + 10;
+	
 	
 }
 
