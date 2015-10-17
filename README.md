@@ -9,6 +9,16 @@ Programming the copes to leading the arm to move the cells, achieve the goal sta
 
 http://armgo.coding.io
 
+
+
+## Thanks
+
+Inspiration form cargo-bot (https://itunes.apple.com/us/app/cargo-bot/id519690804) .
+
+Cargo-bot is a very interesting game for code beginner. I love it and call my friends play it togetter. 
+
+But it only run in iPad which lots of beginners can't get.  When I learn to HTML5, I transplant it in Javascript, so everyone can play it only needs a browser.
+
 ###Author
 
 ZJL@USC
@@ -20,12 +30,3 @@ ZJL@USC
 Jiang Si
 
 Liang Jinfeng
-
-## Thanks
-
-Inspiration form cargo-bot (https://itunes.apple.com/us/app/cargo-bot/id519690804) .
-
-Cargo-bot is a very interesting game for code beginner. I love it and call my friends play it togetter. 
-
-But it only run in iPad which lots of beginners can't get.  When I learn to HTML5, I transplant it in Javascript, so everyone can play it only needs a browser.
-
