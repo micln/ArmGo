@@ -492,10 +492,13 @@ function RUNS() {
 		var rets = '';
 
 		for ( var i=0; i<ret.length; i++) {
-			rets += '\t'.repeat(i+indent) + ret[i] + '\n';
+// 			rets += '\t'.repeat(i+indent) + ret[i] + '\n';
+			rets += repeatstr('\t', i+indent) + ret[i] + '\n';
+			
 		}
 		for ( var i=defer.length-1;i>=0;i--){
-			rets += '\t'.repeat(i+indent) + defer[i] + '\n';
+// 			rets += '\t'.repeat(i+indent) + defer[i] + '\n';
+			rets += repeatstr('\t', i+indent) + defer[i] + '\n';
 		}
 		return rets;
 
@@ -530,4 +533,11 @@ function RUNS() {
 	}
 
 	this.init(1);
+}
+
+function repeatstr(a,num) {
+    var ret = '';
+    for (var i=0; i<num; i++) 
+        ret += a;
+    return ret;
 }
