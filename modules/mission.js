@@ -28,7 +28,7 @@ function MISSIONLIST() {
 		// }
 		
 		cxt.fillStyle = '#000';
-		cxt.fillRect(0, 0, c.width, c.height);
+		cxt.fillRect(0, 0, canvas.width, canvas.height);
 		var img = new Image();
 		img.src='img/bg.jpg'
 		cxt.drawImage(img,0,0)
@@ -43,8 +43,8 @@ function MISSIONLIST() {
 			cxt.strokeRect(x, y, this.r, this.c);	
 			cxt.fillText(i, x + this.r * 1 / 3, y + this.c * 2 / 3);
 		}
-		c.style.cursor = 'hand';
-		c.onclick = function(e) {
+		canvas.style.cursor = 'hand';
+		canvas.onclick = function(e) {
 			missionList.has = false;
 			missionList.selected(e)
 		}
@@ -71,27 +71,24 @@ function initLevel(v) {
 }
 
 function placebtns(){
-
 	btn_Mission.classList.remove('zhide');
 	btn_start.classList.remove('zhide');
 	btn_Refresh.classList.remove('zhide');
 	btn_save.classList.remove('zhide');
 	btn_load.classList.remove('zhide');
 
-	btn_start.style.top = c.offsetTop + c.offsetHeight - btn_start.offsetHeight - 10;
-	btn_start.style.left = c.offsetLeft + c.offsetWidth - btn_start.offsetWidth - 150;
+	btn_start.style.top = canvas.offsetTop + canvas.offsetHeight - btn_start.offsetHeight - 10;
+	btn_start.style.left = canvas.offsetLeft + canvas.offsetWidth - btn_start.offsetWidth - 150;
 
-	btn_Mission.style.top = c.offsetTop + 10;
-	btn_Mission.style.left = c.offsetLeft + c.offsetWidth - btn_Mission.offsetWidth - 10;
+	btn_Mission.style.top = canvas.offsetTop + 10;
+	btn_Mission.style.left = canvas.offsetLeft + canvas.offsetWidth - btn_Mission.offsetWidth - 10;
 
-	btn_Refresh.style.top = c.offsetTop + c.offsetHeight - btn_Refresh.offsetHeight - 10;
-	btn_Refresh.style.left = c.offsetLeft + c.offsetWidth - btn_Refresh.offsetWidth - 300;
+	btn_Refresh.style.top = canvas.offsetTop + canvas.offsetHeight - btn_Refresh.offsetHeight - 10;
+	btn_Refresh.style.left = canvas.offsetLeft + canvas.offsetWidth - btn_Refresh.offsetWidth - 300;
 
 	btn_save.style.top = btn_load.style.top = btn_Refresh.offsetTop;
 	btn_save.style.left = btn_start.offsetLeft + btn_start.offsetWidth + 10;
 	btn_load.style.left = btn_save.offsetLeft + btn_save.offsetWidth + 10;
-	
-	
 }
 
 window.addEventListener('resize', function(){

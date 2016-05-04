@@ -1,0 +1,15 @@
+{
+  "name": "armgo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.*",
+    "sweetalert": "*",
+    "bootstrap": "~3.3.*"
+  }
+}

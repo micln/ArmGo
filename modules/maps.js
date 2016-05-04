@@ -5,7 +5,7 @@
 // color[0] : background-color
 // color[i] : copo[i].color
 var color = ['#999966', '#00D6FF', '#FF5C00', '#ffff00', '#F80909'];
-var imgfile = ['none.jpg', 'right.jpg', 'up.jpg', 'down.jpg', 'prog1.jpg', 'prog2.jpg', 'prog3.jpg', 'prog4.jpg'];
+var imgFile = ['none.jpg', 'right.jpg', 'up.jpg', 'down.jpg', 'prog1.jpg', 'prog2.jpg', 'prog3.jpg', 'prog4.jpg'];
 var grade = [
 	[], // numbers, steps
 	[3, 3],

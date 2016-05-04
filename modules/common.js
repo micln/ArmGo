@@ -1,6 +1,6 @@
 // Global Variables
-var c = eid("canvas");
-var cxt = c.getContext("2d");
+var canvas = eid("canvas");
+var cxt = canvas.getContext("2d");
 var g_ctime; // arm Go!
 var Mission; // Mission Canvas Object
 var costime;
@@ -13,186 +13,200 @@ var btn_save = eid("btn_save");
 var btn_load = eid("btn_load");
 var btns = [btn_start, btn_load, btn_save, btn_Refresh];
 
-var g_img = {}
+var res = {
+    img: {}
+};
 
 //	全局函数；公共组件
 
 function checkAns() {
     console.log('正在尝试检查答案...')
-	console.log(state.box.toString())
-	console.log(Goal[Mission].toString())
-	if (state.box.toString() == Goal[Mission].toString()) {
-		var costcope = 0;
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 8; j++) 
-			    //  不统计跳转指令
-			    if ( runs.tasks[i][j]<=3 ) {
-				    costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0) ;
-			    }
-		}
-		
-		var score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
-		var scoretxt = '<span class="scorestar">★</span>'
-		if (score==2) scoretxt+=scoretxt;
-		if (score==3) scoretxt+=scoretxt+scoretxt;
-		
-		message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>" + scoretxt);
-		
-		//	通知游戏结束
-		runs.finish();
-	}
+    console.log(state.box.toString())
+    console.log(Goal[Mission].toString())
+    if (state.box.toString() == Goal[Mission].toString()) {
+        var costcope = 0;
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 8; j++)
+                //  不统计跳转指令
+                if (runs.tasks[i][j] <= 3) {
+                    costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0);
+                }
+        }
+
+        var score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
+        var scoretxt = '<span class="scorestar">★</span>'
+        if (score == 2) scoretxt += scoretxt;
+        if (score == 3) scoretxt += scoretxt + scoretxt;
+
+        message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>" + scoretxt);
+
+        //	通知游戏结束
+        runs.finish();
+    }
 }
 
 function drawcell(x, y, v) {
-	cxt.fillStyle = color[v];
-	cxt.fillRect(x, y, conf.cell.x, conf.cell.y);
-	cxt.fillStyle = "#7E3902";
-	cxt.fillRect(x + conf.cell.x * 0.2, y + conf.cell.y * 0.2, conf.cell.x * 0.6, conf.cell.y * 0.6);
-	// cxt.strokeStyle = "#7E3902";
-	// cxt.strokeRect(x,y,conf.cell.x,conf.cell.y);
+    cxt.fillStyle = color[v];
+    cxt.fillRect(x, y, conf.cell.x, conf.cell.y);
+    cxt.fillStyle = "#7E3902";
+    cxt.fillRect(x + conf.cell.x * 0.2, y + conf.cell.y * 0.2, conf.cell.x * 0.6, conf.cell.y * 0.6);
+    // cxt.strokeStyle = "#7E3902";
+    // cxt.strokeRect(x,y,conf.cell.x,conf.cell.y);
 }
 
-function drawBg(x,y,w,h) {
-	// cxt.fillStyle = color[0];
-	// cxt.fillRect(0, 0, c.width, c.height);
-	
-	//	draw all
-	var img = new Image()
-	img.src=g_img['bg'].src;
-	if ( x== undefined) {
-		cxt.drawImage(img,0,0)
-	}else{
-		//	draw(x,y,w,h)
-		cxt.drawImage(img,x,y,w,h,x,y,w,h)
-	}
-	
+function drawBg(x, y, w, h) {
+    // cxt.fillStyle = color[0];
+    // cxt.fillRect(0, 0, canvas.width, canvas.height);
+
+    //	draw all
+    var img = new Image();
+    img.src = res.img.bg.src;
+    if (x == undefined) {
+        cxt.drawImage(img, 0, 0)
+    } else {
+        //	draw(x,y,w,h)
+        cxt.drawImage(img, x, y, w, h, x, y, w, h)
+    }
+
 }
 
 function drawGoal() {
-	var x = conf.goalm.x;
-	var y = conf.goalm.y;
-	var g = Goal[Mission];
+    var x = conf.goalm.x;
+    var y = conf.goalm.y;
+    var g = Goal[Mission];
 
-	// holder
-	var gradient = cxt.createLinearGradient(50, 50,  330 ,500);
-	for (var i=0; i<0.9; i+=0.05){
-		gradient.addColorStop(i, "#987335");
-		gradient.addColorStop(i+0.025, "#5E4925");
-	}
-	// cxt.fillStyle = "#5E4925";
-	cxt.fillStyle = gradient;
-	cxt.fillRect(conf.goalm.x + conf.cell.x * 6, conf.goalm.y - 35, 15, 500);
-	for (i = 1; i < 7; i++) {
-		cxt.fillRect(conf.goalm.x, conf.goalm.y + conf.cell.y * (i * 2 - 1), conf.cell.x * 6, 15);
-	}
+    // holder
+    var gradient = cxt.createLinearGradient(50, 50, 330, 500);
+    for (var i = 0; i < 0.9; i += 0.05) {
+        gradient.addColorStop(i, "#987335");
+        gradient.addColorStop(i + 0.025, "#5E4925");
+    }
+    // cxt.fillStyle = "#5E4925";
+    cxt.fillStyle = gradient;
+    cxt.fillRect(conf.goalm.x + conf.cell.x * 6, conf.goalm.y - 35, 15, 500);
+    for (i = 1; i < 7; i++) {
+        cxt.fillRect(conf.goalm.x, conf.goalm.y + conf.cell.y * (i * 2 - 1), conf.cell.x * 6, 15);
+    }
 
-	// conf.cell
-	cxt.fillStyle = '#000';
-	cxt.font = "30px 'Comic Sans MS'";
-	cxt.fillText("Goal:", x, y - 30);
-	cxt.fillText("Yours:", 300, y - 30);
-	cxt.fillText("Code:", 530, y - 30);
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			cxt.fillStyle = color[g[i][j]];
-			cxt.strokeStyle = color[g[i][j]];
-			if (g[i][j] != 0) {
-				//cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
-				drawcell(j * conf.cell.x + x, i * conf.cell.y * 2 + y, g[i][j]);
-			} else {
-				// cxt.strokeRect(j * conf.cell.x + x, i * conf.cell.y * 2 + y, conf.cell.x, conf.cell.y);
-			}
-		}
-	}
+    // conf.cell
+    cxt.fillStyle = '#000';
+    cxt.font = "30px 'Comic Sans MS'";
+    cxt.fillText("Goal:", x, y - 30);
+    cxt.fillText("Yours:", 300, y - 30);
+    cxt.fillText("Code:", 530, y - 30);
+    for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+            cxt.fillStyle = color[g[i][j]];
+            cxt.strokeStyle = color[g[i][j]];
+            if (g[i][j] != 0) {
+                //cxt.fillRect(j*conf.cell.x+x,i*conf.cell.y*2+y,conf.cell.x,conf.cell.y);
+                drawcell(j * conf.cell.x + x, i * conf.cell.y * 2 + y, g[i][j]);
+            } else {
+                // cxt.strokeRect(j * conf.cell.x + x, i * conf.cell.y * 2 + y, conf.cell.x, conf.cell.y);
+            }
+        }
+    }
 }
 
 //	刷新图像
-function freshMap(x) { 
-	if (missionList.has) return;
-	costime++;
-	state.draw();
+function freshMap(x) {
+    if (missionList.has) return;
+    costime++;
+    state.draw();
 
-	// 首次进入从关卡进入游戏主界面，需要刷新非舞台区
-	if (x == 1) { 
-		drawBg();
-		drawGoal();
-		runs.draw();
-	}
+    // 首次进入从关卡进入游戏主界面，需要刷新非舞台区
+    if (x == 1) {
+        drawBg();
+        drawGoal();
+        runs.draw();
+    }
 }
 
 function clearFlash() {
-	clearInterval(g_ctime);
-	log('clearFlash.')
+    clearInterval(g_ctime);
+    log('clearFlash.')
 }
 
-// ID of (e.x,e.y) in Map: start(x,y),per(r,c), there are m in one line 
-function getClickId(e, x, y, r, c, m) { 
-	
-	//alert(e.clientX+","+e.clientY);
-	var i = Math.floor((e.clientX - eid("canvas").offsetLeft - x) / r) + 1;
-	var j = Math.floor((e.clientY - eid("canvas").offsetTop - y) / c) + 1;
-	//alert(i+','+j);
-	
-	eid("canvas").style.cursor = 'default';
-	var ttt = (j - 1) * m + i;
-	//alert(ttt);
-	
-	if (ttt > 0 && ttt <= missionList.tot) {
+/**
+ * ID of (e.x,e.y) in Map: start(x,y),per(r,canvas), there are m in one line
+ * @param e
+ * @param x
+ * @param y
+ * @param r
+ * @param c
+ * @param m
+ * @returns {number}
+ */
+function getClickId(e, x, y, r, c, m) {
 
-		//	清除因选关卡而设置的点击事件
-		eid("canvas").onclick = function() {
-			null;
-		};
+    //alert(e.clientX+","+e.clientY);
+    var i = Math.floor((e.clientX - canvas.offsetLeft - x) / r) + 1;
+    var j = Math.floor((e.clientY - canvas.offsetTop - y) / c) + 1;
+    //alert(i+','+j);
 
-		return ttt;
-	} else {
-		//	return getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.c*2,5);
-	}
+    canvas.style.cursor = 'default';
+    var ttt = (j - 1) * m + i;
+    //alert(ttt);
+
+    if (ttt > 0 && ttt <= missionList.tot) {
+
+        //	清除因选关卡而设置的点击事件
+        canvas.onclick = function () {
+            null;
+        };
+
+        return ttt;
+    } else {
+        //	return getClickId(e,missionList.x,missionList.y,missionList.r*2,missionList.canvas*2,5);
+    }
 }
 
 function log(t) {
-	if (conf.Debug == true) 
-		console.log(t);
+    if (conf.Debug == true)
+        console.log(t);
 }
 
 function message(t) {
-	m = eid("msgbox");
-	m.getElementsByTagName("div")[0].innerHTML = t;
-	m.style.display = 'block';
-	m.style.left = (document.body.clientWidth - m.offsetWidth) / 2;
+    m = eid("msgbox");
+    m.getElementsByTagName("div")[0].innerHTML = t;
+    m.style.display = 'block';
+    m.style.left = (document.body.clientWidth - m.offsetWidth) / 2;
 }
 
 function preload() {
-	for (i = 0; i < imgfile.length; i++) {
-		var a = new Image();
-		a.src = "img/" + imgfile[i];
-	}
-	g_img['hello'] = new Image()
-	g_img['hello'].src ='img/hello.jpg'
+    for (i = 0; i < imgFile.length; i++) {
+        var a = new Image();
+        a.src = "img/" + imgFile[i];
+    }
 
-	g_img['bg'] = new Image()
-	g_img['bg'].src ='img/bg.jpg'
+    var list = ['hello', 'bg'];
+
+    for (var id in list) {
+        var name = list[id];
+        res.img[name] = new Image();
+        res.img[name].src = 'img/' + name + '.jpg';
+    }
 }
-setTimeout(preload,0);
+preload();
 
 function showhelp() {
-	txt = "";
-	//alert(txt);
-	message(txt);
+    var txt = "";
+    //alert(txt);
+    message(txt);
 }
 
 function eid(x) {
-	return document.getElementById(x);
+    return document.getElementById(x);
 }
 
 function ename(x) {
-	return document.getElementsByName(x)[0];
+    return document.getElementsByName(x)[0];
 }
 
 var zpp = {
-	'includejs': function(filename) {
-		document.write("<script type='text/javascript' src='" + filename + "'></script>");
-	}
+    'includejs': function (filename) {
+        document.write("<script type='text/javascript' src='" + filename + "'></script>");
+    }
 }
 
 
@@ -220,18 +234,38 @@ function sprintf() {
                 throw('Expecting number but found ' + typeof(a));
             }
             switch (m[7]) {
-                case 'b': a = a.toString(2); break;
-                case 'c': a = String.fromCharCode(a); break;
-                case 'd': a = parseInt(a); break;
-                case 'e': a = m[6] ? a.toExponential(m[6]) : a.toExponential(); break;
-                case 'f': a = m[6] ? parseFloat(a).toFixed(m[6]) : parseFloat(a); break;
-                case 'o': a = a.toString(8); break;
-                case 's': a = ((a = String(a)) && m[6] ? a.substring(0, m[6]) : a); break;
-                case 'u': a = Math.abs(a); break;
-                case 'x': a = a.toString(16); break;
-                case 'X': a = a.toString(16).toUpperCase(); break;
+                case 'b':
+                    a = a.toString(2);
+                    break;
+                case 'c':
+                    a = String.fromCharCode(a);
+                    break;
+                case 'd':
+                    a = parseInt(a);
+                    break;
+                case 'e':
+                    a = m[6] ? a.toExponential(m[6]) : a.toExponential();
+                    break;
+                case 'f':
+                    a = m[6] ? parseFloat(a).toFixed(m[6]) : parseFloat(a);
+                    break;
+                case 'o':
+                    a = a.toString(8);
+                    break;
+                case 's':
+                    a = ((a = String(a)) && m[6] ? a.substring(0, m[6]) : a);
+                    break;
+                case 'u':
+                    a = Math.abs(a);
+                    break;
+                case 'x':
+                    a = a.toString(16);
+                    break;
+                case 'X':
+                    a = a.toString(16).toUpperCase();
+                    break;
             }
-            a = (/[def]/.test(m[7]) && m[2] && a >= 0 ? '+'+ a : a);
+            a = (/[def]/.test(m[7]) && m[2] && a >= 0 ? '+' + a : a);
             c = m[3] ? m[3] == '0' ? '0' : m[3].charAt(1) : ' ';
             x = m[5] - String(a).length - s.length;
             p = m[5] ? str_repeat(c, x) : '';

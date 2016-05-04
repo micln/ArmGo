@@ -9,7 +9,11 @@ Programming the copes to leading the arm to move the cells, achieve the goal sta
 
 http://armgo.coding.io
 
+## Install
 
+```
+bower install
+```
 
 ## Thanks
 

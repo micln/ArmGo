@@ -1,152 +1,138 @@
-body{
-	text-align: center;
-	overflow: hidden;
+#game #msgbox {
+    position: absolute;
+    background: #4EC5E8;
+    border: 10px solid #008BFF;
+    border-radius: 20px;
+    left: 500;
+    top: 120px;
+    width: 366;
+    height: 240;
+    padding: 0px 10px;
+    display: none;
+    z-index: 10;
+    text-align: center;
 }
 
-#game{
+#game #msgbox > a {
+    position: relative;
+    top: 200;
+    border: 1px solid rgba(0, 110, 255, 0.44);
+    border-radius: 5px;
+    cursor: hand;
+    padding: 5px 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#game a#msgok:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+#game #helptxt {
+    display: none;
+}
+
+#game #runs {
+    position: absolute;
+}
+
+#game .toola {
+    float: left;
+}
+
+#game #toolslc {
+    display: none;
+    position: absolute;
+    border: 4px solid #1b43e1;
+    background-color: #fff;
+    width: 163px;
+    padding: 8px;
+}
+
+#game #toolslcifs {
+    display: none;
+    position: absolute;
+    border: 4px solid #1b43e1;
+    background-color: #fff;
+    width: 150px;
+    padding: 8px;
+}
+
+#game #toolslcifs .toolifs {
+    float: left;
+    border: 1px solid;
+    margin: 3px;
+}
+
+#game .toolifs {
+    width: 35px;
+    height: 24.5px;
+    cursor: hand;
+}
+
+#game .tool {
+    float: left;
+    width: 35px;
+    height: 35px;
+    cursor: hand;
+}
+
+#game #toolslc .tool {
+    margin: 5px;
+}
+
+#game .tool:hover {
+    outline: 4px solid #00C7FF;
+}
+
+#game .toolifs:hover {
+    outline: 4px solid #ff8100;
+}
+
+#game input[type='button'] {
+    cursor: hand;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #C7C7C7;
+    background: linear-gradient(to bottom, #FFFFFF 0, #B6B6B6 100%);
+    border-radius: 3px;
+    position: absolute;
+}
+
+#game input[type='button']:hover {
+    background: #bbb;
+}
+
+#game #btn_start {
+    background: linear-gradient(to bottom, #42B600 0, #034700 100%);
+    width: 120px;
+    height: 80px;
+    color: #fff;
+    font-size: 40px;
+    border-radius: 15px;
+    border: 0px;
+}
+
+#game #btn_start:hover {
+    background: #034700;
+}
+
+#game .zhide {
+    display: none;
+}
+
+#game span.scorestar {
+    font-size: 60px;
+    color: #FF0;
+    text-shadow: 0px 8px 10px #F7C810;
+    -webkit-animation: bianxiao 800ms;
 
 }
 
-#msgbox{
-	position: absolute;
-	background: #4EC5E8;
-	border: 10px solid #008BFF;
-	border-radius: 20px;
-	left: 500;
-	top: 120px;
-	width: 366;
-	height: 240;
-	padding: 0px 10px;
-	display: none;
-	z-index: 10;
-	text-align: center;
-}
-
-#msgbox>a{
-	position: relative;
-	top: 200;
-	border: 1px solid rgba(0, 110, 255, 0.44);
-	border-radius: 5px;
-	cursor: hand;
-	padding: 5px 20px;
-	background-color: rgba(255, 255, 255, 0.5);
-}
-
-a#msgok:hover{
-	background-color: rgba(255, 255, 255, 0.6);
-}
-
-#helptxt{
-	display: none;
-}
-
-canvas{
-	border: 1px solid #919191;
-	box-shadow: 0px 0px 5px 1px #030303;
-	margin-bottom: 800px;
-	background-image: url('img/hello.jpg');
-}
-
-#runs{
-	position: absolute;
-}
-
-.toola{
-	float: left;
-}
-
-#toolslc{
-	display: none;
-	position: absolute;
-	border:	4px solid #1b43e1;
-	background-color: #fff;
-	width: 143px;
-	padding-left: 8px;
-	padding-top: 8px;
-}
-
-#toolslcifs{
-	display: none;
-	position: absolute;
-	border:	4px solid #1b43e1;
-	background-color: #fff;
-	width: 150px;
-	height: 110px;
-	padding-left: 8px;
-	padding-top: 8px;
-}
-
-#toolslcifs .toolifs{
-	float: left;
-	border: 1px solid;
-	margin: 3px;
-}
-
-.toolifs{
-	width: 35px;
-	height: 24.5px;
-	cursor: hand;
-}
-
-.tool{
-	float: left;
-	width: 35px;
-	height: 35px;
-	cursor: hand;
-}
-
-#toolslc .tool{
-	margin: 5px;
-}
-
-.tool:hover{
-	outline: 4px solid #00C7FF;
-}
-
-.toolifs:hover{
-	outline: 4px solid #ff8100;
-}
-
-input[type='button']{
-	cursor: hand;
-	height: 35px;
-	text-align: center;
-	border: 1px solid #C7C7C7;
-	background: linear-gradient(to bottom,#FFFFFF 0,#B6B6B6 100%);
-	border-radius: 3px;
-	position: absolute;
-}
-
-input[type='button']:hover{
-	background: #bbb;
-}
-
-#btn_start{
-	background: linear-gradient(to bottom,#42B600 0,#034700 100%);
-	width: 120px;
-	height: 80px;
-	color: #fff;
-	font-size: 40px;
-	border-radius: 15px;
-	border: 0px;
-}
-
-#btn_start:hover{
-	background: #034700;
-}
-
-.zhide{
-	display: none;
-}
-
-span.scorestar{
-	font-size: 60px;
-	  color: #FF0;
-	  text-shadow: 0px 8px 10px #F7C810;
-	-webkit-animation:bianxiao 800ms;
-
-}
-@keyframes bianxiao{
-	from{font-size: 500px}
-	to{font-size: 60px}
+@keyframes bianxiao {
+    from {
+        font-size: 500px
+    }
+    to {
+        font-size: 60px
+    }
 }
