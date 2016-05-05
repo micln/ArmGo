@@ -116,11 +116,7 @@
     background: #034700;
 }
 
-#game .zhide {
-    display: none;
-}
-
-#game span.scorestar {
+#game span.score-star {
     font-size: 60px;
     color: #FF0;
     text-shadow: 0px 8px 10px #F7C810;

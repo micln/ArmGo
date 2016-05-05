@@ -21,20 +21,18 @@ function COPE(v) {
 
     /**
      * 绘制指令块
-     * @param x 坐标，相对画布
-     * @param y
-     * @param v 指令信息
-     * @param r 可选。指令块大小，默认为 this.width
-     * @param c
+     * @param left 左上角坐标，相对画布
+     * @param top
+     * @param val 指令信息
+     * @param width 可选。指令块大小，默认为 this.width
+     * @param height
      */
-    this.draw = function (x, y, v, r, c) {
-        var img = new Image();
-        img.src = "img/" + imgFile[v];
-        if (r == undefined) {
-            // cxt.drawImage(img,x,y,cope.width,cope.height);
-            cxt.drawImage(img, x + cope.width * 0.02, y + cope.height * 0.02, cope.width * 0.96, cope.height * 0.96);
+    this.draw = function (left, top, val, width, height) {
+        var img = res.img[val];
+        if (width == undefined) {
+            cxt.drawImage(img, left + cope.width * 0.02, top + cope.height * 0.02, cope.width * 0.96, cope.height * 0.96);
         } else {
-            cxt.drawImage(img, x, y, r, c);
+            cxt.drawImage(img, left, top, width, height);
         }
     }
 
@@ -44,7 +42,7 @@ function COPE(v) {
      *  参数：
      *      同上
      */
-    this.drawifs = function (x, y, v) {
+    this.drawIfs = function (x, y, v) {
         cxt.fillStyle = color[v];
         cxt.beginPath();
         cxt.moveTo(x, y);
@@ -53,7 +51,7 @@ function COPE(v) {
         cxt.lineTo(x + 35, y);
         cxt.closePath();
         cxt.fill();
-    }
+    };
 
     /**
      *  绘制循环的数字

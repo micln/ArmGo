@@ -3,6 +3,12 @@
     <title>Armgo - 编程</title>
     <link rel="stylesheet" href="bower/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower/sweetalert/dist/sweetalert.css">
+
+    <link rel="stylesheet" href="bower/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="bower/codemirror/addon/fold/foldgutter.css">
+    <link rel="stylesheet" href="bower/codemirror/addon/dialog/dialog.css">
+    <link rel="stylesheet" href="bower/codemirror/theme/monokai.css">
+
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
@@ -18,13 +24,16 @@
         <? require('game.php'); ?>
     </div>
     <div class="col-md-4">
-            <pre id='codepad' style="max-height: 90%;overflow-y: auto;"></pre>
+        <textarea id='codepad' style="overflow-y: auto;"></textarea>
     </div>
 </div>
 
 <script src="bower/jquery/dist/jquery.min.js"></script>
 <script src="bower/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="bower/codemirror/lib/codemirror.js"></script>
+<script src="bower/codemirror/mode/clike/clike.js"></script>
 
 <script src="lib/jquery-plus.js"></script>
 
@@ -43,6 +52,7 @@
 <script type="text/javascript" src="modules/toolbar.js"></script>
 <script type="text/javascript" src="modules/runs.js"></script>
 <script type="text/javascript" src="modules/hello.js"></script>
+<script type="text/javascript" src="modules/codepad.js"></script>
 <!-- 初始化游戏 -->
 <script type="text/javascript" src="armgo.js"></script>
 </body>

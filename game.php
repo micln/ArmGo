@@ -22,16 +22,15 @@
     </div>
     <div id="controlBar">
         <!--	<input id="" style='display:initial' name="" type="button" onClick="showhelp();" value="查看帮助 (Help)"> -->
-        <input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择" class='zhide'>
-        <input id="btn_Refresh" name="" type="button" onClick="runs.restart()" value="重新开始" class='zhide'>
-        <input id="btn_start" name="" type="button" onClick="runs.start();" value="Go!" class='zhide'>
-        <input id="btn_save" name="" type="button" onClick="runs.store.save();" value="Save" class='zhide'>
-        <input id="btn_load" name="" type="button" onClick="runs.store.load();" value="Load" class='zhide'>
+        <input id="btn_goMission" name="" type="button" onClick="missionList.show();" value="关卡选择">
+        <input id="btn_Refresh" name="" type="button" onClick="runs.restart()" value="重新开始">
+        <input id="btn_start" name="" type="button" onClick="runs.start();" value="Go!">
+        <input id="btn_save" name="" type="button" onClick="runs.store.save();" value="Save">
+        <input id="btn_load" name="" type="button" onClick="runs.store.load();" value="Load">
     </div>
 
     <div style="position: fixed; right:0px; top: 0px; bottom: 0px;" class='zhide'>
-        <span onclick='this.parentNode.classList.add("zhide")'
-              style="float: right;width: 20px;height: 20px;text-align: center;background-color: #F00;color: #fff;cursor: pointer;">X</span>
+        <span class="x-close-parent" style="float: right;width: 20px;height: 20px;text-align: center;background-color: #F00;color: #fff;cursor: pointer;">X</span>
     </div>
 
 </div>

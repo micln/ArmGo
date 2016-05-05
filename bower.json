@@ -10,6 +10,7 @@
   "dependencies": {
     "jquery": "~2.*",
     "sweetalert": "*",
+    "codemirror": "*",
     "bootstrap": "~3.3.*"
   }
 }

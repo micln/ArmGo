@@ -4,17 +4,27 @@
  */
 function TOOLBAR() {
     var that = this;
-    this.selectDom = eid("toolslc");
-    this.selectIfDom = eid("toolslcifs");
-    this.selected = 0;
+
+    this.selectDom = $id("toolslc");
+    this.selectIfDom = $id("toolslcifs");
+    this.selectedCope = 0;
     this.init = function (p) {
-        this.selected = 0;
+        this.selectedCope = 0;
 
         //	初始化指令工具栏
         for (var i = 0; i < 8; i++) {
-            $('<div>', {class: 'tool'})
-                .css('background', "url('img/" + imgFile[i] + "')")
+            $('<div>', {class: 'tool', toolId: i})
+                .css('background', "url('" + res.img[i].src + "')")
                 .css('backgroundSize', "35px 35px")
+                .click(function () {
+                    var x = that.selectedCope.x;
+                    var y = that.selectedCope.y;
+
+                    runs.tasks[x][y - 1] = Number(this.getAttribute('toolId'));
+                    runs.draw();
+
+                    that.hide();
+                })
                 .appendTo(this.selectDom);
         }
 
@@ -24,14 +34,43 @@ function TOOLBAR() {
                 class: 'toolifs',
                 toolId: i
             }).css('backgroundColor', color[i])
+                .click(function () {
+                    var x = that.selectedCope.x;
+                    var y = that.selectedCope.y;
+
+                    runs.ifs[x][y - 1] = Number(this.getAttribute('toolId'));
+                    runs.draw();
+                    that.hide();
+                })
                 .appendTo(this.selectIfDom);
         }
 
         //	初始化循环工具栏
-        var newson = document.createElement("div");
-        newson.className = "toolifs";
-        newson.innerHTML = "loop";
-        this.selectIfDom.appendChild(newson);
+        $('<div>', {
+            class: 'toolifs',
+            text: 'loop',
+        })
+            .click(function () {
+                var x = that.selectedCope.x;
+                var y = that.selectedCope.y;
+
+
+                //fyh
+                swal({
+                    title: "ArmGo!",
+                    text: "Please input a integer:",
+                    type: "input",
+                    closeOnConfirm: true,
+                }, function (inputValue) {
+                    var lp = Number(inputValue);
+                    if (!lp||lp<0) lp = 1;
+                    runs.loops[x][y - 1] = lp;
+                    runs.draw();
+                    that.hide();
+                    return false;
+                });
+            })
+            .appendTo(this.selectIfDom);
 
         this.selectDom.style.zIndex = 10;
         this.selectIfDom.style.zIndex = 10;
@@ -39,84 +78,42 @@ function TOOLBAR() {
     this.init();
 
     this.hide = function (x) {
-        this.selectDom.style.display = 'none';
-        this.selectIfDom.style.display = 'none';
+        $(this.selectDom).hide();
+        $(this.selectIfDom).hide();
     }
 
-    this.show = function (x, y) {
+    this.show1 = function (x, y) {
         this.hide();
-        this.selectDom.style.left = x;
-        this.selectDom.style.top = y;
-        this.selectDom.style.display = 'block';
+        $(this.selectDom).css('left', x);
+        $(this.selectDom).css('top', y);
+        $(this.selectDom).show();
     }
 
     this.show2 = function (x, y) {
         this.hide();
-        this.selectIfDom.style.left = x;
-        this.selectIfDom.style.top = y;
-        this.selectIfDom.style.display = 'block';
+        $(this.selectIfDom).css('left', x);
+        $(this.selectIfDom).css('top', y);
+        $(this.selectIfDom).show();
     }
-
-    this.settool = function (v) {
-        this.selected = v;
-        var somes = this.selectDom.getElementsByTagName('div');
-        for (i = 0; i < somes.length; i++) {
-            somes[i].onclick = function () {
-                //eid("cope"+toolbar.selected).style.background = this.style.background;
-                //eid("cope"+toolbar.selected).style.backgroundSize = "35px 35px";
-
-                var x = Math.floor(toolbar.selected / 8);
-                var y = toolbar.selected % 8;
-                if (y == 0) {
-                    x--;
-                    y = 8;
-                }
-                runs.tasks[x][y - 1] = Number(this.getAttribute('toolId'));
-                runs.draw();
-
-                toolbar.hide();
-            }
-        }
-    }
-
 
     /*******************
      *    参数 v = (x-1)*8 + y
      *    换算为数组下标时y -= 1
-     *
      */
-    this.settool2 = function (v) {
+    this.setCope = function (v) {
 
-        this.selected = v;
-
-        var x = Math.floor(toolbar.selected / 8);
-        var y = toolbar.selected % 8;
+        var x = Math.floor(v / 8);
+        var y = v % 8;
         if (y == 0) {
             x--;
             y = 8;
         }
 
-        var somes = this.selectIfDom.getElementsByTagName('div');
-        // for (i = 0; i < somes.length; i++) {
-        for (i = 0; i < color.length; i++) {
-            somes[i].onclick = function () {
-                runs.ifs[x][y - 1] = Number(this.getAttribute('toolId'));
-                runs.draw();
-                toolbar.hide2();
-            }
-        }
-
-        //	setLoops
-        somes[color.length].onclick = function () {
-
-            var lp = prompt('请输入该指令要循环的次数，默认为1', 1);
-            lp = Number(lp);
-            if (lp < 1) lp = 1;
-
-            runs.loops[x][y - 1] = lp;
-            runs.draw();
-            toolbar.hide2();
-        }
+        this.selectedCope = {
+            id: v,
+            x: x,
+            y: y
+        };
     }
 
 }

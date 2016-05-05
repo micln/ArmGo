@@ -1,16 +1,16 @@
 // Global Variables
-var canvas = eid("canvas");
+var canvas = $id("canvas");
 var cxt = canvas.getContext("2d");
 var g_ctime; // arm Go!
 var Mission; // Mission Canvas Object
 var costime;
 var coststep;
 
-var btn_start = eid("btn_start");
-var btn_Mission = eid("btn_goMission");
-var btn_Refresh = eid("btn_Refresh");
-var btn_save = eid("btn_save");
-var btn_load = eid("btn_load");
+var btn_start = $id("btn_start");
+var btn_Mission = $id("btn_goMission");
+var btn_Refresh = $id("btn_Refresh");
+var btn_save = $id("btn_save");
+var btn_load = $id("btn_load");
 var btns = [btn_start, btn_load, btn_save, btn_Refresh];
 
 var res = {
@@ -21,24 +21,24 @@ var res = {
 
 function checkAns() {
     console.log('正在尝试检查答案...')
-    console.log(state.box.toString())
-    console.log(Goal[Mission].toString())
+    // console.log(state.box.toString())
+    // console.log(Goal[Mission].toString())
     if (state.box.toString() == Goal[Mission].toString()) {
-        var costcope = 0;
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 8; j++)
+        var costCope = 0;
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 8; j++)
                 //  不统计跳转指令
                 if (runs.tasks[i][j] <= 3) {
-                    costcope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0);
+                    costCope += (runs.tasks[i][j] != 0) + (runs.ifs[i][j] != 0);
                 }
         }
 
-        var score = 1 + (coststep <= grade[Mission][1]) + (costcope <= grade[Mission][0]);
-        var scoretxt = '<span class="scorestar">★</span>'
-        if (score == 2) scoretxt += scoretxt;
-        if (score == 3) scoretxt += scoretxt + scoretxt;
+        var score = 1 + (coststep <= grade[Mission][1]) + (costCope <= grade[Mission][0]);
+        var scoreTxt = '<span class="score-star">★</span>'
+        if (score == 2) scoreTxt += scoreTxt;
+        if (score == 3) scoreTxt += scoreTxt + scoreTxt;
 
-        message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costcope + " instructions<br>" + scoretxt);
+        message("WIN<hr>" + costime * conf.Fz / 1000 + "s<br>" + coststep + " steps<br>" + costCope + " instructions<br>" + scoreTxt);
 
         //	通知游戏结束
         runs.finish();
@@ -109,17 +109,10 @@ function drawGoal() {
 }
 
 //	刷新图像
-function freshMap(x) {
+function freshMap() {
     if (missionList.has) return;
     costime++;
     state.draw();
-
-    // 首次进入从关卡进入游戏主界面，需要刷新非舞台区
-    if (x == 1) {
-        drawBg();
-        drawGoal();
-        runs.draw();
-    }
 }
 
 function clearFlash() {
@@ -163,20 +156,21 @@ function getClickId(e, x, y, r, c, m) {
 
 function log(t) {
     if (conf.Debug == true)
-        console.log(t);
+        console.trace(t);
 }
 
 function message(t) {
-    m = eid("msgbox");
+    var m = $id("msgbox");
     m.getElementsByTagName("div")[0].innerHTML = t;
     m.style.display = 'block';
     m.style.left = (document.body.clientWidth - m.offsetWidth) / 2;
 }
 
-function preload() {
-    for (i = 0; i < imgFile.length; i++) {
+(function preload() {
+    for (var i = 0; i < imgFile.length; i++) {
         var a = new Image();
         a.src = "img/" + imgFile[i];
+        res.img[i] = a;
     }
 
     var list = ['hello', 'bg'];
@@ -186,27 +180,26 @@ function preload() {
         res.img[name] = new Image();
         res.img[name].src = 'img/' + name + '.jpg';
     }
-}
-preload();
+})();
 
-function showhelp() {
+function showHelp() {
     var txt = "";
     //alert(txt);
     message(txt);
 }
 
-function eid(x) {
+function $id(x) {
     return document.getElementById(x);
-}
-
-function ename(x) {
-    return document.getElementsByName(x)[0];
 }
 
 var zpp = {
     'includejs': function (filename) {
         document.write("<script type='text/javascript' src='" + filename + "'></script>");
     }
+};
+
+function delay(fn) {
+    setTimeout(fn, 0);
 }
 
 
@@ -278,3 +271,9 @@ function sprintf() {
     }
     return o.join('');
 }
+
+$(document).ready(function () {
+    $('.x-close-parent').click(function () {
+        $(this).parent().hide();
+    });
+});

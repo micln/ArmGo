@@ -28,7 +28,7 @@
  */
 function RUNS() {
     var that = this;
-    this.dom = eid("runs");
+    this.dom = $id("runs");
     this.x = state.x + conf.cell.x * 8;
     this.y = state.y - conf.cell.y + cope.height * 0.7;
     this.r = cope.width * 9;
@@ -83,13 +83,13 @@ function RUNS() {
         if (xxx == 1) {
             this.genHTMLToolbar()
         }
-    }
+    };
 
     //	第一次启动游戏时，生成输入位置的选择框。只应该调用一次
     this.genHTMLToolbar = function () {
         // alert(3);
-        for (i = 0; i < 4; i++) {
-            for (j = 1; j < 9; j++) {
+        for (var i = 0; i < 4; i++) {
+            for (var j = 1; j < 9; j++) {
 
                 // toolifs + tool
                 var toolAll = $('<div>', {class: 'toola'});
@@ -99,7 +99,7 @@ function RUNS() {
                     class: 'toolifs',
                     copeId: i * 8 + j
                 }).click(function (e) {
-                    that.settoolifs(e, this.getAttribute("copeId"));
+                    that.showToolIfs(e, this.getAttribute("copeId"));
                 }).appendTo(toolAll);
 
                 // tool
@@ -108,7 +108,7 @@ function RUNS() {
                 newson2.setAttribute("copeId", i * 8 + j);
                 newson2.setAttribute('id', 'cope' + (i * 8 + j));
                 newson2.onclick = function (e) {
-                    runs.settool(e, this.getAttribute('copeId'));
+                    that.showTools1(e, this.getAttribute('copeId'));
                 }
                 toolAll.append(newson2);
                 $(this.dom).append(toolAll);
@@ -118,43 +118,43 @@ function RUNS() {
             }
         }
 
-        placegrids();
+        placeGrids();
 
         that.dom.style.display = 'none';
         that.dom.style.width = cope.width * 8;
-    }
-    function placegrids() {
+    };
+
+    function placeGrids() {
         that.dom.style.left = that.x + cope.width + canvas.offsetLeft + 1;
         that.dom.style.top = that.y + canvas.offsetTop - cope.height * 0.7;
     }
 
     window.addEventListener('resize', function () {
-        placegrids();
+        placeGrids();
     });
 
-    this.settool = function (e, v) {
-        toolbar.show(e.clientX, e.clientY + 10 - $(canvas).top());
-        toolbar.settool(v);
+    this.showTools1 = function (e, v) {
+        toolbar.show1(e.clientX, e.clientY + 10 - $(canvas).top());
+        toolbar.setCope(v);
     }
 
-    this.settoolifs = function (e, v) {
+    this.showToolIfs = function (e, v) {
         toolbar.show2(e.clientX, e.clientY + 10 - $(canvas).top());
-        toolbar.settool2(v);
+        toolbar.setCope(v);
     }
 
     this.draw = function () {
-        console.log('runs.draw')
-        for (i = 0; i < 4; i++) {
-            for (j = 1; j < 9; j++) {
+        console.trace('runs.draw');
+        for (var i = 0; i < 4; i++) {
+            for (var j = 1; j < 9; j++) {
 
                 //	绘制指令块
                 cope.draw(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.tasks[i][j - 1]);
 
                 // 绘制条件指令块
                 if (this.ifs[i][j - 1] != 0) {
-                    cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.ifs[i][j - 1]);
+                    cope.drawIfs(this.x + cope.width * j, this.y + cope.height * i * 1.7, this.ifs[i][j - 1]);
                 } else {
-                    // cope.drawifs(this.x + cope.width * j, this.y + cope.height * i * 1.7, 0);
                     drawBg(this.x + cope.width * j, this.y + cope.height * i * 1.7 - cope.height * 0.7, cope.width, cope.height * 0.7)
                 }
 
@@ -165,21 +165,23 @@ function RUNS() {
 
                 if (i == 3 && j == 5) break;
             }
+
+            // 最坐标的数字图标
             cope.draw(this.x, this.y + cope.height * i * 1.7, i + 4, cope.width, cope.height);
         }
 
         //	用来选中的格子
-        this.dom.style.display = 'block';
-    }
+        $(this.dom).show();
+    };
     this.hide = function () {
         this.dom.style.display = 'none';
-    }
+    };
 
     //	运行(v,i)
     this.run = function (pos, condition) {
 
-        this.run2()
-        return
+        this.run2();
+        return;
 
         //  得到此位置的循环数
         var lpn = this.loops[pos.v][pos.i];
@@ -408,7 +410,7 @@ function RUNS() {
     //  机器终止运行
     this.stop = function () {
         this.finish(1);
-    }
+    };
 
     //  持久化组件
     this.store = {
@@ -418,15 +420,15 @@ function RUNS() {
             localStorage.setItem("armgo_runs_ifs_" + Mission, JSON.stringify(that.ifs));
             localStorage.setItem("armgo_runs_loops_" + Mission, JSON.stringify(that.loops));
 
-            console.log("Save:");
-            console.log(localStorage);
+            console.log("Saved.");
+            // console.log(localStorage);
         },
 
         load: function () {
 
             //  尝试获取指令
-            t = "armgo_runs_" + Mission;
-            res = eval("(" + localStorage.getItem(t) + ")");
+            var t = "armgo_runs_" + Mission;
+            var res = eval("(" + localStorage.getItem(t) + ")");
             if (res != null) {
                 that.tasks = res;
 
@@ -446,7 +448,7 @@ function RUNS() {
             }
 
             //  绘制指令区
-            runs.draw();
+            that.draw();
         }
     }
 
@@ -471,19 +473,18 @@ function RUNS() {
         }
 
         if (that.ifs[x][y] > 0) {
-            ret.push(sprintf('if (condition[%d][%d] == hand ) {', x, y));
-            defer.pish('}');
+            ret.push(sprintf('if (condition[%d][%d] == "%s") {', x, y, color[that.ifs[x][y]]));
+            defer.push('}');
         }
 
-        var tmp = '';
         var hash = {
             1: 'moveRight();',
             2: 'moveUp();',
             3: 'moveDown();',
-            4: 'func1();',
-            5: 'func2();',
-            6: 'func3();',
-            7: 'func4();'
+            4: 'prog1();',
+            5: 'prog2();',
+            6: 'prog3();',
+            7: 'prog4();'
         }
 
         ret.push(hash[that.tasks[x][y]]);
@@ -491,50 +492,45 @@ function RUNS() {
         var rets = '';
 
         for (var i = 0; i < ret.length; i++) {
-// 			rets += '\t'.repeat(i+indent) + ret[i] + '\n';
-            rets += repeatstr('\t', i + indent) + ret[i] + '\n';
+            rets += strRepeat('\t', i + indent) + ret[i] + '\n';
 
         }
         for (var i = defer.length - 1; i >= 0; i--) {
-// 			rets += '\t'.repeat(i+indent) + defer[i] + '\n';
-            rets += repeatstr('\t', i + indent) + defer[i] + '\n';
+            rets += strRepeat('\t', i + indent) + defer[i] + '\n';
         }
         return rets;
 
     }
     this.genCodePROG = function (idx) {
-
-        var rets = sprintf('void func%d() {\n', idx + 1);
-        for (var i = 0; i < that.tasks[idx].length && that.tasks[idx][i] > 0; i++) {
+        var rets = '';
+        for (var i = 0; i < that.tasks[idx].length; i++) if (that.tasks[idx][i] > 0) {
             rets += that.genCodeOne({x: idx, y: i, indent: 1});
         }
-        return rets + '}\n\n';
-    }
+        if (rets)
+            rets = sprintf('void prog%d() {\n', idx + 1) + rets + '}\n\n';
+        return rets;
+    };
 
     this.genCode = function () {
 
-        var rets = '';
+        var rets = '#inlcude "armgo.h"\n\n';
 
         for (var i = 0; i < 4; i++) {
             rets += that.genCodePROG(i);
         }
 
-        rets += sprintf('int main(){\n\tfunc1();\n\treturn 0;\n}\n');
+        rets += sprintf('int main(){\n\tprog1();\n\treturn 0;\n}\n');
         return rets;
     }
 
     this.showCode = function () {
-
-        var cpad = eid('codepad');
-        cpad.innerHTML = that.genCode();
-
-        cpad.parentNode.classList.remove('zhide');
-    }
+        codepad.showCode(this.genCode());
+    };
 
     this.init(1);
 }
 
-function repeatstr(a, num) {
+function strRepeat(a, num) {
     var ret = '';
     for (var i = 0; i < num; i++)
         ret += a;

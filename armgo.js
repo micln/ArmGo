@@ -7,3 +7,6 @@ var missionList = new MISSIONLIST();
 var runs = new RUNS();
 var toolbar = new TOOLBAR();
 
+$(document).ready(function () {
+    // initLevel(1);
+});
