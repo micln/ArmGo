@@ -5,7 +5,8 @@
 
 function HelloUI() {
     this.draw = function () {
-        canvas.style.cursor = 'catched';
+
+        canvas.style.cursor = 'hand';
 
         delay(function () {
             cxt.drawImage(resources.img.hello, 0, 0);

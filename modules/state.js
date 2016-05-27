@@ -19,20 +19,20 @@ function StageClass() {
 	}
 
 	//  初始化箱子显示区的状态
-	this.init = function (v) {
+	this.init = function (level) {
 		for (i = 0; i < 6; i++) {
 			this.box[i] = [];
 			for (j = 0; j < 6; j++) {
-				this.box[i][j] = startM[currentLevel][i][j];
+				this.box[i][j] = startM[level][i][j];
 			}
 		}
 		arm.init();
 		this.draw();
-	}
+	};
 
 	this.clear = function () {
 
-	}
+	};
 
 	this.draw = function () {
 		var x = this.x;

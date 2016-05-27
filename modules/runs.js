@@ -61,13 +61,13 @@ function CodeCenterClass() {
          *      Stack
          *
          *          [[x,y,f],...]
-         *                (x,y)    :    Postion
+         *                (x,y)    :    Position
          *                f        :    Loops
          *
          */
         this.stack = [];
         this.stackLen = 0;
-    }
+    };
     this.clear();
 
     /**
@@ -94,7 +94,7 @@ function CodeCenterClass() {
                 // toolifs + tool
                 var toolAll = $('<div>', {class: 'toola'});
 
-                // toolifs
+                // toolIfs
                 $('<div>', {
                     class : 'toolifs',
                     copeId: i * 8 + j
@@ -103,14 +103,14 @@ function CodeCenterClass() {
                 }).appendTo(toolAll);
 
                 // tool
-                var newson2       = document.createElement('div');
-                newson2.className = 'tool';
-                newson2.setAttribute("copeId", i * 8 + j);
-                newson2.setAttribute('id', 'cope' + (i * 8 + j));
-                newson2.onclick = function (e) {
+                $('<div>', {
+                    class : 'tool',
+                    copeId: i * 8 + j,
+                    id    : 'cope' + (i * 8 + j)
+                }).click(function (e) {
                     o.showTools1(e, this.getAttribute('copeId'));
-                };
-                toolAll.append(newson2);
+                }).appendTo(toolAll);
+
                 $(this.dom).append(toolAll);
 
                 //  第4行只有5个指令
@@ -120,13 +120,13 @@ function CodeCenterClass() {
 
         placeGrids();
 
-        o.dom.style.display = 'none';
-        o.dom.style.width   = cope.width * 8;
+        $(o.dom).hide();
     };
 
     function placeGrids() {
-        o.dom.style.left = o.x + cope.width + canvas.offsetLeft + 1;
-        o.dom.style.top  = o.y + canvas.offsetTop - cope.height * 0.7;
+        $(o.dom).css('left', o.x + cope.width + canvas.offsetLeft + 1)
+            .css('top', o.y + canvas.offsetTop - cope.height * 0.7)
+            .width(cope.width * 8);
     }
 
     window.addEventListener('resize', function () {
@@ -186,13 +186,13 @@ function CodeCenterClass() {
         //  得到此位置的循环数
         var lpn = this.loops[pos.v][pos.i];
 
-        console.log('[Try ] %d,%d Loop(%d)', pos.v, pos.i, lpn)
+        console.log('[Try ] %d,%d Loop(%d)', pos.v, pos.i, lpn);
 
         while (lpn--) {
 
             if (!arm.isRunning) return;
 
-            console.log('[Do  ] %d,%d', pos.v, pos.i)
+            console.log('[Do  ] %d,%d', pos.v, pos.i);
 
             //  如果递归超过this.stackLim次，认为是死循环
             if (pos.i == 0 && ++this.stackLen > this.stackLim) return;
@@ -213,7 +213,7 @@ function CodeCenterClass() {
             //  执行此位置的代码
 
             currentCostStep++;
-            console.log('task=%d', this.tasks[pos.v][pos.i])
+            console.log('task=%d', this.tasks[pos.v][pos.i]);
             switch (this.tasks[pos.v][pos.i]) {
                 case 1:
                     arm.right({'c': this.ifs[pos.v][pos.i]});
@@ -266,7 +266,7 @@ function CodeCenterClass() {
         // 	console.log("%d,%d done.",v,i)
         // })
 
-    }
+    };
 
     //	@ 采用递归的方式模拟完整运行一次
     //
@@ -286,7 +286,7 @@ function CodeCenterClass() {
         var myarm = {
             row : 0,
             hand: 0
-        }
+        };
 
         function gohand() {
             if (myarm.catched == 0) {
@@ -295,7 +295,7 @@ function CodeCenterClass() {
                 }
             } else {
                 if (sg[myarm.row].length < 6) {
-                    sg[myarm.row].push(myarm.catched)
+                    sg[myarm.row].push(myarm.catched);
                     myarm.catched = 0
                 }
             }
@@ -303,24 +303,24 @@ function CodeCenterClass() {
 
         function go(pos) {
             var lpn = o.loops[pos.x][pos.y];
-            console.log('go %d,%d L(%d)', pos.x, pos.y, lpn)
+            console.log('go %d,%d L(%d)', pos.x, pos.y, lpn);
             while (lpn--) {
                 if (!arm.isRunning) return;
-                console.log('do %d,%d L(%d)', pos.x, pos.y, lpn)
+                console.log('do %d,%d L(%d)', pos.x, pos.y, lpn);
 
                 if (pos.y == 0 && ++o.stackLen > o.stackLim) {
-                    console.log('[Halt] Deap Loops.')
+                    console.log('[Halt] Deap Loops.');
                     return
                 }
                 ;
 
                 if (o.tasks[pos.x][pos.y] == 0) {
-                    console.log('[Halt] No code.')
+                    console.log('[Halt] No code.');
                     return
                 }
 
                 if (o.ifs[pos.x][pos.y] != 0 && o.ifs[pos.x][pos.y] != myarm.catched) {
-                    console.log('[Cotn] Bad Condition.')
+                    console.log('[Cotn] Bad Condition.');
                     if (o.tasks[pos.x][pos.y + 1]) {
                         go({x: pos.x, y: pos.y + 1})
                     }
@@ -343,16 +343,16 @@ function CodeCenterClass() {
                         arm.down();
                         break;
                     case 4:
-                        go({x: 0, y: 0})
+                        go({x: 0, y: 0});
                         break;
                     case 5:
-                        go({x: 1, y: 0})
+                        go({x: 1, y: 0});
                         break;
                     case 6:
-                        go({x: 2, y: 0})
+                        go({x: 2, y: 0});
                         break;
                     case 7:
-                        go({x: 3, y: 0})
+                        go({x: 3, y: 0});
                         break;
                 }
 
@@ -364,10 +364,10 @@ function CodeCenterClass() {
             }
         }
 
-        go({x: 0, y: 0})
+        go({x: 0, y: 0});
         console.log('[Done] go(0,0)')
 
-    }
+    };
 
     //  启动机器
     this.start = function () {
@@ -389,12 +389,12 @@ function CodeCenterClass() {
             o.run({'v': 0, 'i': 0});
         }, 50)
 
-    }
+    };
 
     this.restart = function () {
         this.finish();
         initLevel(currentLevel);
-    }
+    };
 
     //  机器运行结束
     //	x 表示由halt得来，为空则表示程序正常结束
@@ -403,7 +403,7 @@ function CodeCenterClass() {
         clearFresh();
         if (x != 1)
             arm.halt();
-    }
+    };
 
     //  机器终止运行
     this.stop = function () {
@@ -448,13 +448,13 @@ function CodeCenterClass() {
             //  绘制指令区
             o.draw();
         }
-    }
+    };
 
     this.genCodeOne  = function (arg) {
         var code = {
             x: arg.x,
             y: arg.y
-        }
+        };
 
         var x      = arg.x;
         var y      = arg.y;
@@ -483,7 +483,7 @@ function CodeCenterClass() {
             5: 'prog2();',
             6: 'prog3();',
             7: 'prog4();'
-        }
+        };
 
         ret.push(hash[o.tasks[x][y]]);
 
@@ -498,7 +498,7 @@ function CodeCenterClass() {
         }
         return rets;
 
-    }
+    };
     this.genCodePROG = function (idx) {
         var rets = '';
         for (var i = 0; i < o.tasks[idx].length; i++) if (o.tasks[idx][i] > 0) {
@@ -519,7 +519,7 @@ function CodeCenterClass() {
 
         rets += sprintf('int main(){\n\tprog1();\n\treturn 0;\n}\n');
         return rets;
-    }
+    };
 
     this.showCode = function () {
         codepad.showCode(this.genCode());

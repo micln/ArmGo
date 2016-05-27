@@ -36,7 +36,7 @@ function LevelUI() {
             cxt.strokeRect(x, y, this.r, this.c);
             cxt.fillText(i, x + this.r / 3, y + this.c * 2 / 3);
         }
-        canvas.style.cursor = 'catched';
+        canvas.style.cursor = 'hand';
         canvas.onclick      = that.selected;
         //setTimeout('levelUI.show()',conf.Fz/2);
     };
@@ -74,7 +74,7 @@ function placeBtns() {
     $(btnLevelUI).show();
 
     btnStart.style.top  = canvas.offsetTop + canvas.offsetHeight - btnStart.offsetHeight - 10;
-    btnStart.style.left = canvas.offsetLeft + canvas.offsetWidth - btnStart.offsetWidth - 150;
+    btnStart.style.left = canvas.offsetLeft + canvas.offsetWidth - btnStart.offsetWidth - 180;
 
     btnLevelUI.style.top  = canvas.offsetTop + 10;
     btnLevelUI.style.left = canvas.offsetLeft + canvas.offsetWidth - btnLevelUI.offsetWidth - 10;

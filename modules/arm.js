@@ -128,7 +128,8 @@ function ArmClass() {
 
     //  撞毁
     this.died = function () {
-        message("Destroyed!<hr>通过下方按钮“重新开始”")
+        controller.stop();
+        message("Destroyed!\n通过下方按钮“重新开始”")
     };
 
     //  向右运动，返回
@@ -137,7 +138,6 @@ function ArmClass() {
     //  	a.canvas
     //  		调用该函数时的条件指令块，不满足时直接return
     this.right = function (a) {
-
         if (!this.isRunning) return;
 
         var num = 0;

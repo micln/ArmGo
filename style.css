@@ -7,7 +7,7 @@
     top: 120px;
     width: 366;
     height: 240;
-    padding: 0px 10px;
+    padding: 0 10px;
     display: none;
     z-index: 10;
     text-align: center;
@@ -27,12 +27,9 @@
     background-color: rgba(255, 255, 255, 0.6);
 }
 
-#game #helptxt {
-    display: none;
-}
-
-#game #runs {
+#controller {
     position: absolute;
+    left: 100px;
 }
 
 #game .toola {
@@ -88,40 +85,21 @@
     outline: 4px solid #ff8100;
 }
 
-#game input[type='button'] {
-    cursor: hand;
-    height: 35px;
-    text-align: center;
-    border: 1px solid #C7C7C7;
-    background: linear-gradient(to bottom, #FFFFFF 0, #B6B6B6 100%);
-    border-radius: 3px;
+#game button {
     position: absolute;
-}
-
-#game input[type='button']:hover {
-    background: #bbb;
+    left:-100px;
 }
 
 #game #btn_start {
-    background: linear-gradient(to bottom, #42B600 0, #034700 100%);
-    width: 120px;
-    height: 80px;
-    color: #fff;
     font-size: 40px;
     border-radius: 15px;
-    border: 0px;
 }
 
-#game #btn_start:hover {
-    background: #034700;
-}
-
-#game span.score-star {
+span.score-star {
     font-size: 60px;
     color: #FF0;
-    text-shadow: 0px 8px 10px #F7C810;
-    -webkit-animation: bianxiao 800ms;
-
+    text-shadow: 0 8px 10px #F7C810;
+    /*-webkit-animation: bianxiao 800ms;*/
 }
 
 @keyframes bianxiao {

@@ -5,10 +5,10 @@
 function ToolbarClass() {
     var that = this;
 
-    this.selectDom = $id("toolslc");
-    this.selectIfDom = $id("toolslcifs");
+    this.selectDom    = $id("toolslc");
+    this.selectIfDom  = $id("toolslcifs");
     this.selectedCope = 0;
-    this.init = function (p) {
+    this.init         = function () {
         this.selectedCope = 0;
 
         //	初始化指令工具栏
@@ -31,7 +31,7 @@ function ToolbarClass() {
         //	初始化条件工具栏
         for (i = 0; i < color.length; i++) {
             $('<div>', {
-                class: 'toolifs',
+                class : 'toolifs',
                 toolId: i
             }).css('backgroundColor', color[i])
                 .click(function () {
@@ -48,22 +48,21 @@ function ToolbarClass() {
         //	初始化循环工具栏
         $('<div>', {
             class: 'toolifs',
-            text: 'loop',
+            text : 'loop'
         })
             .click(function () {
                 var x = that.selectedCope.x;
                 var y = that.selectedCope.y;
 
-
                 //fyh
                 swal({
-                    title: "ArmGo!",
-                    text: "Please input a integer:",
-                    type: "input",
-                    closeOnConfirm: true,
+                    title         : "ArmGo!",
+                    text          : "Please input a integer:",
+                    type          : "input",
+                    closeOnConfirm: true
                 }, function (inputValue) {
                     var lp = Number(inputValue);
-                    if (!lp||lp<0) lp = 1;
+                    if (!lp || lp < 0) lp = 1;
                     controller.loops[x][y - 1] = lp;
                     controller.draw();
                     that.hide();
@@ -72,29 +71,29 @@ function ToolbarClass() {
             })
             .appendTo(this.selectIfDom);
 
-        this.selectDom.style.zIndex = 10;
+        this.selectDom.style.zIndex   = 10;
         this.selectIfDom.style.zIndex = 10;
-    }
+    };
     this.init();
 
     this.hide = function (x) {
         $(this.selectDom).hide();
         $(this.selectIfDom).hide();
-    }
+    };
 
     this.show1 = function (x, y) {
         this.hide();
         $(this.selectDom).css('left', x);
         $(this.selectDom).css('top', y);
         $(this.selectDom).show();
-    }
+    };
 
     this.show2 = function (x, y) {
         this.hide();
         $(this.selectIfDom).css('left', x);
         $(this.selectIfDom).css('top', y);
         $(this.selectIfDom).show();
-    }
+    };
 
     /*******************
      *    参数 v = (x-1)*8 + y
@@ -111,8 +110,8 @@ function ToolbarClass() {
 
         this.selectedCope = {
             id: v,
-            x: x,
-            y: y
+            x : x,
+            y : y
         };
     }
 
