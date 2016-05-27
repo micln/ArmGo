@@ -26,13 +26,13 @@
  stop()		强行终止机器
  }
  */
-function RUNS() {
-    var that = this;
-    this.dom = $id("runs");
-    this.x = state.x + conf.cell.x * 8;
-    this.y = state.y - conf.cell.y + cope.height * 0.7;
-    this.r = cope.width * 9;
-    this.c = cope.height * 6.8;
+function CodeCenterClass() {
+    var o    = this;
+    this.dom = $id("controller");
+    this.x   = stage.x + conf.cell.x * 8;
+    this.y   = stage.y - conf.cell.y + cope.height * 0.7;
+    this.r   = cope.width * 9;
+    this.c   = cope.height * 6.8;
 
     //  当递归深度超过这个值时，认为是无限递归，直接退出
     this.stackLim = 20;
@@ -44,7 +44,7 @@ function RUNS() {
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0]
         ];
-        this.ifs = [
+        this.ifs   = [
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
@@ -77,7 +77,7 @@ function RUNS() {
      *
      */
     this.init = function (xxx) {
-        if (arm.running) this.stop();
+        if (arm.isRunning) this.stop();
 
         //  draw toolbar
         if (xxx == 1) {
@@ -96,20 +96,20 @@ function RUNS() {
 
                 // toolifs
                 $('<div>', {
-                    class: 'toolifs',
+                    class : 'toolifs',
                     copeId: i * 8 + j
                 }).click(function (e) {
-                    that.showToolIfs(e, this.getAttribute("copeId"));
+                    o.showToolIfs(e, this.getAttribute("copeId"));
                 }).appendTo(toolAll);
 
                 // tool
-                var newson2 = document.createElement('div');
+                var newson2       = document.createElement('div');
                 newson2.className = 'tool';
                 newson2.setAttribute("copeId", i * 8 + j);
                 newson2.setAttribute('id', 'cope' + (i * 8 + j));
                 newson2.onclick = function (e) {
-                    that.showTools1(e, this.getAttribute('copeId'));
-                }
+                    o.showTools1(e, this.getAttribute('copeId'));
+                };
                 toolAll.append(newson2);
                 $(this.dom).append(toolAll);
 
@@ -120,13 +120,13 @@ function RUNS() {
 
         placeGrids();
 
-        that.dom.style.display = 'none';
-        that.dom.style.width = cope.width * 8;
+        o.dom.style.display = 'none';
+        o.dom.style.width   = cope.width * 8;
     };
 
     function placeGrids() {
-        that.dom.style.left = that.x + cope.width + canvas.offsetLeft + 1;
-        that.dom.style.top = that.y + canvas.offsetTop - cope.height * 0.7;
+        o.dom.style.left = o.x + cope.width + canvas.offsetLeft + 1;
+        o.dom.style.top  = o.y + canvas.offsetTop - cope.height * 0.7;
     }
 
     window.addEventListener('resize', function () {
@@ -136,15 +136,15 @@ function RUNS() {
     this.showTools1 = function (e, v) {
         toolbar.show1(e.clientX, e.clientY + 10 - $(canvas).top());
         toolbar.setCope(v);
-    }
+    };
 
     this.showToolIfs = function (e, v) {
         toolbar.show2(e.clientX, e.clientY + 10 - $(canvas).top());
         toolbar.setCope(v);
-    }
+    };
 
     this.draw = function () {
-        console.trace('runs.draw');
+        console.trace('controller.draw');
         for (var i = 0; i < 4; i++) {
             for (var j = 1; j < 9; j++) {
 
@@ -190,7 +190,7 @@ function RUNS() {
 
         while (lpn--) {
 
-            if (!arm.running) return;
+            if (!arm.isRunning) return;
 
             console.log('[Do  ] %d,%d', pos.v, pos.i)
 
@@ -205,14 +205,14 @@ function RUNS() {
             //	@ 不再runs中判断条件块，而在arm中去判断，如果不满足，则return当前函数
             //
             // //  此位置有条件块但不满足条件
-            // if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.hand) {
+            // if (this.ifs[v][i] != 0 && this.ifs[v][i] != arm.catched) {
             // 	arm.done(v, i);
             // 	return;
             // }
 
             //  执行此位置的代码
 
-            coststep++;
+            currentCostStep++;
             console.log('task=%d', this.tasks[pos.v][pos.i])
             switch (this.tasks[pos.v][pos.i]) {
                 case 1:
@@ -252,7 +252,6 @@ function RUNS() {
                     break;
             }
 
-
             if (pos.i == 0) this.stackLen--;
 
         }
@@ -267,7 +266,6 @@ function RUNS() {
         // 	console.log("%d,%d done.",v,i)
         // })
 
-
     }
 
     //	@ 采用递归的方式模拟完整运行一次
@@ -280,58 +278,58 @@ function RUNS() {
         var sg = [[], [], [], [], [], []];
         for (var i = 0; i < 6; i++) {
             for (var j = 5; j >= 0; j--) {
-                if (state.box[i][j] == 0) break;
-                sg[i].push(state.box[i][j])
+                if (stage.box[i][j] == 0) break;
+                sg[i].push(stage.box[i][j])
             }
         }
 
         var myarm = {
-            row: 0,
+            row : 0,
             hand: 0
         }
 
         function gohand() {
-            if (myarm.hand == 0) {
+            if (myarm.catched == 0) {
                 if (sg[myarm.row].length > 0) {
-                    myarm.hand = sg[myarm.row].pop();
+                    myarm.catched = sg[myarm.row].pop();
                 }
             } else {
                 if (sg[myarm.row].length < 6) {
-                    sg[myarm.row].push(myarm.hand)
-                    myarm.hand = 0
+                    sg[myarm.row].push(myarm.catched)
+                    myarm.catched = 0
                 }
             }
         }
 
         function go(pos) {
-            var lpn = that.loops[pos.x][pos.y];
+            var lpn = o.loops[pos.x][pos.y];
             console.log('go %d,%d L(%d)', pos.x, pos.y, lpn)
             while (lpn--) {
-                if (!arm.running) return;
+                if (!arm.isRunning) return;
                 console.log('do %d,%d L(%d)', pos.x, pos.y, lpn)
 
-                if (pos.y == 0 && ++that.stackLen > that.stackLim) {
+                if (pos.y == 0 && ++o.stackLen > o.stackLim) {
                     console.log('[Halt] Deap Loops.')
                     return
                 }
                 ;
 
-                if (that.tasks[pos.x][pos.y] == 0) {
+                if (o.tasks[pos.x][pos.y] == 0) {
                     console.log('[Halt] No code.')
                     return
                 }
 
-                if (that.ifs[pos.x][pos.y] != 0 && that.ifs[pos.x][pos.y] != myarm.hand) {
+                if (o.ifs[pos.x][pos.y] != 0 && o.ifs[pos.x][pos.y] != myarm.catched) {
                     console.log('[Cotn] Bad Condition.')
-                    if (that.tasks[pos.x][pos.y + 1]) {
+                    if (o.tasks[pos.x][pos.y + 1]) {
                         go({x: pos.x, y: pos.y + 1})
                     }
                     return
                 }
 
-                coststep++;
+                currentCostStep++;
 
-                switch (that.tasks[pos.x][pos.y]) {
+                switch (o.tasks[pos.x][pos.y]) {
                     case 1:
                         gohand();
                         arm.right();
@@ -361,7 +359,7 @@ function RUNS() {
                 if (pos.x == 0) this.stackLen--;
             }
 
-            if (that.tasks[pos.x][pos.y + 1]) {
+            if (o.tasks[pos.x][pos.y + 1]) {
                 go({x: pos.x, y: pos.y + 1})
             }
         }
@@ -374,13 +372,13 @@ function RUNS() {
     //  启动机器
     this.start = function () {
         this.store.save();
-        initLevel(Mission);
+        initLevel(currentLevel);
         this.store.load();
 
-        arm.running = true;
+        arm.isRunning = true;
 
-        costime = 0;
-        coststep = 0;
+        currentCostTime = 0;
+        currentCostStep = 0;
 
         actor.stop();
 
@@ -388,21 +386,21 @@ function RUNS() {
 
         setTimeout(function () {
             actor.start();
-            that.run({'v': 0, 'i': 0});
+            o.run({'v': 0, 'i': 0});
         }, 50)
 
     }
 
     this.restart = function () {
         this.finish();
-        initLevel(Mission);
+        initLevel(currentLevel);
     }
 
     //  机器运行结束
     //	x 表示由halt得来，为空则表示程序正常结束
     this.finish = function (x) {
         actor.stop();
-        clearFlash();
+        clearFresh();
         if (x != 1)
             arm.halt();
     }
@@ -416,9 +414,9 @@ function RUNS() {
     this.store = {
 
         save: function () {
-            localStorage.setItem("armgo_runs_" + Mission, JSON.stringify(that.tasks));
-            localStorage.setItem("armgo_runs_ifs_" + Mission, JSON.stringify(that.ifs));
-            localStorage.setItem("armgo_runs_loops_" + Mission, JSON.stringify(that.loops));
+            localStorage.setItem("armgo_runs_" + currentLevel, JSON.stringify(o.tasks));
+            localStorage.setItem("armgo_runs_ifs_" + currentLevel, JSON.stringify(o.ifs));
+            localStorage.setItem("armgo_runs_loops_" + currentLevel, JSON.stringify(o.loops));
 
             console.log("Saved.");
             // console.log(localStorage);
@@ -427,42 +425,42 @@ function RUNS() {
         load: function () {
 
             //  尝试获取指令
-            var t = "armgo_runs_" + Mission;
+            var t   = "armgo_runs_" + currentLevel;
             var res = eval("(" + localStorage.getItem(t) + ")");
             if (res != null) {
-                that.tasks = res;
+                o.tasks = res;
 
                 //  尝试获取ifs指令
-                t = "armgo_runs_ifs_" + Mission;
+                t   = "armgo_runs_ifs_" + currentLevel;
                 res = eval("(" + localStorage.getItem(t) + ")");
                 if (res != null) {
-                    that.ifs = res;
+                    o.ifs = res;
                 }
 
                 //	尝试获取loops指令
-                t = "armgo_runs_loops_" + Mission;
+                t   = "armgo_runs_loops_" + currentLevel;
                 res = eval("(" + localStorage.getItem(t) + ")");
                 if (res != null) {
-                    that.loops = res;
+                    o.loops = res;
                 }
             }
 
             //  绘制指令区
-            that.draw();
+            o.draw();
         }
     }
 
-    this.genCodeOne = function (arg) {
+    this.genCodeOne  = function (arg) {
         var code = {
             x: arg.x,
             y: arg.y
         }
 
-        var x = arg.x;
-        var y = arg.y;
+        var x      = arg.x;
+        var y      = arg.y;
         var indent = arg.indent;
 
-        var ret = [];
+        var ret   = [];
         var defer = [];
 
         if (this.loops[x][y] > 1) {
@@ -472,8 +470,8 @@ function RUNS() {
             defer.push('}');
         }
 
-        if (that.ifs[x][y] > 0) {
-            ret.push(sprintf('if (condition[%d][%d] == "%s") {', x, y, color[that.ifs[x][y]]));
+        if (o.ifs[x][y] > 0) {
+            ret.push(sprintf('if (condition[%d][%d] == "%s") {', x, y, color[o.ifs[x][y]]));
             defer.push('}');
         }
 
@@ -487,7 +485,7 @@ function RUNS() {
             7: 'prog4();'
         }
 
-        ret.push(hash[that.tasks[x][y]]);
+        ret.push(hash[o.tasks[x][y]]);
 
         var rets = '';
 
@@ -503,8 +501,8 @@ function RUNS() {
     }
     this.genCodePROG = function (idx) {
         var rets = '';
-        for (var i = 0; i < that.tasks[idx].length; i++) if (that.tasks[idx][i] > 0) {
-            rets += that.genCodeOne({x: idx, y: i, indent: 1});
+        for (var i = 0; i < o.tasks[idx].length; i++) if (o.tasks[idx][i] > 0) {
+            rets += o.genCodeOne({x: idx, y: i, indent: 1});
         }
         if (rets)
             rets = sprintf('void prog%d() {\n', idx + 1) + rets + '}\n\n';
@@ -516,7 +514,7 @@ function RUNS() {
         var rets = '#inlcude "armgo.h"\n\n';
 
         for (var i = 0; i < 4; i++) {
-            rets += that.genCodePROG(i);
+            rets += o.genCodePROG(i);
         }
 
         rets += sprintf('int main(){\n\tprog1();\n\treturn 0;\n}\n');

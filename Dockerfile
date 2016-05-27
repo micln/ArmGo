@@ -1,17 +1,11 @@
-# Using a compact OS
-FROM alpine:latest
+# 使用官方 PHP-Apache 镜像
+FROM daocloud.io/php:5.6-apache
 
-MAINTAINER Golfen Guo <golfen.guo@daocloud.io> 
+# docker-php-ext-install 为官方 PHP 镜像内置命令，用于安装 PHP 扩展依赖
+# pdo_mysql 为 PHP 连接 MySQL 扩展
+RUN docker-php-ext-install pdo_mysql
 
-# Install Nginx
-RUN apk --update add nginx
+# /var/www/html/ 为 Apache 目录
+COPY . /var/www/html/
 
-# Add 2048 stuff into Nginx server
-COPY . /usr/share/nginx/html
-
-EXPOSE 80
-
-# Start Nginx and keep it from running background
-CMD ["nginx", "-g", "daemon off;"]
-
-
+MAINTAINER Huiren <zhrlnt@gmail.com>

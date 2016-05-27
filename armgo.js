@@ -1,12 +1,11 @@
 // init object	初始化对象
-(new HELLO).draw();
-var state = new STATE(); // the state of stage
-var arm = new ArmClass();
-var cope = new COPE(1);
-var missionList = new MISSIONLIST();
-var runs = new RUNS();
-var toolbar = new TOOLBAR();
+(new HelloUI).draw();
+var stage      = new StageClass(); // the stage of stage
+var arm        = new ArmClass();
+var cope       = new CopeClass(1);
+var levelUI    = new LevelUI();
+var controller = new CodeCenterClass();
+var toolbar    = new ToolbarClass();
 
 $(document).ready(function () {
-    // initLevel(1);
 });

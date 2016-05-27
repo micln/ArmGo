@@ -2,7 +2,7 @@
  *    工具栏-指令选择框
  * @constructor
  */
-function TOOLBAR() {
+function ToolbarClass() {
     var that = this;
 
     this.selectDom = $id("toolslc");
@@ -14,14 +14,14 @@ function TOOLBAR() {
         //	初始化指令工具栏
         for (var i = 0; i < 8; i++) {
             $('<div>', {class: 'tool', toolId: i})
-                .css('background', "url('" + res.img[i].src + "')")
+                .css('background', "url('" + resources.img[i].src + "')")
                 .css('backgroundSize', "35px 35px")
                 .click(function () {
                     var x = that.selectedCope.x;
                     var y = that.selectedCope.y;
 
-                    runs.tasks[x][y - 1] = Number(this.getAttribute('toolId'));
-                    runs.draw();
+                    controller.tasks[x][y - 1] = Number(this.getAttribute('toolId'));
+                    controller.draw();
 
                     that.hide();
                 })
@@ -38,8 +38,8 @@ function TOOLBAR() {
                     var x = that.selectedCope.x;
                     var y = that.selectedCope.y;
 
-                    runs.ifs[x][y - 1] = Number(this.getAttribute('toolId'));
-                    runs.draw();
+                    controller.ifs[x][y - 1] = Number(this.getAttribute('toolId'));
+                    controller.draw();
                     that.hide();
                 })
                 .appendTo(this.selectIfDom);
@@ -64,8 +64,8 @@ function TOOLBAR() {
                 }, function (inputValue) {
                     var lp = Number(inputValue);
                     if (!lp||lp<0) lp = 1;
-                    runs.loops[x][y - 1] = lp;
-                    runs.draw();
+                    controller.loops[x][y - 1] = lp;
+                    controller.draw();
                     that.hide();
                     return false;
                 });

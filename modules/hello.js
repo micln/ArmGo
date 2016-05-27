@@ -3,16 +3,16 @@
 
  */
 
-function HELLO() {
+function HelloUI() {
     this.draw = function () {
-        canvas.style.cursor = 'hand';
+        canvas.style.cursor = 'catched';
 
-        setTimeout(function () {
-            cxt.drawImage(res.img.hello, 0, 0);
-        }, 0);
+        delay(function () {
+            cxt.drawImage(resources.img.hello, 0, 0);
+        });
 
         $(canvas).bind('click', function () {
-            missionList.show();
+            levelUI.show();
             $(this).unbind('click');
         });
     }
