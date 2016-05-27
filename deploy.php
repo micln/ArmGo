@@ -14,3 +14,4 @@ function run($cmds)
 }
 
 run('git pull');
+run('git pull >> deploy.log');
