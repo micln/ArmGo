@@ -1,8 +1,9 @@
 /*  
  Class {游戏操作区 && 运行控制器}
+        有点小臃肿~
 
  attribute {
- obj			交互层的div元素
+ dom			交互层的div元素,
 
  x,y,r,c		相对画布的坐标，尺寸
 
@@ -26,31 +27,32 @@
  stop()		强行终止机器
  }
  */
+
 function CodeCenterClass() {
     var o    = this;
-    this.dom = $id("controller");
-    this.x   = stage.x + conf.cell.x * 8;
+    this.dom = $id("controller");   //  交互层使用 DOM 实现,canvas 烦人了
+    this.x   = stage.x + conf.cell.x * 8; //  坐标
     this.y   = stage.y - conf.cell.y + cope.height * 0.7;
-    this.r   = cope.width * 9;
+    this.r   = cope.width * 9;    //  尺寸
     this.c   = cope.height * 6.8;
 
     //  当递归深度超过这个值时，认为是无限递归，直接退出
     this.stackLim = 20;
 
     this.clear = function () {
-        this.tasks = [
+        this.tasks = [  //  color of cell
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0]
         ];
-        this.ifs   = [
+        this.ifs   = [  //  condition color of cell
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0]
         ];
-        this.loops = [
+        this.loops = [  //  loop count of cell
             [1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1],
@@ -275,28 +277,31 @@ function CodeCenterClass() {
     //
     this.run2 = function () {
 
+        //  模拟 stage
         var sg = [[], [], [], [], [], []];
         for (var i = 0; i < 6; i++) {
             for (var j = 5; j >= 0; j--) {
                 if (stage.box[i][j] == 0) break;
-                sg[i].push(stage.box[i][j])
+                sg[i].push(stage.box[i][j]);    //  每行都按 stack, 直接用 push/pop 就行了, 省了计算。
             }
         }
 
-        var myarm = {
+        //  模拟 arm
+        var myArm = {
             row : 0,
             hand: 0
         };
 
-        function gohand() {
-            if (myarm.catched == 0) {
-                if (sg[myarm.row].length > 0) {
-                    myarm.catched = sg[myarm.row].pop();
+        //  模拟爪子向右移动, 不需要动画,直接判断取/放的结果。
+        function goHand() {
+            if (myArm.catched == 0) {
+                if (sg[myArm.row].length > 0) {
+                    myArm.catched = sg[myArm.row].pop();
                 }
             } else {
-                if (sg[myarm.row].length < 6) {
-                    sg[myarm.row].push(myarm.catched);
-                    myarm.catched = 0
+                if (sg[myArm.row].length < 6) {
+                    sg[myArm.row].push(myArm.catched);
+                    myArm.catched = 0
                 }
             }
         }
@@ -309,18 +314,17 @@ function CodeCenterClass() {
                 console.log('do %d,%d L(%d)', pos.x, pos.y, lpn);
 
                 if (pos.y == 0 && ++o.stackLen > o.stackLim) {
-                    console.log('[Halt] Deap Loops.');
+                    console.log('[Halt] Too deep Loops.');
                     return
                 }
-                ;
 
                 if (o.tasks[pos.x][pos.y] == 0) {
                     console.log('[Halt] No code.');
                     return
                 }
 
-                if (o.ifs[pos.x][pos.y] != 0 && o.ifs[pos.x][pos.y] != myarm.catched) {
-                    console.log('[Cotn] Bad Condition.');
+                if (o.ifs[pos.x][pos.y] != 0 && o.ifs[pos.x][pos.y] != myArm.catched) {
+                    console.log('[SKIP] Bad Condition.');
                     if (o.tasks[pos.x][pos.y + 1]) {
                         go({x: pos.x, y: pos.y + 1})
                     }
@@ -331,15 +335,15 @@ function CodeCenterClass() {
 
                 switch (o.tasks[pos.x][pos.y]) {
                     case 1:
-                        gohand();
+                        goHand();
                         arm.right();
                         break;
                     case 2:
-                        if (myarm.row > 0) myarm.row--;
+                        if (myArm.row > 0) myArm.row--;
                         arm.up();
                         break;
                     case 3:
-                        if (myarm.row < 4) myarm.row++;
+                        if (myArm.row < 4) myArm.row++;
                         arm.down();
                         break;
                     case 4:
@@ -356,7 +360,7 @@ function CodeCenterClass() {
                         break;
                 }
 
-                if (pos.x == 0) this.stackLen--;
+                if (pos.x == 0) o.stackLen--;
             }
 
             if (o.tasks[pos.x][pos.y + 1]) {
@@ -366,7 +370,6 @@ function CodeCenterClass() {
 
         go({x: 0, y: 0});
         console.log('[Done] go(0,0)')
-
     };
 
     //  启动机器
@@ -380,10 +383,10 @@ function CodeCenterClass() {
         currentCostTime = 0;
         currentCostStep = 0;
 
-        actor.stop();
-
         this.showCode();
 
+        //  actor 重头开始
+        actor.stop();
         setTimeout(function () {
             actor.start();
             o.run({'v': 0, 'i': 0});
