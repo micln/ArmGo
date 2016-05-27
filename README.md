@@ -7,7 +7,7 @@ Programming the copes to leading the arm to move the cells, achieve the goal sta
 
 ## Demo 
 
-http://armgo.coding.io
+http://armgo.romatic.net
 
 ## Install
 
