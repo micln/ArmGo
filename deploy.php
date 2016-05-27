@@ -25,5 +25,6 @@ function run($cmds, $log = false)
 
 run([
     'git pull',
-    'bower install'
+    'bower install -V',
+    'bower update -V'
 ], true);
