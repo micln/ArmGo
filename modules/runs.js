@@ -385,13 +385,11 @@ function CodeCenterClass() {
 
         this.showCode();
 
-        //  actor 重头开始
         actor.stop();
         setTimeout(function () {
-            actor.start();
+            actor.startListen();
             o.run({'v': 0, 'i': 0});
         }, 50)
-
     };
 
     this.restart = function () {
