@@ -1,30 +1,5 @@
-#game #msgbox {
-    position: absolute;
-    background: #4EC5E8;
-    border: 10px solid #008BFF;
-    border-radius: 20px;
-    left: 500;
-    top: 120px;
-    width: 366;
-    height: 240;
-    padding: 0 10px;
-    display: none;
-    z-index: 10;
+.center {
     text-align: center;
-}
-
-#game #msgbox > a {
-    position: relative;
-    top: 200;
-    border: 1px solid rgba(0, 110, 255, 0.44);
-    border-radius: 5px;
-    cursor: hand;
-    padding: 5px 20px;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-#game a#msgok:hover {
-    background-color: rgba(255, 255, 255, 0.6);
 }
 
 #controller {
@@ -87,7 +62,7 @@
 
 #game button {
     position: absolute;
-    left:-100px;
+    left: -100px;
 }
 
 #game #btn_start {

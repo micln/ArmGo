@@ -14,9 +14,9 @@
 <body>
 <div class="container" style="width: 100%;padding: 0px">
     <div class="">
-        <center>
+        <div class="center">
             <h1>Armgo - 编程菜鸟进阶</h1>
-        </center>
+        </div>
         <hr>
     </div>
     <div class="clearfix"></div>
@@ -46,11 +46,11 @@
 <script type="text/javascript" src="conf.js"></script>
 <!-- 加载游戏模块 -->
 <script type="text/javascript" src="modules/state.js"></script>
-<script type="text/javascript" src="modules/mission.js"></script>
+<script type="text/javascript" src="modules/level-ui.js"></script>
 <script type="text/javascript" src="modules/cope.js"></script>
 <script type="text/javascript" src="modules/arm.js"></script>
 <script type="text/javascript" src="modules/toolbar.js"></script>
-<script type="text/javascript" src="modules/runs.js"></script>
+<script type="text/javascript" src="modules/controller.js"></script>
 <script type="text/javascript" src="modules/hello.js"></script>
 <script type="text/javascript" src="modules/codepad.js"></script>
 <!-- 初始化游戏 -->

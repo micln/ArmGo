@@ -186,23 +186,15 @@ function $id(x) {
     return document.getElementById(x);
 }
 
-var zpp = {
-    'includejs': function (filename) {
-        document.write("<script type='text/javascript' src='" + filename + "'></script>");
-    }
-};
-
 function delay(fn) {
     setTimeout(fn, 0);
 }
 
 // http://demon.tw/programming/javascript-sprintf.html
-
 function str_repeat(i, m) {
-    for (var o = []; m > 0; o[--m] = i);
+    for (var o = []; m > 0;)o[--m] = i;
     return o.join('');
 }
-
 function sprintf() {
     var i = 0, a, f = arguments[i++], o = [], m, p, c, x, s = '';
     while (f) {

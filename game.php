@@ -1,10 +1,6 @@
 
 <!--  main GAME  -->
 <div id="game">
-    <div id="msgbox">
-        <a id="msgok" onclick="document.getElementById('msgbox').style.display = 'none'">OK</a>
-        <div></div>
-    </div>
     <canvas id="canvas" width="900px" height="480px"></canvas>
     <div id="controller"></div>
     <div id="toolslc">
@@ -22,11 +18,5 @@
         <button id="btn_load" class='btn btn-default' onClick="controller.store.load();">Load</button>
     </div>
 
-    <div style="position: fixed; right:0px; top: 0px; bottom: 0px;" class='zhide'>
-        <span class="x-close-parent" style="float: right;width: 20px;height: 20px;text-align: center;background-color: #F00;color: #fff;cursor: pointer;">X</span>
-    </div>
-
 </div>
 
-</body>
-</html>
