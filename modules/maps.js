@@ -107,8 +107,8 @@ var levelData = {
             [0, 0, 0, 0, 0, 0]
         ],
         scope   : {
-            number: 13,
-            step  : 33
+            number: 8,
+            step  : 37
         }
     },
     6 : {
