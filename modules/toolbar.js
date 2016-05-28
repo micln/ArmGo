@@ -8,7 +8,8 @@ function ToolbarClass() {
     this.selectDom    = $id("toolslc");
     this.selectIfDom  = $id("toolslcifs");
     this.selectedCope = 0;
-    this.init         = function () {
+
+    this.init = function () {
         this.selectedCope = 0;
 
         //	初始化指令工具栏

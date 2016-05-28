@@ -1,6 +1,7 @@
 // Global Variables
 var canvas = $id("canvas");
 var cxt    = canvas.getContext("2d");
+var currentGame;
 var currentTimer; // arm Go!
 var currentLevel; // currentLevel Canvas Object
 var currentCostTime;
@@ -23,7 +24,8 @@ function checkAns() {
     console.log('正在尝试检查答案...');
     // console.log(stage.box.toString())
     // console.log(Goal[currentLevel].toString())
-    if (stage.box.toString() == Goal[currentLevel].toString()) {
+    //if (stage.box.toString() == Goal[currentLevel].toString()) {
+    if (stage.box.toString() == currentGame.mapGoal.toString()) {
         var costCope = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 8; j++)
@@ -33,7 +35,7 @@ function checkAns() {
                 }
         }
 
-        var score    = 1 + (currentCostStep <= grade[currentLevel][1]) + (costCope <= grade[currentLevel][0]);
+        var score    = 1 + (currentCostStep <= currentGame.scope.step) + (costCope <= currentGame.scope.number);
         var scoreTxt = '<span class="score-star">★</span>';
         if (score == 2) scoreTxt += scoreTxt;
         if (score == 3) scoreTxt += scoreTxt + scoreTxt;
@@ -80,7 +82,8 @@ function drawBg(x, y, w, h) {
 function drawGoal() {
     var x = conf.goalm.x;
     var y = conf.goalm.y;
-    var g = Goal[currentLevel];
+    //var g = Goal[currentLevel];
+    var g = currentGame.mapGoal;
 
     // holder
     var gradient = cxt.createLinearGradient(50, 50, 330, 500);

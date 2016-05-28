@@ -23,7 +23,8 @@ function StageClass() {
         for (i = 0; i < 6; i++) {
             this.box[i] = [];
             for (j = 0; j < 6; j++) {
-                this.box[i][j] = startM[level][i][j];
+                //this.box[i][j] = startM[level][i][j];
+                this.box[i][j] = levelData[level].mapStart[i][j];
             }
         }
         arm.init();

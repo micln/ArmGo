@@ -3,12 +3,13 @@
  * @constructor
  */
 function LevelUI() {
-    var that       = this;
-    this.tot       = Goal.length - 1;
-    this.x         = 90;
-    this.y         = 150;
-    this.r         = 80;
-    this.c         = 80;
+    var that = this;
+    this.tot = levelData.totLevel;
+    this.x   = 90;
+    this.y   = 150;
+    this.r   = 80;
+    this.c   = 80;
+    
     this.isShowing = false;
 
     this.show = function () {
@@ -50,6 +51,7 @@ function LevelUI() {
 //	载入关卡
 function initLevel(v) {
     currentLevel = v;
+    currentGame  = levelData[v];
 
     stage.init(v);
     controller.clear();

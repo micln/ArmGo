@@ -37,7 +37,7 @@ function CodeCenterClass() {
     this.c   = cope.height * 6.8;
 
     //  当递归深度超过这个值时，认为是无限递归，直接退出
-    this.stackLim = 20;
+    this.stackLim = 50;
 
     this.clear = function () {
         this.tasks = [  //  color of cell
@@ -175,6 +175,7 @@ function CodeCenterClass() {
         //	用来选中的格子
         $(this.dom).show();
     };
+
     this.hide = function () {
         this.dom.style.display = 'none';
     };
@@ -420,7 +421,6 @@ function CodeCenterClass() {
             localStorage.setItem("armgo_runs_loops_" + currentLevel, JSON.stringify(o.loops));
 
             console.log("Saved.");
-            // console.log(localStorage);
         },
 
         load: function () {

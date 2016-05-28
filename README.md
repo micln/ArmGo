@@ -12,7 +12,7 @@ http://armgo.romatic.net
 ## Install
 
 ```
-bower install
+php deploy.php
 ```
 
 ## Thanks
