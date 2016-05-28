@@ -289,18 +289,18 @@ function CodeCenterClass() {
 
         //  模拟 arm
         var myArm = {
-            row : 0,
-            hand: 0
+            row    : 0,
+            catched: 0
         };
 
         //  模拟爪子向右移动, 不需要动画,直接判断取/放的结果。
         function goHand() {
             if (myArm.catched == 0) {
-                if (sg[myArm.row].length > 0) {
+                if (sg[myArm.row].length > 0) {     //  抓
                     myArm.catched = sg[myArm.row].pop();
                 }
             } else {
-                if (sg[myArm.row].length < 6) {
+                if (sg[myArm.row].length < 6) {     //  放
                     sg[myArm.row].push(myArm.catched);
                     myArm.catched = 0
                 }
@@ -324,6 +324,8 @@ function CodeCenterClass() {
                     return
                 }
 
+                console.log(pos);
+                console.log(o.ifs[pos.x][pos.y], myArm);
                 if (o.ifs[pos.x][pos.y] != 0 && o.ifs[pos.x][pos.y] != myArm.catched) {
                     console.log('[SKIP] Bad Condition.');
                     if (o.tasks[pos.x][pos.y + 1]) {
