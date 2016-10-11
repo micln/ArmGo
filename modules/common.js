@@ -59,13 +59,9 @@ function drawCell(x, y, v) {
     cxt.fillRect(x, y, conf.cell.x, conf.cell.y);
     cxt.fillStyle = "#7E3902";
     cxt.fillRect(x + conf.cell.x * 0.2, y + conf.cell.y * 0.2, conf.cell.x * 0.6, conf.cell.y * 0.6);
-    // cxt.strokeStyle = "#7E3902";
-    // cxt.strokeRect(x,y,conf.cell.x,conf.cell.y);
 }
 
 function drawBg(x, y, w, h) {
-    // cxt.fillStyle = color[0];
-    // cxt.fillRect(0, 0, canvas.width, canvas.height);
 
     //	draw all
     var img = new Image();
