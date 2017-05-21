@@ -5,7 +5,7 @@ function wlog($str, $file = false)
 {
     echo $str;
     if ($file) {
-        file_put_contents('run.log', $str, FILE_APPEND);
+        file_put_contents($file, $str, FILE_APPEND);
     }
 }
 
@@ -26,6 +26,4 @@ function run($cmds, $log = false)
 
 run([
     'git pull',
-    'bower install -V',
-    'bower update -V'
-], true);
+], 'run.log');
