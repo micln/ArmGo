@@ -1,6 +1,8 @@
 ArmGo
 =====
 
+[![Build Status](https://jenkins.romatic.net/buildStatus/icon?job=armgo)](https://jenkins.romatic.net/job/armgo)
+
 A game for program learner
 
 Programming the copes to leading the arm to move the cells, achieve the goal state and you can get your scores.
