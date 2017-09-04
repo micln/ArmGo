@@ -24,7 +24,10 @@ function run($cmds, $log = false)
 }
 
 run([
-    'git pull origin',
+    'git checkout master',
+    'git pull origin master',
+    'git checkout -',
+    'git merge master',
     'bower install -V',
     'bower update -V'
 ], true);
