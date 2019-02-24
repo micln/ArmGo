@@ -514,7 +514,7 @@ function CodeCenterClass() {
 
     this.genCode = function () {
 
-        var rets = '#inlcude "armgo.h"\n\n';
+        var rets = '#include "armgo.h"\n\n';
 
         for (var i = 0; i < 4; i++) {
             rets += o.genCodePROG(i);
