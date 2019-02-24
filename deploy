@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+function wlog($str, $file = null)
+{
+    echo $str;
+    if ($file) {
+        file_put_contents($file, $str, FILE_APPEND);
+    }
+}
+
+function run($cmds, $log = null)
+{
+    foreach ((array)$cmds as $cmd) {
+        $output = [];
+        $return = null;
+        wlog("> $cmd ", $log);
+        exec($cmd, $output, $return);
+        wlog("[$return] \n", $log);
+
+        foreach ($output as $line) {
+            wlog($line . "\n", $log);
+        }
+    }
+}
+
+run([
+    'git pull',
+], 'run.log');

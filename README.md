@@ -13,9 +13,18 @@ http://armgo.romatic.net
 
 ## Install
 
-```
-php deploy.php
-```
+### rocking with docker
+
+- build
+
+       git clone https://git.coding.net/kzzhr/ArmGo.git
+       cd ArmGo
+       docker build -t armgo .
+
+ - run in `:8080`
+
+        docker run --name armgo -d -p 8080:8080 armgo
+
 
 ## Thanks
 
